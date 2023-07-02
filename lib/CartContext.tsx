@@ -9,15 +9,13 @@ type CartItem = {
   qty: number;
 };
 
-type PopulatedCartItem = CartItem & { product?: ProductData };
-
 type CartContextType = {
   cartItems: CartItem[];
   addItem: (productId: string) => void;
   removeItem: (productId: string) => void;
   updateItemQty: (productId: string, qty: number) => void;
   clearItems: () => void;
-  populatedCartItems: PopulatedCartItem[];
+  populatedCartItems: (CartItem & { product?: ProductData })[];
   showCartDrawer: boolean;
   setShowCartDrawer: (value: boolean) => void;
   toggleShowCartDrawer: () => void;
@@ -57,15 +55,12 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const clearItems = () => setCartItems([]);
 
-  const populatedCartItems: PopulatedCartItem[] = useMemo(
+  const populatedCartItems = useMemo(
     () =>
-      cartItems.map(cartItem => {
-        const matchingProductItem = productData?.find(
-          product => product._id == cartItem.productId
-        );
-        if (!matchingProductItem) return cartItem;
-        return { ...cartItem, product: matchingProductItem };
-      }),
+      cartItems.map(cartItem => ({
+        ...cartItem,
+        product: productData?.find(product => product._id == cartItem.productId)
+      })),
     [cartItems, productData]
   );
 
