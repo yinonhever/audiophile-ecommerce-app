@@ -1,5 +1,6 @@
 import { Schema, model, models, Model } from "mongoose";
 import type { DataItem } from "@/lib/types";
+import { unique } from "next/dist/build/utils";
 
 interface IProduct {
   title: string;
@@ -12,7 +13,8 @@ export type ProductData = DataItem<IProduct>;
 const productSchema = new Schema<IProduct>({
   title: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   price: {
     type: Number,

@@ -8,7 +8,7 @@ export default function CartDrawer() {
   ) as CartContextType;
 
   useEffect(() => {
-    console.log("populatedCartItems", populatedCartItems);
+    // 
   }, [populatedCartItems]);
 
   return <div className={styles["cart-drawer"]}></div>;

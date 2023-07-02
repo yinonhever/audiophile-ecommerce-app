@@ -12,7 +12,7 @@ type CartItem = {
 
 export type CartContextType = {
   cartItems: CartItem[];
-  addItem: (productId: string) => void;
+  addItem: (productId: string, qty: number) => void;
   removeItem: (productId: string) => void;
   updateItemQty: (productId: string, qty: number) => void;
   clearItems: () => void;
@@ -26,8 +26,8 @@ export const CartContext = createContext<CartContextType | null>(null);
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-    const existingItemsCookie = getCookie("cartItems") as string;
-    return existingItemsCookie ? JSON.parse(existingItemsCookie) : [];
+    const itemsCookie = getCookie("cartItems") as string;
+    return itemsCookie ? JSON.parse(itemsCookie) : [];
   });
   const [showCartDrawer, setShowCartDrawer] = useState(false);
   const { data: productData } = useSWR("/api/products", fecther<ProductData[]>);
@@ -36,14 +36,14 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     setCookie("cartItems", cartItems);
   }, [cartItems]);
 
-  const addItem = (productId: string) => {
+  const addItem = (productId: string, qty: number) => {
     const clonedItems = cloneDeep(cartItems);
     const existingItem = clonedItems.find(item => item.productId === productId);
     if (existingItem) {
-      existingItem.qty++;
+      existingItem.qty += qty;
       setCartItems(clonedItems);
     } else {
-      const newItem = { productId, qty: 1 };
+      const newItem = { productId, qty };
       setCartItems([...clonedItems, newItem]);
     }
   };

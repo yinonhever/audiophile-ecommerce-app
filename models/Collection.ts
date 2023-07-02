@@ -6,7 +6,7 @@ interface ICollection {
   title: string;
   slug: string;
   products: (Types.ObjectId | ProductData)[];
-  showInHomepage: boolean;
+  showInPages: boolean;
 }
 
 export type CollectionData = DataItem<ICollection>;
@@ -30,7 +30,7 @@ const collectionSchema = new Schema<ICollection>({
       required: true
     }
   ],
-  showInHomepage: {
+  showInPages: {
     type: Boolean,
     default: false
   }
