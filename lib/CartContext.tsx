@@ -1,8 +1,9 @@
 import { ProductData } from "@/models/Product";
-import { createContext, useState, useMemo, ReactNode } from "react";
+import { createContext, useState, useEffect, useMemo, ReactNode } from "react";
 import useSWR from "swr";
 import { fecther } from "./functions";
 import cloneDeep from "clone-deep";
+import { getCookie, setCookie } from "cookies-next";
 
 type CartItem = {
   productId: string;
@@ -24,9 +25,16 @@ export type CartContextType = {
 export const CartContext = createContext<CartContextType | null>(null);
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    const existingItemsCookie = getCookie("cartItems") as string;
+    return existingItemsCookie ? JSON.parse(existingItemsCookie) : [];
+  });
   const [showCartDrawer, setShowCartDrawer] = useState(false);
   const { data: productData } = useSWR("/api/products", fecther<ProductData[]>);
+
+  useEffect(() => {
+    setCookie("cartItems", cartItems);
+  }, [cartItems]);
 
   const addItem = (productId: string) => {
     const clonedItems = cloneDeep(cartItems);
