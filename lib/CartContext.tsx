@@ -9,7 +9,7 @@ type CartItem = {
   qty: number;
 };
 
-type CartContextType = {
+export type CartContextType = {
   cartItems: CartItem[];
   addItem: (productId: string) => void;
   removeItem: (productId: string) => void;
@@ -17,12 +17,11 @@ type CartContextType = {
   clearItems: () => void;
   populatedCartItems: (CartItem & { product?: ProductData })[];
   showCartDrawer: boolean;
-  setShowCartDrawer: (value: boolean) => void;
-  toggleShowCartDrawer: () => void;
+  toggleShowCartDrawer: (value?: boolean) => void;
   productData: ProductData[] | undefined;
 };
 
-const CartContext = createContext<CartContextType | null>(null);
+export const CartContext = createContext<CartContextType | null>(null);
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -64,7 +63,8 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     [cartItems, productData]
   );
 
-  const toggleShowCartDrawer = () => setShowCartDrawer(!showCartDrawer);
+  const toggleShowCartDrawer = (value?: boolean) =>
+    setShowCartDrawer(value ?? !showCartDrawer);
 
   return (
     <CartContext.Provider
@@ -76,7 +76,6 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
         clearItems,
         populatedCartItems,
         showCartDrawer,
-        setShowCartDrawer,
         toggleShowCartDrawer,
         productData
       }}

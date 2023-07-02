@@ -26,7 +26,8 @@ const collectionSchema = new Schema<ICollection>({
   products: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Product"
+      ref: "Product",
+      required: true
     }
   ],
   showInHomepage: {

@@ -6,6 +6,7 @@ import { getProducts } from "./api/products";
 import type { ProductData } from "@/models/Product";
 import type { CollectionData } from "@/models/Collection";
 import { getCollections } from "./api/collections";
+import CartDrawer from "@/components/CartDrawer/CartDrawer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function Home({
         {products.map(product => (
           <h3 key={product._id}>{product.title}</h3>
         ))}
+        <CartDrawer></CartDrawer>
       </div>
     </>
   );
