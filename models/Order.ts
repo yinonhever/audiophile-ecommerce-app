@@ -79,7 +79,10 @@ const orderSchema = new Schema<IOrder>({
     },
     country: {
       type: String,
-      required: true
+      required: true,
+      trim: true,
+      minlength: 2,
+      maxlength: 2
     }
   },
   paymentMethod: {
