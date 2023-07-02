@@ -1,5 +1,5 @@
 import { ProductData } from "@/models/Product";
-import { createContext, useState, ReactNode } from "react";
+import { createContext, useState, useMemo, ReactNode } from "react";
 import useSWR from "swr";
 import { fecther } from "./functions";
 import cloneDeep from "clone-deep";
@@ -9,12 +9,15 @@ type CartItem = {
   qty: number;
 };
 
+type PopulatedCartItem = CartItem & { product?: ProductData };
+
 type CartContextType = {
   cartItems: CartItem[];
   addItem: (productId: string) => void;
   removeItem: (productId: string) => void;
   updateItemQty: (productId: string, qty: number) => void;
   clearItems: () => void;
+  populatedCartItems: PopulatedCartItem[];
   showCartDrawer: boolean;
   setShowCartDrawer: (value: boolean) => void;
   toggleShowCartDrawer: () => void;
@@ -54,6 +57,18 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const clearItems = () => setCartItems([]);
 
+  const populatedCartItems: PopulatedCartItem[] = useMemo(
+    () =>
+      cartItems.map(cartItem => {
+        const matchingProductItem = productData?.find(
+          product => product._id == cartItem.productId
+        );
+        if (!matchingProductItem) return cartItem;
+        return { ...cartItem, product: matchingProductItem };
+      }),
+    [cartItems, productData]
+  );
+
   const toggleShowCartDrawer = () => setShowCartDrawer(!showCartDrawer);
 
   return (
@@ -64,6 +79,7 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
         removeItem,
         updateItemQty,
         clearItems,
+        populatedCartItems,
         showCartDrawer,
         setShowCartDrawer,
         toggleShowCartDrawer,

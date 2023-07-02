@@ -1,12 +1,11 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+import styles from "@/styles/Home.module.scss";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { getProducts } from "./api/products";
 import type { ProductData } from "@/models/Product";
 import type { CollectionData } from "@/models/Collection";
 import { getCollections } from "./api/collections";
-import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
