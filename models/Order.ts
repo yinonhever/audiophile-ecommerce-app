@@ -7,6 +7,19 @@ interface IOrder {
   itemsPrice: number;
   shippingFee: number;
   totalPrice: number;
+  billingDetails: {
+    name: string;
+    email: string;
+    phone: string;
+  };
+  shippingDetails: {
+    address: string;
+    zipCode: string;
+    city: string;
+    country: string;
+  };
+  paymentMethod: string;
+  isPaid: boolean;
 }
 
 export type OrderData = DataItem<IOrder>;
@@ -36,6 +49,47 @@ const orderSchema = new Schema<IOrder>({
   totalPrice: {
     type: Number,
     required: true
+  },
+  billingDetails: {
+    name: {
+      type: String,
+      required: true
+    },
+    email: {
+      type: String,
+      required: true
+    },
+    phone: {
+      type: String,
+      required: true
+    }
+  },
+  shippingDetails: {
+    address: {
+      type: String,
+      required: true
+    },
+    zipCode: {
+      type: String,
+      required: true
+    },
+    city: {
+      type: String,
+      required: true
+    },
+    country: {
+      type: String,
+      required: true
+    }
+  },
+  paymentMethod: {
+    type: String,
+    required: true,
+    enum: ["e-money", "cash"]
+  },
+  isPaid: {
+    type: Boolean,
+    default: false
   }
 });
 
