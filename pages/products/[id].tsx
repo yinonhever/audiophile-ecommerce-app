@@ -9,13 +9,13 @@ export default function ProductPage({
   product,
   collections
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  return <div>{product.title}</div>;
+  return <div>{product?.title}</div>;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const products = await getProducts();
   const paths = products.map(product => ({ params: { id: product._id } }));
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 };
 
 export const getStaticProps: GetStaticProps<{
@@ -23,10 +23,15 @@ export const getStaticProps: GetStaticProps<{
   collections: CollectionData[];
 }> = async ({ params }) => {
   const productId = params?.id as string;
-  const [product, collections] = await Promise.all([
-    getProductById(productId),
-    getCollections({ showInPages: true })
-  ]);
-  if (!product) return { notFound: true };
-  return { props: { product, collections } };
+  try {
+    const [product, collections] = await Promise.all([
+      getProductById(productId),
+      getCollections({ showInPages: true })
+    ]);
+    if (!product) return { notFound: true };
+    return { props: { product, collections } };
+  } catch (error: any) {
+    console.log(error.message);
+    return { notFound: true };
+  }
 };

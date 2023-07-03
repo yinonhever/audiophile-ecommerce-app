@@ -14,14 +14,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths = collections.map(collection => ({
     params: { slug: collection.slug }
   }));
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 };
 
 export const getStaticProps: GetStaticProps<{
   collection: CollectionData;
 }> = async ({ params }) => {
-  const slug = params?.slug as string;
-  const collection = await getCollectionBySlug(slug);
-  if (!collection) return { notFound: true };
-  return { props: { collection } };
+  try {
+    const slug = params?.slug as string;
+    const collection = await getCollectionBySlug(slug);
+    if (!collection) return { notFound: true };
+    return { props: { collection } };
+  } catch (error: any) {
+    console.log(error.message);
+    return { notFound: true };
+  }
 };
