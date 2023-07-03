@@ -13,9 +13,14 @@ export default function ProductPage({
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const products = await getProducts();
-  const paths = products.map(product => ({ params: { id: product._id } }));
-  return { paths, fallback: true };
+  try {
+    const products = await getProducts();
+    const paths = products.map(product => ({ params: { id: product._id } }));
+    return { paths, fallback: true };
+  } catch (error: any) {
+    console.log(error.message);
+    return { paths: [], fallback: true };
+  }
 };
 
 export const getStaticProps: GetStaticProps<{

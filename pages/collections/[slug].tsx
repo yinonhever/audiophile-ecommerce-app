@@ -10,11 +10,16 @@ export default function CollectionPage({
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const collections = await getCollections();
-  const paths = collections.map(collection => ({
-    params: { slug: collection.slug }
-  }));
-  return { paths, fallback: true };
+  try {
+    const collections = await getCollections();
+    const paths = collections.map(collection => ({
+      params: { slug: collection.slug }
+    }));
+    return { paths, fallback: true };
+  } catch (error: any) {
+    console.log(error.message);
+    return { paths: [], fallback: true };
+  }
 };
 
 export const getStaticProps: GetStaticProps<{
