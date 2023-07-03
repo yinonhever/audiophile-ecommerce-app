@@ -13,14 +13,13 @@ type CartItem = {
 
 export type CartContextType = {
   cartItems: CartItem[];
+  populatedCartItems: (CartItem & { product?: ProductData })[];
   addItem: (productId: string, qty: number) => void;
   removeItem: (productId: string) => void;
   updateItemQty: (productId: string, qty: number) => void;
   clearItems: () => void;
-  populatedCartItems: (CartItem & { product?: ProductData })[];
   showCartDrawer: boolean;
   toggleShowCartDrawer: (value?: boolean) => void;
-  productData: ProductData[] | undefined;
 };
 
 export const CartContext = createContext<CartContextType | null>(null);
@@ -34,14 +33,6 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
   const { data: productData } = useSWR("/api/products", fecther<ProductData[]>);
   const { pathname } = useRouter();
 
-  useEffect(() => {
-    setCookie("cartItems", cartItems);
-  }, [cartItems]);
-
-  useEffect(() => {
-    setShowCartDrawer(false);
-  }, [pathname]);
-
   const populatedCartItems = useMemo(
     () =>
       cartItems.map(cartItem => ({
@@ -50,6 +41,14 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
       })),
     [cartItems, productData]
   );
+
+  useEffect(() => {
+    setCookie("cartItems", cartItems);
+  }, [cartItems]);
+
+  useEffect(() => {
+    setShowCartDrawer(false);
+  }, [pathname]);
 
   const addItem = (productId: string, qty: number) => {
     const clonedItems = cloneDeep(cartItems);
@@ -84,14 +83,13 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     <CartContext.Provider
       value={{
         cartItems,
+        populatedCartItems,
         addItem,
         removeItem,
         updateItemQty,
         clearItems,
-        populatedCartItems,
         showCartDrawer,
-        toggleShowCartDrawer,
-        productData
+        toggleShowCartDrawer
       }}
     >
       {children}
