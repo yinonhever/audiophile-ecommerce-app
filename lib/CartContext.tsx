@@ -4,6 +4,7 @@ import useSWR from "swr";
 import { fecther } from "./functions";
 import cloneDeep from "clone-deep";
 import { getCookie, setCookie } from "cookies-next";
+import { useRouter } from "next/router";
 
 type CartItem = {
   productId: string;
@@ -31,10 +32,24 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
   });
   const [showCartDrawer, setShowCartDrawer] = useState(false);
   const { data: productData } = useSWR("/api/products", fecther<ProductData[]>);
+  const { pathname } = useRouter();
 
   useEffect(() => {
     setCookie("cartItems", cartItems);
   }, [cartItems]);
+
+  useEffect(() => {
+    setShowCartDrawer(false);
+  }, [pathname]);
+
+  const populatedCartItems = useMemo(
+    () =>
+      cartItems.map(cartItem => ({
+        ...cartItem,
+        product: productData?.find(product => product._id == cartItem.productId)
+      })),
+    [cartItems, productData]
+  );
 
   const addItem = (productId: string, qty: number) => {
     const clonedItems = cloneDeep(cartItems);
@@ -61,15 +76,6 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const clearItems = () => setCartItems([]);
-
-  const populatedCartItems = useMemo(
-    () =>
-      cartItems.map(cartItem => ({
-        ...cartItem,
-        product: productData?.find(product => product._id == cartItem.productId)
-      })),
-    [cartItems, productData]
-  );
 
   const toggleShowCartDrawer = (value?: boolean) =>
     setShowCartDrawer(value ?? !showCartDrawer);
