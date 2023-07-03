@@ -6,12 +6,12 @@ import cloneDeep from "clone-deep";
 import { getCookie, setCookie } from "cookies-next";
 import { useRouter } from "next/router";
 
-type CartItem = {
+interface CartItem {
   productId: string;
   qty: number;
-};
+}
 
-export type CartContextType = {
+export interface CartContextType {
   cartItems: CartItem[];
   populatedCartItems: (CartItem & { product?: ProductData })[];
   addItem: (productId: string, qty: number) => void;
@@ -20,7 +20,7 @@ export type CartContextType = {
   clearItems: () => void;
   showCartDrawer: boolean;
   toggleShowCartDrawer: (value?: boolean) => void;
-};
+}
 
 export const CartContext = createContext<CartContextType | null>(null);
 
@@ -30,16 +30,16 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
     return itemsCookie ? JSON.parse(itemsCookie) : [];
   });
   const [showCartDrawer, setShowCartDrawer] = useState(false);
-  const { data: productData } = useSWR("/api/products", fecther<ProductData[]>);
+  const { data: products } = useSWR("/api/products", fecther<ProductData[]>);
   const { pathname } = useRouter();
 
   const populatedCartItems = useMemo(
     () =>
       cartItems.map(cartItem => ({
         ...cartItem,
-        product: productData?.find(product => product._id == cartItem.productId)
+        product: products?.find(product => product._id === cartItem.productId)
       })),
-    [cartItems, productData]
+    [cartItems, products]
   );
 
   useEffect(() => {
@@ -60,6 +60,7 @@ const CartProvider = ({ children }: { children: ReactNode }) => {
       const newItem = { productId, qty };
       setCartItems([...clonedItems, newItem]);
     }
+    setShowCartDrawer(true);
   };
 
   const removeItem = (productId: string) =>

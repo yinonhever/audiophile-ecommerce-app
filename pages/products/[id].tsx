@@ -22,8 +22,8 @@ export const getStaticProps: GetStaticProps<{
   product: ProductData;
   collections: CollectionData[];
 }> = async ({ params }) => {
-  const productId = params?.id as string;
   try {
+    const productId = params?.id as string;
     const [product, collections] = await Promise.all([
       getProductById(productId),
       getCollections({ showInPages: true })
