@@ -3,12 +3,14 @@ import Product from "@/models/Product";
 import type { CartItem } from "@/lib/CartContext";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { BillingDetails, ShippingDetails } from "@/lib/types";
+import braintree from "braintree";
 
 interface OrderRequestData {
   items: CartItem[];
   billingDetails: BillingDetails;
   shippingDetails: ShippingDetails;
   paymentMethod: string;
+  paymentMethodNonce?: string;
 }
 
 export const getOrderPrice = async (cartItems: CartItem[]) => {
@@ -29,8 +31,9 @@ export const getOrderPrice = async (cartItems: CartItem[]) => {
     0
   );
   const shippingFee = 50;
+  const vat = (itemsPrice * 20) / 100;
   const totalPrice = itemsPrice + shippingFee;
-  return { itemsPrice, shippingFee, totalPrice };
+  return { itemsPrice, shippingFee, vat, totalPrice };
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -40,25 +43,48 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         items,
         shippingDetails,
         billingDetails,
-        paymentMethod
+        paymentMethod,
+        paymentMethodNonce
       }: OrderRequestData = req.body;
       const orderPrice = await getOrderPrice(items);
-      const { itemsPrice, shippingFee, totalPrice } = orderPrice;
-      const doc = await new Order({
+      const { itemsPrice, shippingFee, vat, totalPrice } = orderPrice;
+      const order = await new Order({
         items,
         shippingDetails,
         billingDetails,
         paymentMethod,
         itemsPrice,
         shippingFee,
+        vat,
         totalPrice
-      }).save();
-      const order: OrderData = doc.toObject();
-      order._id = order._id.toString();
-      return res.status(201).json(order);
+      });
+      if (paymentMethod === "e-money") {
+        const gateway = new braintree.BraintreeGateway({
+          environment: braintree.Environment.Sandbox,
+          merchantId: process.env.BRAINTREE_MERCHANT_ID as string,
+          publicKey: process.env.BRAINTREE_PUBLIC_KEY as string,
+          privateKey: process.env.BRAINTREE_PRIVATE_KEY as string
+        });
+        const paymentResult = await gateway.transaction.sale({
+          amount: totalPrice.toFixed(2),
+          paymentMethodNonce,
+          options: { submitForSettlement: true }
+        });
+        console.log("payment result", paymentResult);
+        if (paymentResult.success) {
+          order.isPaid = true;
+          order.paymentResult = paymentResult;
+        } else {
+          throw new Error(`Payment failed | ${paymentResult.message}`);
+        }
+      }
+      const doc = await order.save();
+      const orderData: OrderData = doc.toObject();
+      orderData._id = orderData._id.toString();
+      return res.status(201).json(orderData);
     }
   } catch (error: any) {
-    console.log(error)
+    console.log(error);
     res.status(500).json({ msg: error.message });
   }
 };

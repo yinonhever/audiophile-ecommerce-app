@@ -6,11 +6,13 @@ interface IOrder {
   items: { product: Types.ObjectId | ProductData; qty: number }[];
   itemsPrice: number;
   shippingFee: number;
+  vat: number;
   totalPrice: number;
   billingDetails: BillingDetails;
   shippingDetails: ShippingDetails;
   paymentMethod: string;
   isPaid: boolean;
+  paymentResult: object | null;
 }
 
 export type OrderData = DataItem<IOrder>;
@@ -34,6 +36,10 @@ const orderSchema = new Schema<IOrder>({
     required: true
   },
   shippingFee: {
+    type: Number,
+    required: true
+  },
+  vat: {
     type: Number,
     required: true
   },
@@ -84,6 +90,10 @@ const orderSchema = new Schema<IOrder>({
   isPaid: {
     type: Boolean,
     default: false
+  },
+  paymentResult: {
+    type: Object,
+    default: null
   }
 });
 

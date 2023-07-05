@@ -1,6 +1,5 @@
 import { Schema, model, models, Model } from "mongoose";
 import type { DataItem } from "@/lib/types";
-import { unique } from "next/dist/build/utils";
 
 interface IProduct {
   title: string;
