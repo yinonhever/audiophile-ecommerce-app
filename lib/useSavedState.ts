@@ -3,7 +3,7 @@ import { getCookie, setCookie } from "cookies-next";
 
 const useSavedState = <T>(
   key: string,
-  initialState: any
+  initialState: T
 ): [T, Dispatch<SetStateAction<T>>] => {
   const [state, setState] = useState<T>(() => {
     const cookie = getCookie(key) as string;

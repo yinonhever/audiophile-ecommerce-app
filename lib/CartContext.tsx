@@ -6,7 +6,7 @@ import { fecther } from "./functions";
 import useSavedState from "./useSavedState";
 import type { ProductData } from "@/models/Product";
 
-interface CartItem {
+export interface CartItem {
   productId: string;
   qty: number;
 }
