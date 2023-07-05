@@ -1,5 +1,5 @@
 import { Schema, model, models, Model, Types } from "mongoose";
-import { DataItem } from "@/lib/types";
+import type { BillingDetails, ShippingDetails, DataItem } from "@/lib/types";
 import { ProductData } from "./Product";
 
 interface IOrder {
@@ -7,17 +7,8 @@ interface IOrder {
   itemsPrice: number;
   shippingFee: number;
   totalPrice: number;
-  billingDetails: {
-    name: string;
-    email: string;
-    phone: string;
-  };
-  shippingDetails: {
-    address: string;
-    zipCode: string;
-    city: string;
-    country: string;
-  };
+  billingDetails: BillingDetails;
+  shippingDetails: ShippingDetails;
   paymentMethod: string;
   isPaid: boolean;
 }
