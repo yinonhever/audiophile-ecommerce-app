@@ -6,7 +6,7 @@ export const getProducts = async () => {
   await dbConnect();
   const products = await Product.find();
   return products.map(doc => {
-    const product: ProductData = doc.toObject();
+    const product = doc.toObject() as ProductData;
     product._id = product._id.toString();
     return product;
   });
@@ -19,6 +19,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return res.json(products);
     }
 
+    // TO DELETE BEFORE PUSING TO PRODUCTION
     if (req.method === "POST") {
       if (process.env.NODE_ENV !== "development")
         throw new Error("Invalid route");

@@ -6,7 +6,7 @@ export const getProductById = async (productId: string) => {
   await dbConnect();
   const doc = await Product.findById(productId);
   if (!doc) return null;
-  const product: ProductData = doc.toObject();
+  const product = doc.toObject() as ProductData;
   product._id = product._id.toString();
   return product;
 };

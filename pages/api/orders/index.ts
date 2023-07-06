@@ -4,18 +4,20 @@ import type { CartItem } from "@/lib/CartContext";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { BillingDetails, OrderPrice, ShippingDetails } from "@/lib/types";
 import braintree from "braintree";
+import dbConnect from "@/lib/dbConnect";
 
 interface OrderRequestData {
   items: CartItem[];
   billingDetails: BillingDetails;
   shippingDetails: ShippingDetails;
   paymentMethod: string;
-  paymentMethodNonce?: string;
+  nonce?: string;
 }
 
 export const getOrderPrice = async (
   cartItems: CartItem[]
 ): Promise<OrderPrice> => {
+  await dbConnect();
   const products = await Product.find({
     _id: { $in: cartItems.map(item => item.productId) }
   });
@@ -46,7 +48,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         billingDetails,
         shippingDetails,
         paymentMethod,
-        paymentMethodNonce
+        nonce
       }: OrderRequestData = req.body;
       const price = await getOrderPrice(items);
       const order = new Order({
@@ -56,7 +58,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         shippingDetails,
         paymentMethod
       });
-      if (paymentMethod === "e-money") {
+      if (paymentMethod === "credit-card") {
         const gateway = new braintree.BraintreeGateway({
           environment: braintree.Environment.Sandbox,
           merchantId: process.env.BRAINTREE_MERCHANT_ID as string,
@@ -65,10 +67,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         });
         const paymentResult = await gateway.transaction.sale({
           amount: price.totalPrice.toFixed(2),
-          paymentMethodNonce,
+          paymentMethodNonce: nonce,
           options: { submitForSettlement: true }
         });
-        console.log("payment result", paymentResult);
         if (paymentResult.success) {
           order.isPaid = true;
           order.paymentResult = paymentResult;

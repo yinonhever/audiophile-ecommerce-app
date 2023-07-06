@@ -6,7 +6,7 @@ export const getCollectionBySlug = async (slug: string) => {
   await dbConnect();
   const doc = await Collection.findOne({ slug }).populate("products");
   if (!doc) return null;
-  const collection: CollectionData = doc.toObject();
+  const collection = doc.toObject() as CollectionData;
   collection._id = collection._id.toString();
   for (const proudct of collection.products) {
     proudct._id = proudct._id.toString();

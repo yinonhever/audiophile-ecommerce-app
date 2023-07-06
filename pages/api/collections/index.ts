@@ -22,6 +22,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return res.json(collections);
     }
 
+    // TO DELETE BEFORE PUSING TO PRODUCTION
     if (req.method === "POST") {
       if (process.env.NODE_ENV !== "development")
         throw new Error("Invalid route");

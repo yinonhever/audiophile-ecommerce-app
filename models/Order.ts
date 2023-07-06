@@ -89,7 +89,7 @@ const orderSchema = new Schema<IOrder>({
   paymentMethod: {
     type: String,
     required: true,
-    enum: ["e-money", "cash"]
+    enum: ["credit-card", "cash"]
   },
   isPaid: {
     type: Boolean,
