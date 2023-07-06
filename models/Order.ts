@@ -4,10 +4,12 @@ import { ProductData } from "./Product";
 
 interface IOrder {
   items: { product: Types.ObjectId | ProductData; qty: number }[];
-  itemsPrice: number;
-  shippingFee: number;
-  vat: number;
-  totalPrice: number;
+  price: {
+    itemsPrice: number;
+    shippingFee: number;
+    vat: number;
+    totalPrice: number;
+  };
   billingDetails: BillingDetails;
   shippingDetails: ShippingDetails;
   paymentMethod: string;
@@ -31,21 +33,23 @@ const orderSchema = new Schema<IOrder>({
       }
     }
   ],
-  itemsPrice: {
-    type: Number,
-    required: true
-  },
-  shippingFee: {
-    type: Number,
-    required: true
-  },
-  vat: {
-    type: Number,
-    required: true
-  },
-  totalPrice: {
-    type: Number,
-    required: true
+  price: {
+    itemsPrice: {
+      type: Number,
+      required: true
+    },
+    shippingFee: {
+      type: Number,
+      required: true
+    },
+    vat: {
+      type: Number,
+      required: true
+    },
+    totalPrice: {
+      type: Number,
+      required: true
+    }
   },
   billingDetails: {
     name: {

@@ -41,22 +41,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST") {
       const {
         items,
-        shippingDetails,
         billingDetails,
+        shippingDetails,
         paymentMethod,
         paymentMethodNonce
       }: OrderRequestData = req.body;
-      const orderPrice = await getOrderPrice(items);
-      const { itemsPrice, shippingFee, vat, totalPrice } = orderPrice;
-      const order = await new Order({
+      const price = await getOrderPrice(items);
+      const order = new Order({
         items,
-        shippingDetails,
+        price,
         billingDetails,
-        paymentMethod,
-        itemsPrice,
-        shippingFee,
-        vat,
-        totalPrice
+        shippingDetails,
+        paymentMethod
       });
       if (paymentMethod === "e-money") {
         const gateway = new braintree.BraintreeGateway({
@@ -66,7 +62,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           privateKey: process.env.BRAINTREE_PRIVATE_KEY as string
         });
         const paymentResult = await gateway.transaction.sale({
-          amount: totalPrice.toFixed(2),
+          amount: price.totalPrice.toFixed(2),
           paymentMethodNonce,
           options: { submitForSettlement: true }
         });
