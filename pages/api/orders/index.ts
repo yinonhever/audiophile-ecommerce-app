@@ -32,7 +32,7 @@ export const getOrderPrice = async (cartItems: CartItem[]) => {
   );
   const shippingFee = 50;
   const vat = (itemsPrice * 20) / 100;
-  const totalPrice = itemsPrice + shippingFee;
+  const totalPrice = itemsPrice + shippingFee + vat;
   return { itemsPrice, shippingFee, vat, totalPrice };
 };
 
