@@ -3,7 +3,7 @@ import { getCookie } from "cookies-next";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { getOrderPrice } from "../api/orders";
 import { useContext, useEffect } from "react";
-import type { BillingDetails, ShippingDetails } from "@/lib/types";
+import type { BillingDetails, OrderPrice, ShippingDetails } from "@/lib/types";
 import { useForm } from "react-hook-form";
 
 interface FormValues {
@@ -12,7 +12,7 @@ interface FormValues {
   paymentMethod: string;
 }
 
-export default function CheckoutPage({
+export default function Checkout({
   orderPrice
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { populatedCartItems } = useContext(CartContext) as CartContextType;
@@ -27,7 +27,9 @@ export default function CheckoutPage({
   return <div></div>;
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps<{
+  orderPrice: OrderPrice;
+}> = async () => {
   try {
     const cartItemsCookie = getCookie("cartItems") as string;
     if (!cartItemsCookie) return { notFound: true };

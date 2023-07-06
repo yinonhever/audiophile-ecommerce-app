@@ -1,6 +1,6 @@
 import { Schema, model, models, Model, Types } from "mongoose";
-import { ProductData } from "./Product";
-import { DataItem } from "@/lib/types";
+import type { ProductData } from "./Product";
+import type { DataItem } from "@/lib/types";
 
 interface ICollection {
   title: string;

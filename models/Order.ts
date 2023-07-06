@@ -1,15 +1,15 @@
 import { Schema, model, models, Model, Types } from "mongoose";
-import type { BillingDetails, ShippingDetails, DataItem } from "@/lib/types";
-import { ProductData } from "./Product";
+import type {
+  BillingDetails,
+  ShippingDetails,
+  DataItem,
+  OrderPrice
+} from "@/lib/types";
+import type { ProductData } from "./Product";
 
 interface IOrder {
   items: { product: Types.ObjectId | ProductData; qty: number }[];
-  price: {
-    itemsPrice: number;
-    shippingFee: number;
-    vat: number;
-    totalPrice: number;
-  };
+  price: OrderPrice;
   billingDetails: BillingDetails;
   shippingDetails: ShippingDetails;
   paymentMethod: string;

@@ -2,7 +2,7 @@ import Order, { OrderData } from "@/models/Order";
 import Product from "@/models/Product";
 import type { CartItem } from "@/lib/CartContext";
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { BillingDetails, ShippingDetails } from "@/lib/types";
+import type { BillingDetails, OrderPrice, ShippingDetails } from "@/lib/types";
 import braintree from "braintree";
 
 interface OrderRequestData {
@@ -13,7 +13,9 @@ interface OrderRequestData {
   paymentMethodNonce?: string;
 }
 
-export const getOrderPrice = async (cartItems: CartItem[]) => {
+export const getOrderPrice = async (
+  cartItems: CartItem[]
+): Promise<OrderPrice> => {
   const products = await Product.find({
     _id: { $in: cartItems.map(item => item.productId) }
   });
@@ -75,7 +77,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         }
       }
       const doc = await order.save();
-      const orderData: OrderData = doc.toObject();
+      const orderData = doc.toObject() as OrderData;
       orderData._id = orderData._id.toString();
       return res.status(201).json(orderData);
     }
