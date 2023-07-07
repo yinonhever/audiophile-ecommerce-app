@@ -1,14 +1,18 @@
 import { CartContext, CartContextType, CartItem } from "@/lib/CartContext";
 import { getOrderPrice } from "../api/orders";
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useRef } from "react";
 import type { BillingDetails, OrderPrice, ShippingDetails } from "@/lib/types";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import axios from "axios";
 import type { OrderData } from "@/models/Order";
 import PaymentModal from "@/components/PaymentModal/PaymentModal";
+import styles from "@/styles/Checkout.module.scss";
+import CheckoutForm from "@/components/CheckoutForm/CheckoutForm";
+import initialCheckoutData from "@/lib/util/initial-checkout-data.json";
+import OrderSummary from "@/components/OrderSummary/OrderSummary";
 
-interface CheckoutData {
+export interface CheckoutData {
   billingDetails: BillingDetails;
   shippingDetails: ShippingDetails;
   paymentMethod: string;
@@ -20,17 +24,20 @@ export default function Checkout({
   const { cartItems, populatedCartItems, clearItems } = useContext(
     CartContext
   ) as CartContextType;
-  const { register, getValues, handleSubmit } = useForm<CheckoutData>();
-  const [showDropin, setShowDropin] = useState(false);
+  const displayedCartItems = useRef([...populatedCartItems]);
+  const { register, getValues, handleSubmit, formState } =
+    useForm<CheckoutData>({
+      defaultValues: initialCheckoutData
+    });
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | string | object | null>();
   const [completed, setCompleted] = useState(false);
   const [orderData, setOrderData] = useState<OrderData>();
-  const displayedCartItems = useRef([...populatedCartItems]);
 
   const onSubmit: SubmitHandler<CheckoutData> = ({ paymentMethod }) => {
     if (paymentMethod === "credit-card") {
-      setShowDropin(true);
+      setShowPaymentModal(true);
     } else if (paymentMethod === "cash") {
       submitOrder();
     }
@@ -39,7 +46,7 @@ export default function Checkout({
   const submitOrder = async (nonce?: string) => {
     const { billingDetails, shippingDetails, paymentMethod } = getValues();
     setLoading(true);
-    setShowDropin(false);
+    setShowPaymentModal(false);
     try {
       const { data } = await axios.post<OrderData>("/api/orders", {
         items: cartItems,
@@ -62,21 +69,34 @@ export default function Checkout({
   };
 
   return (
-    <div>
-      <button onClick={() => setShowDropin(true)}>Proceed to checkout</button>
-      <PaymentModal active={showDropin} onPayment={submitOrder} />
+    <div className={styles.checkout}>
+      {orderPrice ? (
+        <>
+          <main className={styles.container}>
+            <CheckoutForm className={styles.section} register={register} errors={formState.errors} />
+            <OrderSummary
+              className={styles.section}
+              orderPrice={orderPrice}
+              onSubmit={handleSubmit(onSubmit)}
+            />
+          </main>
+          <PaymentModal active={showPaymentModal} onPayment={submitOrder} />
+        </>
+      ) : (
+        <div className={styles.empty}>Your cart is empty.</div>
+      )}
     </div>
   );
 }
 
 export const getServerSideProps: GetServerSideProps<{
-  orderPrice: OrderPrice;
+  orderPrice: OrderPrice | null;
 }> = async context => {
   try {
     const { cartItems: cartItemsCookie } = context.req.cookies;
-    if (!cartItemsCookie) return { notFound: true };
+    if (!cartItemsCookie) return { props: { orderPrice: null } };
     const cartItems = JSON.parse(cartItemsCookie) as CartItem[];
-    // if (!cartItems.length) return { notFound: true };
+    // if (!cartItems?.length) return { props: { orderPrice: null } };
     const orderPrice = await getOrderPrice(cartItems);
     return { props: { orderPrice: orderPrice } };
   } catch (error: any) {

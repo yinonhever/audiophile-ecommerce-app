@@ -1,0 +1,14 @@
+{
+  "billingDetails": {
+    "name": "",
+    "email": "",
+    "phone": ""
+  },
+  "shippingDetails": {
+    "address": "",
+    "zipCode": "",
+    "city": "",
+    "country": ""
+  },
+  "paymentMethod": "credit-card"
+}
