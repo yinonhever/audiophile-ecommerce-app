@@ -1,4 +1,10 @@
-import { createContext, useState, useEffect, useMemo, ReactNode } from "react";
+import {
+  createContext,
+  useState,
+  useEffect,
+  useMemo,
+  PropsWithChildren
+} from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import cloneDeep from "clone-deep";
@@ -24,7 +30,7 @@ export interface CartContextType {
 
 export const CartContext = createContext<CartContextType | null>(null);
 
-const CartProvider = ({ children }: { children: ReactNode }) => {
+const CartProvider = ({ children }: PropsWithChildren) => {
   const [cartItems, setCartItems] = useSavedState<CartItem[]>("cartItems", []);
   const [showCartDrawer, setShowCartDrawer] = useState(false);
   const { data: products } = useSWR("/api/products", fecther<ProductData[]>);

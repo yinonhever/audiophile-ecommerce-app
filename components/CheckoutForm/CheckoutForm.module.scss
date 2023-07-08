@@ -1,3 +1,15 @@
 .form {
-  color: #000;
+  display: block;
+}
+
+.input {
+  outline: none;
+
+  &:focus {
+    border-color: blue;
+  }
+
+  &.errored {
+    border-color: orangered;
+  }
 }

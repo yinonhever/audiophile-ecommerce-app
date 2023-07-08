@@ -26,9 +26,7 @@ export default function Checkout({
   ) as CartContextType;
   const displayedCartItems = useRef([...populatedCartItems]);
   const { register, getValues, handleSubmit, formState } =
-    useForm<CheckoutData>({
-      defaultValues: initialCheckoutData
-    });
+    useForm<CheckoutData>({ defaultValues: initialCheckoutData });
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | string | object | null>();
@@ -49,7 +47,7 @@ export default function Checkout({
     setShowPaymentModal(false);
     try {
       const { data } = await axios.post<OrderData>("/api/orders", {
-        items: cartItems,
+        cartItems,
         billingDetails,
         shippingDetails,
         paymentMethod,
@@ -73,9 +71,14 @@ export default function Checkout({
       {orderPrice ? (
         <>
           <main className={styles.container}>
-            <CheckoutForm className={styles.section} register={register} errors={formState.errors} />
+            <CheckoutForm
+              className={styles.section}
+              register={register}
+              errors={formState.errors}
+            />
             <OrderSummary
               className={styles.section}
+              items={displayedCartItems.current}
               orderPrice={orderPrice}
               onSubmit={handleSubmit(onSubmit)}
             />
@@ -96,9 +99,10 @@ export const getServerSideProps: GetServerSideProps<{
     const { cartItems: cartItemsCookie } = context.req.cookies;
     if (!cartItemsCookie) return { props: { orderPrice: null } };
     const cartItems = JSON.parse(cartItemsCookie) as CartItem[];
-    // if (!cartItems?.length) return { props: { orderPrice: null } };
+    if (!Array.isArray(cartItems) || !cartItems?.length)
+      return { props: { orderPrice: null } };
     const orderPrice = await getOrderPrice(cartItems);
-    return { props: { orderPrice: orderPrice } };
+    return { props: { orderPrice } };
   } catch (error: any) {
     console.log(error.message);
     return { notFound: true };

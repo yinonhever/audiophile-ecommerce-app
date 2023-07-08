@@ -8,7 +8,11 @@ import type {
 import type { ProductData } from "./Product";
 
 interface IOrder {
-  items: { product: Types.ObjectId | ProductData; qty: number }[];
+  items: {
+    product: Types.ObjectId | ProductData;
+    price: number;
+    qty: number;
+  }[];
   price: OrderPrice;
   billingDetails: BillingDetails;
   shippingDetails: ShippingDetails;
@@ -25,6 +29,10 @@ const orderSchema = new Schema<IOrder>({
       product: {
         type: Schema.Types.ObjectId,
         ref: "Product",
+        required: true
+      },
+      price: {
+        type: Number,
         required: true
       },
       qty: {
