@@ -5,11 +5,22 @@ import { getProducts } from "./api/products";
 import type { ProductData } from "@/models/Product";
 import type { CollectionData } from "@/models/Collection";
 import { getCollections } from "./api/collections";
+import axios from "axios";
+import tempData from "@/temp.json";
 
 export default function Home({
   products,
   collections
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const temp = async () => {
+    try {
+      const { data } = await axios.post("/api/collections", tempData);
+      console.log(data);
+    } catch (error: any) {
+      console.log(error.response?.data);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -20,6 +31,9 @@ export default function Home({
         {products.map(product => (
           <h3 key={product._id}>{product.title}</h3>
         ))}
+      </div>
+      <div>
+        <button onClick={temp}>Create</button>
       </div>
     </>
   );

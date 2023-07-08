@@ -83,17 +83,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           order.isPaid = true;
           order.paymentResult = paymentResult;
         } else {
-          throw new Error(`Payment failed | ${paymentResult.message}`);
+          throw new Error(`Payment failed – ${paymentResult.message}`);
         }
       }
-      const orderDoc = await order.save();
-      await orderDoc.populate({
+      const createdOrder = await order.save();
+      await createdOrder.populate({
         path: "items.product",
         model: "Product",
         select: "-price -qty"
       });
-      const orderData = orderDoc.toObject() as OrderData;
-      return res.status(201).json(orderData);
+      return res.status(201).json(createdOrder);
     }
   } catch (error: any) {
     console.log(error);

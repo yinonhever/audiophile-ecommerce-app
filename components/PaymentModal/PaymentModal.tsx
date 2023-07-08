@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react";
 import dropin, { Dropin } from "braintree-web-drop-in";
 import styles from "./PaymentModal.module.scss";
+import Modal from "../Modal/Modal";
+import Spinner from "../Spinner/Spinner";
 
 export default function PaymentModal({
   active,
-  onPayment
+  onPayment,
+  error
 }: {
   active: boolean;
   onPayment: (nonce: string) => void;
+  error?: Error | string | object | null;
 }) {
   const [braintreeInstance, setBraintreeInstance] = useState<Dropin>();
-  const [error, setError] = useState<Error | string | object | null>();
 
   useEffect(() => {
     const initializeBraintree = async () => {
-      console.log("attempting to initialize braintree");
-      setError(null);
       try {
         const instance = await dropin.create({
           authorization: process.env
@@ -26,7 +27,6 @@ export default function PaymentModal({
         setBraintreeInstance(instance);
       } catch (error: any) {
         console.log("failed to initialize braintree", error);
-        setError(error);
       }
     };
     if (active) {
@@ -36,22 +36,30 @@ export default function PaymentModal({
 
   const paymentHandler = async () => {
     if (!braintreeInstance) return;
-    setError(null);
     try {
       const { nonce } = await braintreeInstance.requestPaymentMethod();
-      console.log("nonce", nonce);
       await onPayment(nonce);
       braintreeInstance.teardown();
     } catch (error: any) {
       console.log("failed to get payment method nonce", error);
-      setError(error);
     }
   };
 
   return (
-    <div className={styles.payment}>
-      <div id="dropin-container"></div>
-      {braintreeInstance && <button onClick={paymentHandler}>Pay</button>}
-    </div>
+    <Modal active={active}>
+      <div className={styles.payment}>
+        <div id="dropin-container"></div>
+        {!braintreeInstance ? (
+          <Spinner />
+        ) : (
+          <button
+            className={`button ${styles.button}`}
+            onClick={paymentHandler}
+          >
+            Pay & complete order
+          </button>
+        )}
+      </div>
+    </Modal>
   );
 }

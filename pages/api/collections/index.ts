@@ -2,6 +2,8 @@ import dbConnect from "@/lib/dbConnect";
 import Collection, { CollectionData } from "@/models/Collection";
 import { NextApiRequest, NextApiResponse } from "next";
 
+console.log("/api/collections");
+
 export const getCollections = async (options = {}) => {
   await dbConnect();
   const collections = await Collection.find(options).populate("products");
@@ -29,16 +31,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const { data } = req.body;
       const itemsToInsert = Array.isArray(data) ? data : [data];
       const result = await Collection.insertMany(itemsToInsert);
-      await Promise.all(result.map(item => item.populate("products")));
-      const collections = result.map(doc => {
-        const collection: CollectionData = doc.toObject();
-        collection._id = collection._id.toString();
-        for (const proudct of collection.products) {
-          proudct._id = proudct._id.toString();
-        }
-        return collection;
-      });
-      return res.status(201).json(collections);
+      await Promise.all(
+        result.map(collection => collection.populate("products"))
+      );
+      return res.status(201).json(result);
     }
   } catch (error: any) {
     console.log(error);

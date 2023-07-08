@@ -1,5 +1,15 @@
-// .checkout {
-// }
+.checkout {
+  display: block;
+}
 
-// .section {
-// }
+.section {
+  background-color: #fff;
+}
+
+.empty {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
