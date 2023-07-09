@@ -11,30 +11,33 @@ interface ICollection {
 
 export type CollectionData = DataItem<ICollection>;
 
-const collectionSchema = new Schema<ICollection>({
-  title: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  slug: {
-    type: String,
-    required: true,
-    unique: true,
-    immutable: true
-  },
-  products: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Product",
-      required: true
+const collectionSchema = new Schema<ICollection>(
+  {
+    title: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      immutable: true
+    },
+    products: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+        required: true
+      }
+    ],
+    showInPages: {
+      type: Boolean,
+      default: false
     }
-  ],
-  showInPages: {
-    type: Boolean,
-    default: false
-  }
-});
+  },
+  { timestamps: true }
+);
 
 const Collection: Model<ICollection> =
   models.Collection || model<ICollection>("Collection", collectionSchema);

@@ -5,13 +5,14 @@ import type { BillingDetails, OrderPrice, ShippingDetails } from "@/lib/types";
 import { SubmitHandler, useForm } from "react-hook-form";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import type { OrderData } from "@/models/Order";
-import PaymentModal from "@/components/PaymentModal/PaymentModal";
-import CheckoutForm from "@/components/CheckoutForm/CheckoutForm";
+import Page from "@/components/Page";
+import PaymentModal from "@/components/PaymentModal";
+import CheckoutForm from "@/components/CheckoutForm";
 import initialCheckoutData from "@/lib/util/initial-checkout-data.json";
-import OrderSummary from "@/components/OrderSummary/OrderSummary";
-import Overlay from "@/components/Overlay/Overlay";
-import Spinner from "@/components/Spinner/Spinner";
-import CompletionModal from "@/components/CompletionModal/CompletionModal";
+import OrderSummary from "@/components/OrderSummary";
+import Overlay from "@/components/Overlay";
+import Spinner from "@/components/Spinner";
+import CompletionModal from "@/components/CompletionModal";
 import Head from "next/head";
 import styles from "@/styles/Checkout.module.scss";
 import axios from "axios";
@@ -32,7 +33,7 @@ export default function Checkout({
     useForm<CheckoutData>({ defaultValues: initialCheckoutData });
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error | string | object | null>();
+  const [error, setError] = useState<Error | null>();
   const [completed, setCompleted] = useState(false);
   const [orderData, setOrderData] = useState<OrderData>();
   const displayedCartItems = useRef([...populatedCartItems]);
@@ -61,6 +62,7 @@ export default function Checkout({
       setOrderData(data);
       setError(null);
       clearItems();
+      console.log("completed order", data);
     } catch (error: any) {
       setError(error);
       setShowPaymentModal(true);
@@ -75,7 +77,7 @@ export default function Checkout({
         <title>Checkout – Audiophile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <div className={styles.checkout}>
+      <Page>
         {orderPrice ? (
           <>
             <main className={styles.container}>
@@ -96,13 +98,17 @@ export default function Checkout({
               onClick={() => setShowPaymentModal(false)}
             />
             {loading && <Spinner fixed />}
-            <PaymentModal active={showPaymentModal} onPayment={submitOrder} />
+            <PaymentModal
+              active={showPaymentModal}
+              onPayment={submitOrder}
+              error={error}
+            />
             <CompletionModal active={completed} orderData={orderData} />
           </>
         ) : (
           <div className={styles.empty}>Your cart is empty.</div>
         )}
-      </div>
+      </Page>
     </>
   );
 }

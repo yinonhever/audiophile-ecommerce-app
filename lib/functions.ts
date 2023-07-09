@@ -11,7 +11,10 @@ export const isValidPhone = (value: string) => {
   if (value.startsWith("+")) {
     value = value.replace("+", "");
   }
-  return isValidInteger(value) && value.length >= 6 ;
+  return isValidInteger(value) && value.length >= 6;
 };
 
 export const isValidInteger = (value: string) => /^\d+$/.test(value);
+
+export const isValidZipCode = (value: string) =>
+  isValidInteger(value) && value.length >= 5;

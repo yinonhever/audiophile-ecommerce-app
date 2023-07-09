@@ -30,7 +30,7 @@ export interface CartContextType {
 
 export const CartContext = createContext<CartContextType | null>(null);
 
-const CartProvider = ({ children }: PropsWithChildren) => {
+export default function CartProvider({ children }: PropsWithChildren) {
   const [cartItems, setCartItems] = useSavedState<CartItem[]>("cartItems", []);
   const [showCartDrawer, setShowCartDrawer] = useState(false);
   const { data: products } = useSWR("/api/products", fecther<ProductData[]>);
@@ -95,6 +95,4 @@ const CartProvider = ({ children }: PropsWithChildren) => {
       {children}
     </CartContext.Provider>
   );
-};
-
-export default CartProvider;
+}

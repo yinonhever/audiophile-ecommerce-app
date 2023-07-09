@@ -3,7 +3,7 @@ import countries from "@/lib/util/countries.json";
 import type { UseFormRegister, FieldErrors } from "react-hook-form";
 import type { CheckoutData } from "@/pages/checkout";
 import type { PropsWithClassName } from "@/lib/types";
-import { isValidEmail, isValidInteger, isValidPhone } from "@/lib/functions";
+import { isValidEmail, isValidZipCode, isValidPhone } from "@/lib/functions";
 
 export default function CheckoutForm({
   register,
@@ -98,7 +98,7 @@ export default function CheckoutForm({
               {...register("shippingDetails.zipCode", {
                 required: "This field is required",
                 validate: value =>
-                  isValidInteger(value) || "Please enter a valid ZIP code"
+                  isValidZipCode(value) || "Please enter a valid ZIP code"
               })}
             />
             {errors.shippingDetails?.zipCode && (

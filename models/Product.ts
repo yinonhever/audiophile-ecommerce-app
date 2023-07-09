@@ -9,18 +9,21 @@ interface IProduct {
 
 export type ProductData = DataItem<IProduct>;
 
-const productSchema = new Schema<IProduct>({
-  title: {
-    type: String,
-    required: true,
-    unique: true
+const productSchema = new Schema<IProduct>(
+  {
+    title: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    price: {
+      type: Number,
+      required: true
+    },
+    qty: Number
   },
-  price: {
-    type: Number,
-    required: true
-  },
-  qty: Number
-});
+  { timestamps: true }
+);
 
 const Product: Model<IProduct> =
   models.Product || model<IProduct>("Product", productSchema);

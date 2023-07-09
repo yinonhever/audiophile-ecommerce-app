@@ -2,13 +2,11 @@ import dbConnect from "@/lib/dbConnect";
 import Collection, { CollectionData } from "@/models/Collection";
 import { NextApiRequest, NextApiResponse } from "next";
 
-console.log("/api/collections");
-
-export const getCollections = async (options = {}) => {
+export const getCollections = async (options: Partial<CollectionData> = {}) => {
   await dbConnect();
   const collections = await Collection.find(options).populate("products");
   return collections.map(doc => {
-    const collection: CollectionData = doc.toObject();
+    const collection = doc.toObject() as CollectionData;
     collection._id = collection._id.toString();
     for (const proudct of collection.products) {
       proudct._id = proudct._id.toString();
@@ -20,7 +18,7 @@ export const getCollections = async (options = {}) => {
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     if (req.method === "GET") {
-      const collections = await getCollections(req.query);
+      const collections = await getCollections();
       return res.json(collections);
     }
 
