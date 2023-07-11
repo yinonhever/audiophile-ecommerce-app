@@ -9,7 +9,7 @@ export default function ErrorMessage({ error }: { error: Error | string }) {
       ? error.response?.data?.msg
       : error.message;
   return (
-    <p className={styles.errorMessage}>
+    <p className={styles.message}>
       {msg || "An error occured. Please try again in a few moments"}
     </p>
   );

@@ -4,7 +4,7 @@ import type { DataItem } from "@/lib/types";
 interface IProduct {
   title: string;
   price: number;
-  qty?: number;
+  image: string;
 }
 
 export type ProductData = DataItem<IProduct>;
@@ -20,7 +20,10 @@ const productSchema = new Schema<IProduct>(
       type: Number,
       required: true
     },
-    qty: Number
+    image: {
+      type: String,
+      required: true
+    }
   },
   { timestamps: true }
 );

@@ -1,6 +1,6 @@
 import { CartContext, CartContextType, CartItem } from "@/lib/CartContext";
 import { getOrderPrice } from "../api/orders";
-import { useContext, useState, useRef } from "react";
+import { useContext, useState } from "react";
 import type { BillingDetails, OrderPrice, ShippingDetails } from "@/lib/types";
 import { SubmitHandler, useForm } from "react-hook-form";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
@@ -26,9 +26,7 @@ export interface CheckoutData {
 export default function Checkout({
   orderPrice
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { cartItems, populatedCartItems, clearItems } = useContext(
-    CartContext
-  ) as CartContextType;
+  const { cartItems, clearItems } = useContext(CartContext) as CartContextType;
   const { register, getValues, handleSubmit, formState } =
     useForm<CheckoutData>({ defaultValues: initialCheckoutData });
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -36,7 +34,6 @@ export default function Checkout({
   const [error, setError] = useState<Error | null>();
   const [completed, setCompleted] = useState(false);
   const [orderData, setOrderData] = useState<OrderData>();
-  const displayedCartItems = useRef([...populatedCartItems]);
 
   const onSubmit: SubmitHandler<CheckoutData> = ({ paymentMethod }) => {
     if (paymentMethod === "credit-card") {
@@ -62,7 +59,6 @@ export default function Checkout({
       setOrderData(data);
       setError(null);
       clearItems();
-      console.log("completed order", data);
     } catch (error: any) {
       setError(error);
       setShowPaymentModal(true);
@@ -88,7 +84,6 @@ export default function Checkout({
               />
               <OrderSummary
                 className={styles.section}
-                items={displayedCartItems.current}
                 orderPrice={orderPrice}
                 onSubmit={handleSubmit(onSubmit)}
               />

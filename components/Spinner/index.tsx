@@ -1,4 +1,5 @@
 import styles from "./Spinner.module.scss";
+import { cx } from "@/lib/functions";
 
 export default function Spinner({
   fixed,
@@ -11,7 +12,7 @@ export default function Spinner({
   if (fixed) classes.push(styles.fixed);
   if (colored) classes.push(styles.colored);
   return (
-    <div className={classes.join(" ")}>
+    <div className={cx(...classes)}>
       <div className={styles["lds-ring"]}>
         <div></div>
         <div></div>

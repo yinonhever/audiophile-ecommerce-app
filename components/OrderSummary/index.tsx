@@ -1,21 +1,82 @@
 import type { OrderPrice, PropsWithClassName } from "@/lib/types";
-import type { CartItem } from "@/lib/CartContext";
+import { CartContext, CartContextType } from "@/lib/CartContext";
+import { useContext, useState, useEffect, MouseEventHandler } from "react";
 import styles from "./OrderSummary.module.scss";
-import type { ProductData } from "@/models/Product";
+import { convertedNumber, cx } from "@/lib/functions";
+import Button from "../Button";
 
 export default function OrderSummary({
-  items,
   orderPrice,
-  className,
-  onSubmit
+  onSubmit,
+  className
 }: PropsWithClassName<{
-  items: (CartItem & { product?: ProductData })[];
   orderPrice: OrderPrice;
-  onSubmit: () => void;
+  onSubmit: MouseEventHandler<HTMLButtonElement>;
 }>) {
+  const { populatedCartItems } = useContext(CartContext) as CartContextType;
+  const [displayedItems, setDisplayedItems] =
+    useState<typeof populatedCartItems>();
+
+  useEffect(() => {
+    if (populatedCartItems.length) {
+      setDisplayedItems([...populatedCartItems]);
+    }
+  }, [populatedCartItems]);
+
   return (
-    <div className={`${styles.summary} ${className}`}>
-      <button onClick={onSubmit}>Continue & pay</button>
+    <div className={cx(styles.summary, className)}>
+      <h3 className={styles.title}>Summary</h3>
+      <div className={cx(styles.section, styles.items)}>
+        {displayedItems?.map(item => (
+          <article className={styles.item}>
+            <div className={styles.item__img}>
+              <img src={item.product?.image} alt={item.product?.title} />
+            </div>
+            <div className={styles.item__content}>
+              <div className={styles.item__main}>
+                <span className={styles.item__title}>
+                  {item.product?.title}
+                </span>
+                <span className={styles.item__price}>
+                  {item.product?.price}
+                </span>
+              </div>
+              <span className={styles.item__count}>X{item.qty}</span>
+            </div>
+          </article>
+        ))}
+      </div>
+      <div className={cx(styles.section, styles.pricing)}>
+        <div className={styles.priceRow}>
+          <span className={styles.priceRow__label}>Total</span>
+          <span className={styles.priceRow__amount}>
+            $ {convertedNumber(orderPrice.itemsPrice)}
+          </span>
+        </div>{" "}
+        <div className={styles.priceRow}>
+          <span className={styles.priceRow__label}>Shipping</span>
+          <span className={styles.priceRow__amount}>
+            $ {convertedNumber(orderPrice.shippingFee)}
+          </span>
+        </div>
+        <div className={styles.priceRow}>
+          <span className={styles.priceRow__label}>VAT (included)</span>
+          <span className={styles.priceRow__amount}>
+            $ {convertedNumber(orderPrice.vat)}
+          </span>
+        </div>
+      </div>
+      <div className={cx(styles.section, styles.pricing)}>
+        <div className={cx(styles.priceRow, styles.totalRow)}>
+          <span className={styles.priceRow__label}>Grand total</span>
+          <span className={styles.priceRow__amount}>
+            $ {convertedNumber(orderPrice.totalPrice)}
+          </span>
+        </div>
+      </div>
+      <Button fullWidth colored onClick={onSubmit}>
+        Continue & pay
+      </Button>
     </div>
   );
 }
