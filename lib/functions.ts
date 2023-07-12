@@ -20,7 +20,7 @@ export const isValidZipCode = (value: string) =>
   isValidInteger(value) && value.length >= 5;
 
 export const cx = (...classNames: (string | boolean | null | undefined)[]) =>
-  classNames.filter(className => className).join(" ");
+  classNames.filter(className => !!className).join(" ");
 
 export const convertedNumber = (n: number | string) => {
   if (isNaN(+n)) throw new Error("Invalid number");

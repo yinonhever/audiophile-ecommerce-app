@@ -9,7 +9,8 @@ export default function CartDrawer() {
     populatedCartItems,
     addItem,
     updateItemQty,
-    clearItems
+    clearItems,
+    toggleShowCartDrawer
   } = useContext(CartContext) as CartContextType;
 
   const hasProductData = useMemo(
@@ -18,6 +19,12 @@ export default function CartDrawer() {
   );
 
   return (
-    <div className={cx(styles.drawer, showCartDrawer && styles.active)}></div>
+    <div className={cx(styles.wrapper, showCartDrawer && styles.active)}>
+      <div className={styles.drawer}></div>
+      <div
+        className={styles.overlay}
+        onClick={() => toggleShowCartDrawer(false)}
+      />
+    </div>
   );
 }

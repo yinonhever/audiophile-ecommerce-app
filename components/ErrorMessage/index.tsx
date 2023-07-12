@@ -2,7 +2,7 @@ import styles from "./ErrorMessage.module.scss";
 import { AxiosError } from "axios";
 
 export default function ErrorMessage({ error }: { error: Error | string }) {
-  const msg =
+  const errorMsg: string =
     typeof error === "string"
       ? error
       : error instanceof AxiosError
@@ -10,7 +10,7 @@ export default function ErrorMessage({ error }: { error: Error | string }) {
       : error.message;
   return (
     <p className={styles.message}>
-      {msg || "An error occured. Please try again in a few moments"}
+      {errorMsg || "An error occured. Please try again in a few moments"}
     </p>
   );
 }

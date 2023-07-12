@@ -3,6 +3,7 @@ import dropin, { Dropin } from "braintree-web-drop-in";
 import styles from "./PaymentModal.module.scss";
 import Modal from "../Modal";
 import Spinner from "../Spinner";
+import Button from "../Button";
 import ErrorMessage from "../ErrorMessage";
 
 export default function PaymentModal({
@@ -11,7 +12,7 @@ export default function PaymentModal({
   error
 }: {
   active: boolean;
-  onPayment: (nonce: string) => void;
+  onPayment: (arg0: string) => void;
   error?: Error | null;
 }) {
   const [braintreeInstance, setBraintreeInstance] = useState<Dropin>();
@@ -37,17 +38,14 @@ export default function PaymentModal({
 
   return (
     <Modal active={active}>
-      <div className={styles.content}>
-        <div id="dropin-container"></div>
+      <div className={styles.wrapper}>
+        <div id="dropin-container" className={styles.dropin} />
         {!braintreeInstance ? (
           <Spinner colored />
         ) : (
-          <button
-            className={`button ${styles.button}`}
-            onClick={paymentHandler}
-          >
+          <Button fullWidth colored onClick={paymentHandler}>
             Pay & complete order
-          </button>
+          </Button>
         )}
         {error && <ErrorMessage error={error} />}
       </div>
