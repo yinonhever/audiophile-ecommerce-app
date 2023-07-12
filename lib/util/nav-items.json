@@ -1,18 +1,18 @@
 [
   {
-    "link": "/",
+    "path": "/",
     "title": "Home"
   },
   {
-    "link": "/collections/headphones",
+    "path": "/collections/headphones",
     "title": "Headphones"
   },
   {
-    "link": "/collections/speakers",
+    "path": "/collections/speakers",
     "title": "Speakers"
   },
   {
-    "link": "/collections/earphones",
+    "path": "/collections/earphones",
     "title": "Earphones"
   }
 ]

@@ -3,7 +3,12 @@ import countries from "@/lib/util/countries.json";
 import type { UseFormRegister, FieldErrors } from "react-hook-form";
 import type { CheckoutData } from "@/pages/checkout";
 import type { PropsWithClassName } from "@/lib/types";
-import { isValidEmail, isValidZipCode, isValidPhone } from "@/lib/functions";
+import {
+  cx,
+  isValidEmail,
+  isValidZipCode,
+  isValidPhone
+} from "@/lib/functions";
 
 export default function CheckoutForm({
   register,
@@ -14,7 +19,7 @@ export default function CheckoutForm({
   errors: FieldErrors<CheckoutData>;
 }>) {
   return (
-    <section className={`${styles.form} ${className}`}>
+    <section className={cx(styles.wrapper, className)}>
       <h2 className={styles.title}>Checkout</h2>
       <div className={styles.subsection}>
         <h3 className={styles.subtitle}>Billing details</h3>
@@ -26,9 +31,10 @@ export default function CheckoutForm({
                 required: "This field is required"
               })}
               type="text"
-              className={`${styles.input} ${
-                errors.billingDetails?.name ? styles.errored : ""
-              }`}
+              className={cx(
+                styles.input,
+                errors.billingDetails?.name && styles.errored
+              )}
             />
             {errors.billingDetails?.name && (
               <small>{errors.billingDetails.name.message}</small>
@@ -43,9 +49,10 @@ export default function CheckoutForm({
                   isValidEmail(value) || "Please enter a valid email address"
               })}
               type="email"
-              className={`${styles.input} ${
-                errors.billingDetails?.email ? styles.errored : ""
-              }`}
+              className={cx(
+                styles.input,
+                errors.billingDetails?.email && styles.errored
+              )}
             />
             {errors.billingDetails?.email && (
               <small>{errors.billingDetails.email.message}</small>
@@ -60,9 +67,10 @@ export default function CheckoutForm({
                   isValidPhone(value) || "Please enter a valid phone number"
               })}
               type="tel"
-              className={`${styles.input} ${
-                errors.billingDetails?.phone ? styles.errored : ""
-              }`}
+              className={cx(
+                styles.input,
+                errors.billingDetails?.phone && styles.errored
+              )}
             />
             {errors.billingDetails?.phone && (
               <small>{errors.billingDetails.phone.message}</small>
@@ -76,13 +84,14 @@ export default function CheckoutForm({
           <div className={`${styles.field} ${styles["field--expanded"]}`}>
             <label className={styles.label}>Address</label>
             <input
-              className={`${styles.input} ${
-                errors.shippingDetails?.address ? styles.errored : ""
-              }`}
-              type="text"
               {...register("shippingDetails.address", {
                 required: "This field is required"
               })}
+              type="text"
+              className={cx(
+                styles.input,
+                errors.shippingDetails?.address && styles.errored
+              )}
             />
             {errors.shippingDetails?.address && (
               <small>{errors.shippingDetails.address.message}</small>
@@ -91,15 +100,16 @@ export default function CheckoutForm({
           <div className={styles.field}>
             <label className={styles.label}>ZIP Code</label>
             <input
-              className={`${styles.input} ${
-                errors.shippingDetails?.zipCode ? styles.errored : ""
-              }`}
-              type="text"
               {...register("shippingDetails.zipCode", {
                 required: "This field is required",
                 validate: value =>
                   isValidZipCode(value) || "Please enter a valid ZIP code"
               })}
+              type="text"
+              className={cx(
+                styles.input,
+                errors.shippingDetails?.zipCode && styles.errored
+              )}
             />
             {errors.shippingDetails?.zipCode && (
               <small>{errors.shippingDetails.zipCode.message}</small>
@@ -108,13 +118,14 @@ export default function CheckoutForm({
           <div className={styles.field}>
             <label className={styles.label}>City</label>
             <input
-              className={`${styles.input} ${
-                errors.shippingDetails?.city ? styles.errored : ""
-              }`}
-              type="text"
               {...register("shippingDetails.city", {
                 required: "This field is required"
               })}
+              type="text"
+              className={cx(
+                styles.input,
+                errors.shippingDetails?.city && styles.errored
+              )}
             />
             {errors.shippingDetails?.city && (
               <small>{errors.shippingDetails.city.message}</small>
@@ -123,12 +134,13 @@ export default function CheckoutForm({
           <div className={styles.field}>
             <label className={styles.label}>Country</label>
             <select
-              className={`${styles.input} ${
-                errors.shippingDetails?.country ? styles.errored : ""
-              }`}
               {...register("shippingDetails.country", {
                 required: "This field is required"
               })}
+              className={cx(
+                styles.input,
+                errors.shippingDetails?.country && styles.errored
+              )}
             >
               {countries.map(country => (
                 <option key={country.code} value={country.code}>

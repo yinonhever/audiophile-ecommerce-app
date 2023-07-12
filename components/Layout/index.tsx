@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
-    <div className={styles.layout}>
+    <div className={styles.wrapper}>
       <Header />
       {children}
       <Footer />

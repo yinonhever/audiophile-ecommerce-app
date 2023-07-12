@@ -35,11 +35,11 @@ export default function Header() {
           <div className={styles.navList}>
             {navItems.map(item => (
               <Link
-                key={item.link}
-                href={item.link}
+                key={item.path}
+                href={item.path}
                 className={cx(
                   styles.navItem,
-                  pathname === item.link && "active"
+                  pathname === item.path && styles.active
                 )}
               >
                 {item.title}
