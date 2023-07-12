@@ -36,11 +36,7 @@ export const convertedNumber = (n: number | string) => {
     integerParts.splice(i, 0, ",");
   }
   let combinedNumber = integerParts.join("");
-  if (fraction) {
-    combinedNumber += "." + fraction;
-  }
-  if (isNegative) {
-    combinedNumber = "-" + combinedNumber;
-  }
+  if (fraction) combinedNumber += "." + fraction;
+  if (isNegative) combinedNumber = "-" + combinedNumber;
   return combinedNumber;
 };

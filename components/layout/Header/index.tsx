@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styles from "./Header.module.scss";
 import navItems from "@/lib/util/nav-items.json";
-import Logo from "../Logo";
+import Logo from "../../UI/Logo";
 import Link from "next/link";
 import { cx } from "@/lib/functions";
-import NavToggle from "../NavToggle";
-import CartToggle from "../CartToggle";
+import NavToggle from "../../UI/NavToggle";
+import CartToggle from "../../UI/CartToggle";
 import CartDrawer from "../CartDrawer";
 
 export default function Header() {

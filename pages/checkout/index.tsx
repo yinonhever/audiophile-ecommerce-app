@@ -5,14 +5,15 @@ import type { BillingDetails, OrderPrice, ShippingDetails } from "@/lib/types";
 import { SubmitHandler, useForm } from "react-hook-form";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import type { OrderData } from "@/models/Order";
-import Page from "@/components/Page";
-import PaymentModal from "@/components/PaymentModal";
-import CheckoutForm from "@/components/CheckoutForm";
+import Page from "@/components/layout/Page";
+import PaymentModal from "@/components/checkout/PaymentModal";
+import CheckoutForm from "@/components/checkout/CheckoutForm";
 import initialCheckoutData from "@/lib/util/initial-checkout-data.json";
-import OrderSummary from "@/components/OrderSummary";
-import Overlay from "@/components/Overlay";
-import Spinner from "@/components/Spinner";
-import CompletionModal from "@/components/CompletionModal";
+import OrderSummary from "@/components/checkout/OrderSummary";
+import Overlay from "@/components/UI/Overlay";
+import Spinner from "@/components/UI/Spinner";
+import CompletionModal from "@/components/checkout/CompletionModal";
+import GoBackButton from "@/components/UI/GoBackButton";
 import Head from "next/head";
 import styles from "@/styles/Checkout.module.scss";
 import axios from "axios";
@@ -74,6 +75,7 @@ export default function Checkout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Page>
+        <GoBackButton />
         {orderPrice ? (
           <>
             <main className={styles.container}>

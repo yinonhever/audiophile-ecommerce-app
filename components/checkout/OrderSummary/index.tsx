@@ -3,7 +3,7 @@ import { CartContext, CartContextType } from "@/lib/CartContext";
 import { useContext, useState, useEffect, MouseEventHandler } from "react";
 import styles from "./OrderSummary.module.scss";
 import { convertedNumber, cx } from "@/lib/functions";
-import Button from "../Button";
+import Button from "../../UI/Button";
 
 export default function OrderSummary({
   orderPrice,

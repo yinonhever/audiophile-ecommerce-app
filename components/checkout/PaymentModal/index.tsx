@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import dropin, { Dropin } from "braintree-web-drop-in";
 import styles from "./PaymentModal.module.scss";
-import Modal from "../Modal";
-import Spinner from "../Spinner";
-import Button from "../Button";
-import ErrorMessage from "../ErrorMessage";
+import Modal from "../../UI/Modal";
+import Spinner from "../../UI/Spinner";
+import Button from "../../UI/Button";
+import ErrorMessage from "../../UI/ErrorMessage";
 
 export default function PaymentModal({
   active,

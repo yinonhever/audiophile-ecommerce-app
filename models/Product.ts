@@ -5,6 +5,8 @@ interface IProduct {
   title: string;
   price: number;
   image: string;
+  isNewProduct: boolean;
+  description: string;
 }
 
 export type ProductData = DataItem<IProduct>;
@@ -21,6 +23,14 @@ const productSchema = new Schema<IProduct>(
       required: true
     },
     image: {
+      type: String,
+      required: true
+    },
+    isNewProduct: {
+      type: Boolean,
+      default: false
+    },
+    description: {
       type: String,
       required: true
     }
