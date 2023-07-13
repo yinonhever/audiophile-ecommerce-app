@@ -84,7 +84,7 @@ export default function CartDrawer() {
               </Button>
             </>
           ) : (
-            <div>Your cary is empty</div>
+            <div>Your cart is empty</div>
           )}
         </div>
       </div>
