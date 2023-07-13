@@ -1,8 +1,25 @@
+@use "styles/variables";
+
 .wrapper {
   display: block;
-}
+  position: absolute;
+  top: calc(100% + 20px);
+  right: variables.$padding-side-desktop;
 
-.drawer {
-  overflow: hidden;
-  transition: all 0.4s;
+  .drawer {
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+    transition: all 0.4s;
+  }
+
+  .container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 20px;
+  }
+
+  .overlay {
+    z-index: 5;
+  }
 }

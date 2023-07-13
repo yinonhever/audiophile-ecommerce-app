@@ -4,6 +4,7 @@ import styles from "./CartDrawer.module.scss";
 import { convertedNumber, cx } from "@/lib/functions";
 import QtyControls from "@/components/UI/QtyControls";
 import Button from "@/components/UI/Button";
+import Overlay from "@/components/UI/Overlay";
 
 export default function CartDrawer() {
   const {
@@ -87,7 +88,11 @@ export default function CartDrawer() {
           )}
         </div>
       </div>
-      <div className={styles.overlay} onClick={() => toggleActive(false)} />
+      <Overlay
+        active={active}
+        onClick={() => toggleActive(false)}
+        className={styles.overlay}
+      />
     </div>
   );
 }
