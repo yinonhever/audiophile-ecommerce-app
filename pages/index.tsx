@@ -7,6 +7,7 @@ import type { CollectionData } from "@/models/Collection";
 import { getCollections } from "./api/collections";
 import axios from "axios";
 import tempData from "@/temp.json";
+import tempData2 from "@/temp2.json";
 
 export default function Home({
   products,
@@ -15,6 +16,15 @@ export default function Home({
   const temp = async () => {
     try {
       const { data } = await axios.post("/api/collections", tempData);
+      console.log(data);
+    } catch (error: any) {
+      console.log(error.response?.data);
+    }
+  };
+
+  const temp2 = async () => {
+    try {
+      const { data } = await axios.post("/api/products", tempData);
       console.log(data);
     } catch (error: any) {
       console.log(error.response?.data);
@@ -33,7 +43,10 @@ export default function Home({
         ))}
       </div>
       <div>
-        <button onClick={temp}>Create</button>
+        <button onClick={temp}>Create collection temp</button>
+      </div>
+      <div>
+        <button onClick={temp2}>Create product temp</button>
       </div>
     </>
   );

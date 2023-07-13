@@ -1,4 +1,6 @@
 import axios from "axios";
+import { Document } from "mongoose";
+import type { DataItem } from "./types";
 
 export const fecther = async <T>(url: string) => {
   const { data } = await axios.get<T>(url);
@@ -39,4 +41,14 @@ export const convertedNumber = (n: number | string) => {
   if (fraction) combinedNumber += "." + fraction;
   if (isNegative) combinedNumber = "-" + combinedNumber;
   return combinedNumber;
+};
+
+export const getConvertedItem = <T>(item: Document | DataItem<T>) => {
+  const convertedItem = (
+    item instanceof Document ? item.toObject() : { ...item }
+  ) as DataItem<T>;
+  convertedItem._id = convertedItem._id.toString();
+  convertedItem.createdAt = new Date(convertedItem.createdAt).toISOString();
+  convertedItem.updatedAt = new Date(convertedItem.updatedAt).toISOString();
+  return convertedItem;
 };

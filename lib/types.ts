@@ -1,4 +1,8 @@
-export type DataItem<T> = T & { _id: string };
+export type DataItem<T = unknown> = T & {
+  _id: string;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+};
 
 export type PropsWithClassName<T = unknown> = T & { className?: string };
 

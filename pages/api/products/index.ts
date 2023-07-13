@@ -1,15 +1,12 @@
 import dbConnect from "@/lib/dbConnect";
+import { getConvertedItem } from "@/lib/functions";
 import Product, { ProductData } from "@/models/Product";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export const getProducts = async () => {
+export const getProducts = async (): Promise<ProductData[]> => {
   await dbConnect();
   const products = await Product.find();
-  return products.map(doc => {
-    const product = doc.toObject() as ProductData;
-    product._id = product._id.toString();
-    return product;
-  });
+  return products.map(doc => getConvertedItem(doc));
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -21,17 +18,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     // TO DELETE BEFORE PUSING TO PRODUCTION
     if (req.method === "POST") {
-      if (process.env.NODE_ENV !== "development")
-        throw new Error("Invalid route");
+      // if (process.env.NODE_ENV !== "development")
+      //   throw new Error("Invalid route");
+      await dbConnect();
       const { data } = req.body;
       const itemsToInsert = Array.isArray(data) ? data : [data];
       const result = await Product.insertMany(itemsToInsert);
-      const products = result.map(doc => {
-        const product: ProductData = doc.toObject();
-        product._id = product._id.toString();
-        return product;
-      });
-      return res.status(201).json(products);
+      return res.status(201).json(result);
     }
   } catch (error: any) {
     console.log(error);

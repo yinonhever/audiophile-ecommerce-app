@@ -33,7 +33,9 @@ export default function OrderSummary({
               <img src={item.product?.image} alt={item.product?.title} />
             </div>
             <div className={styles.item__content}>
-              <span className={styles.item__title}>{item.product?.title}</span>
+              <span className={styles.item__title}>
+                {item.product?.shortTitle}
+              </span>
               <span className={styles.item__price}>{item.product?.price}</span>
               <span className={styles.item__count}>X{item.qty}</span>
             </div>

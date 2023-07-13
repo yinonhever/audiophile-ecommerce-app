@@ -1,16 +1,19 @@
 import dbConnect from "@/lib/dbConnect";
+import { getConvertedItem } from "@/lib/functions";
 import Collection, { CollectionData } from "@/models/Collection";
-import { NextApiRequest, NextApiResponse } from "next";
+import type { ProductData } from "@/models/Product";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-export const getCollections = async (options: Partial<CollectionData> = {}) => {
+export const getCollections = async (
+  options: Partial<CollectionData> = {}
+): Promise<CollectionData[]> => {
   await dbConnect();
   const collections = await Collection.find(options).populate("products");
   return collections.map(doc => {
-    const collection = doc.toObject() as CollectionData;
-    collection._id = collection._id.toString();
-    for (const proudct of collection.products) {
-      proudct._id = proudct._id.toString();
-    }
+    const collection = getConvertedItem(doc);
+    collection.products = collection.products.map(product =>
+      getConvertedItem(product as ProductData)
+    );
     return collection;
   });
 };
@@ -24,8 +27,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     // TO DELETE BEFORE PUSING TO PRODUCTION
     if (req.method === "POST") {
-      if (process.env.NODE_ENV !== "development")
-        throw new Error("Invalid route");
+      // if (process.env.NODE_ENV !== "development")
+      //   throw new Error("Invalid route");
+      await dbConnect();
       const { data } = req.body;
       const itemsToInsert = Array.isArray(data) ? data : [data];
       const result = await Collection.insertMany(itemsToInsert);

@@ -35,7 +35,7 @@ export default function CartDrawer() {
   );
 
   return (
-    <div className={cx(styles.wrapper, active && styles.active)}>
+    <div className={styles.wrapper}>
       <div className={styles.drawer} style={{ maxHeight }} ref={element}>
         <div className={styles.container}>
           {hasProductData ? (
@@ -59,7 +59,7 @@ export default function CartDrawer() {
                     </div>
                     <div className={styles.item__content}>
                       <span className={styles.item__title}>
-                        {item.product?.title}
+                        {item.product?.shortTitle}
                       </span>
                       <span className={styles.item__price}>
                         {item.product?.price}

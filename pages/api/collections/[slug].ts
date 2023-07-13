@@ -1,16 +1,19 @@
 import dbConnect from "@/lib/dbConnect";
+import { getConvertedItem } from "@/lib/functions";
 import Collection, { CollectionData } from "@/models/Collection";
-import { NextApiRequest, NextApiResponse } from "next";
+import type { ProductData } from "@/models/Product";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-export const getCollectionBySlug = async (slug: string) => {
+export const getCollectionBySlug = async (
+  slug: string
+): Promise<CollectionData | null> => {
   await dbConnect();
   const doc = await Collection.findOne({ slug }).populate("products");
   if (!doc) return null;
-  const collection = doc.toObject() as CollectionData;
-  collection._id = collection._id.toString();
-  for (const proudct of collection.products) {
-    proudct._id = proudct._id.toString();
-  }
+  const collection = getConvertedItem(doc);
+  collection.products = collection.products.map(product =>
+    getConvertedItem(product as ProductData)
+  );
   return collection;
 };
 

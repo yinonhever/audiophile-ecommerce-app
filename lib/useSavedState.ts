@@ -11,6 +11,6 @@ export default function useSavedState<T>(
   });
   useEffect(() => {
     setCookie(key, JSON.stringify(state));
-  }, [state]);
+  }, [state, key]);
   return [state, setState];
 }

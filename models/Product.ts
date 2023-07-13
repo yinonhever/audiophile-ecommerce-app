@@ -3,6 +3,7 @@ import type { DataItem } from "@/lib/types";
 
 interface IProduct {
   title: string;
+  shortTitle: string;
   price: number;
   image: string;
   isNewProduct: boolean;
@@ -14,6 +15,11 @@ export type ProductData = DataItem<IProduct>;
 const productSchema = new Schema<IProduct>(
   {
     title: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    shortTitle: {
       type: String,
       required: true,
       unique: true
