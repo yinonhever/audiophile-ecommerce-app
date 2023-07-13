@@ -3,17 +3,20 @@ import { getCollections } from "../api/collections";
 import { getCollectionBySlug } from "../api/collections/[slug]";
 import { CollectionData } from "@/models/Collection";
 import { ProductData } from "@/models/Product";
+import Page from "@/components/layout/Page";
 
 export default function CollectionPage({
   collection
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <div>{collection?.title}</div>
-      {collection?.products.map(item => {
-        const product = { ...item } as ProductData;
-        return <h3 key={product._id}>{product.title}</h3>;
-      })}
+      <Page>
+        <div>{collection?.title}</div>
+        {collection?.products.map(item => {
+          const product = { ...item } as ProductData;
+          return <h3 key={product._id}>{product.title}</h3>;
+        })}
+      </Page>
     </>
   );
 }

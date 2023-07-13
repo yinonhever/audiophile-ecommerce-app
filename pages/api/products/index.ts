@@ -23,11 +23,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       await dbConnect();
       const { data } = req.body;
       const itemsToInsert = Array.isArray(data) ? data : [data];
+      console.log(itemsToInsert);
       const result = await Product.insertMany(itemsToInsert);
       return res.status(201).json(result);
     }
   } catch (error: any) {
-    console.log(error);
+    console.log(error.message);
     res.status(500).json({ msg: error.message });
   }
 };

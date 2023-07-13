@@ -8,9 +8,7 @@ export const getProductById = async (
 ): Promise<ProductData | null> => {
   await dbConnect();
   const doc = await Product.findById(productId);
-  if (!doc) return null;
-  const product = getConvertedItem(doc);
-  return product;
+  return doc ? getConvertedItem(doc) : null;
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

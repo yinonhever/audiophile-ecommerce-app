@@ -4,12 +4,19 @@ import { getProductById } from "../api/products/[id]";
 import { getCollections } from "../api/collections";
 import { ProductData } from "@/models/Product";
 import { CollectionData } from "@/models/Collection";
+import Page from "@/components/layout/Page";
 
 export default function ProductPage({
   product,
   collections
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  return <div>{product?.title}</div>;
+  return (
+    <>
+      <Page>
+        <div>{product?.title}</div>
+      </Page>
+    </>
+  );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {

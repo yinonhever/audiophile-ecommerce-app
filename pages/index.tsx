@@ -8,46 +8,50 @@ import { getCollections } from "./api/collections";
 import axios from "axios";
 import tempData from "@/temp.json";
 import tempData2 from "@/temp2.json";
+import Page from "@/components/layout/Page";
+
+const temp = async () => {
+  try {
+    const { data } = await axios.post("/api/collections", tempData);
+    console.log(data);
+  } catch (error: any) {
+    console.log(error.response?.data);
+  }
+};
+
+const temp2 = async () => {
+  try {
+    console.log(tempData2);
+    const { data } = await axios.post("/api/products", tempData2);
+    console.log(data);
+  } catch (error: any) {
+    console.log(error.response?.data);
+  }
+};
 
 export default function Home({
   products,
   collections
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const temp = async () => {
-    try {
-      const { data } = await axios.post("/api/collections", tempData);
-      console.log(data);
-    } catch (error: any) {
-      console.log(error.response?.data);
-    }
-  };
-
-  const temp2 = async () => {
-    try {
-      const { data } = await axios.post("/api/products", tempData);
-      console.log(data);
-    } catch (error: any) {
-      console.log(error.response?.data);
-    }
-  };
-
   return (
     <>
       <Head>
         <title>Home – Audiophile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <div>
-        {products.map(product => (
-          <h3 key={product._id}>{product.title}</h3>
-        ))}
-      </div>
-      <div>
-        <button onClick={temp}>Create collection temp</button>
-      </div>
-      <div>
-        <button onClick={temp2}>Create product temp</button>
-      </div>
+      <Page>
+        <div>
+          {products.map(product => (
+            <h3 key={product._id}>{product.title}</h3>
+          ))}
+        </div>
+        <div>
+          <button onClick={temp}>Create collection temp</button>
+        </div>
+        <div>
+          <button onClick={temp2}>Create product temp</button>
+        </div>
+      </Page>
     </>
   );
 }
