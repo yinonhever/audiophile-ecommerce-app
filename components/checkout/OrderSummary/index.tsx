@@ -28,19 +28,13 @@ export default function OrderSummary({
       <h3 className={styles.title}>Summary</h3>
       <div className={cx(styles.section, styles.items)}>
         {displayedItems?.map(item => (
-          <article className={styles.item}>
+          <article key={item.productId} className={styles.item}>
             <div className={styles.item__img}>
               <img src={item.product?.image} alt={item.product?.title} />
             </div>
             <div className={styles.item__content}>
-              <div className={styles.item__main}>
-                <span className={styles.item__title}>
-                  {item.product?.title}
-                </span>
-                <span className={styles.item__price}>
-                  {item.product?.price}
-                </span>
-              </div>
+              <span className={styles.item__title}>{item.product?.title}</span>
+              <span className={styles.item__price}>{item.product?.price}</span>
               <span className={styles.item__count}>X{item.qty}</span>
             </div>
           </article>

@@ -10,6 +10,7 @@ export default function CartToggle() {
   return (
     <span className={styles.wrapper} onClick={() => toggleShowCartDrawer()}>
       <svg></svg>
+      Cart toggle
     </span>
   );
 }

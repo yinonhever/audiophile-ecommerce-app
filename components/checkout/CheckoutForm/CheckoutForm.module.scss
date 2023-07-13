@@ -1,3 +1,5 @@
+@use "styles/variables";
+
 .form {
   display: block;
 }
@@ -6,10 +8,10 @@
   outline: none;
 
   &:focus {
-    border-color: blue;
+    border-color: variables.$color-primary;
   }
 
   &.errored {
-    border-color: orangered;
+    border-color: variables.$color-error;
   }
 }

@@ -11,7 +11,7 @@ export default function Button({
   outlined,
   colored
 }: PropsWithChildren<{
-  onClick: MouseEventHandler;
+  onClick?: MouseEventHandler;
   link?: string;
   fullWidth?: boolean;
   outlined?: boolean;

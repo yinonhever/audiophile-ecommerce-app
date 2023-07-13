@@ -3,12 +3,10 @@ import type { AppProps } from "next/app";
 import CartProvider from "@/lib/CartContext";
 import Layout from "@/lib/Layout";
 import { AnimatePresence } from "framer-motion";
-import NextProgress from "nextjs-progressbar";
 
 export default function App({ Component, pageProps, router }: AppProps) {
   return (
     <CartProvider>
-      <NextProgress />
       <Layout>
         <AnimatePresence
           mode="wait"
