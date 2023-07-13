@@ -1,0 +1,17 @@
+const initialCheckoutForm = {
+  billingDetails: {
+    name: "",
+    email: "",
+    phone: ""
+  },
+  shippingDetails: {
+    address: "string",
+    zipCode: "string",
+    city: "string",
+    country: "string"
+  },
+  paymentMethod: "credit-card",
+  shit: "lmao"
+};
+
+export default initialCheckoutForm;

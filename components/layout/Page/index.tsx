@@ -1,9 +1,17 @@
 import styles from "./Page.module.scss";
-import { useEffect, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
+import { motion } from "framer-motion";
 
 export default function Page({ children }: PropsWithChildren) {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-  return <div className={styles.page}>{children}</div>;
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.7 }}
+      className={styles.page}
+    >
+      {children}
+    </motion.div>
+  );
 }
