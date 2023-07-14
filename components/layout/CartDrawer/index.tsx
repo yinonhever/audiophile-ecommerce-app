@@ -1,7 +1,7 @@
 import { useContext, useRef, useMemo } from "react";
 import { CartContextType, CartContext } from "@/lib/CartContext";
 import styles from "./CartDrawer.module.scss";
-import { convertedNumber, cx } from "@/lib/functions";
+import { convertedNumber } from "@/lib/functions";
 import QtyControls from "@/components/UI/QtyControls";
 import Button from "@/components/UI/Button";
 import Overlay from "@/components/UI/Overlay";
