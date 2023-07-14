@@ -6,21 +6,22 @@
   top: calc(100% + 20px);
   right: variables.$padding-side-desktop;
 
-  .drawer {
-    overflow: hidden;
-    position: relative;
-    z-index: 10;
-    transition: all 0.4s;
-  }
-
-  .container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    width: 300px;
-  }
-
   .overlay {
     z-index: 5;
   }
+}
+
+.drawer {
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+  transition: all 0.4s;
+}
+
+.container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  width: 300px;
+  min-height: 300px;
 }

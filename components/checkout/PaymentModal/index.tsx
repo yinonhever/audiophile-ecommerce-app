@@ -12,7 +12,7 @@ export default function PaymentModal({
   error
 }: {
   active: boolean;
-  onPayment: (arg0: string) => void;
+  onPayment: (arg: string) => void;
   error?: Error | null;
 }) {
   const [braintreeInstance, setBraintreeInstance] = useState<Dropin>();

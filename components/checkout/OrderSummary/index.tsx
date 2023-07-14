@@ -11,7 +11,7 @@ export default function OrderSummary({
   className
 }: PropsWithClassName<{
   orderPrice: OrderPrice;
-  onSubmit: MouseEventHandler<HTMLButtonElement>;
+  onSubmit: MouseEventHandler;
 }>) {
   const { populatedCartItems } = useContext(CartContext) as CartContextType;
   const [displayedItems, setDisplayedItems] =
