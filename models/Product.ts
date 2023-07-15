@@ -13,7 +13,7 @@ interface IProduct {
   features: string;
   includedItems: ProductInclude[];
   gallery: ProductImage[];
-  suggestions: (Types.ObjectId | Partial<ProductData>)[];
+  suggestions: (Types.ObjectId | ProductData)[];
 }
 
 export type ProductData = DataItem<IProduct>;

@@ -36,3 +36,9 @@ export interface ShippingDetails {
   city: string;
   country: string;
 }
+
+export interface CheckoutData {
+  billingDetails: BillingDetails;
+  shippingDetails: ShippingDetails;
+  paymentMethod: string;
+}

@@ -5,6 +5,7 @@ import { convertedNumber } from "@/lib/functions";
 import QtyControls from "@/components/UI/QtyControls";
 import Button from "@/components/UI/Button";
 import Overlay from "@/components/UI/Overlay";
+import Link from "next/link";
 
 export default function CartDrawer() {
   const {
@@ -51,16 +52,22 @@ export default function CartDrawer() {
               <main className={styles.items}>
                 {populatedCartItems.map(item => (
                   <article key={item.productId} className={styles.item}>
-                    <div className={styles.item__img}>
+                    <Link
+                      className={styles.item__img}
+                      href={`/products/${item.product?.slug}`}
+                    >
                       <img
                         src={item.product?.image.desktop}
                         alt={item.product?.title}
                       />
-                    </div>
+                    </Link>
                     <div className={styles.item__content}>
-                      <span className={styles.item__title}>
+                      <Link
+                        className={styles.item__title}
+                        href={`/products/${item.product?.slug}`}
+                      >
                         {item.product?.shortTitle}
-                      </span>
+                      </Link>
                       <span className={styles.item__price}>
                         {item.product?.price}
                       </span>

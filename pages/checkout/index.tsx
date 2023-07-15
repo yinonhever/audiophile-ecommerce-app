@@ -1,7 +1,7 @@
 import { CartContext, CartContextType, CartItem } from "@/lib/CartContext";
 import { getOrderPrice } from "../api/orders";
 import { useContext, useState } from "react";
-import type { BillingDetails, OrderPrice, ShippingDetails } from "@/lib/types";
+import type { OrderPrice, CheckoutData } from "@/lib/types";
 import { SubmitHandler, useForm } from "react-hook-form";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import type { OrderData } from "@/models/Order";
@@ -17,12 +17,6 @@ import GoBackButton from "@/components/UI/GoBackButton";
 import Head from "next/head";
 import styles from "@/styles/Checkout.module.scss";
 import axios from "axios";
-
-export interface CheckoutData {
-  billingDetails: BillingDetails;
-  shippingDetails: ShippingDetails;
-  paymentMethod: string;
-}
 
 export default function Checkout({
   orderPrice
@@ -117,8 +111,8 @@ export const getServerSideProps: GetServerSideProps<{
     const { cartItems: cartItemsCookie } = context.req.cookies;
     if (!cartItemsCookie) throw new Error("No cookie found");
     const cartItems = JSON.parse(cartItemsCookie) as CartItem[];
-    // if (!Array.isArray(cartItems) || !cartItems?.length)
-    //   throw new Error("No cart items found");
+    if (!Array.isArray(cartItems) || !cartItems?.length)
+      throw new Error("No cart items found");
     const orderPrice = await getOrderPrice(cartItems);
     return { props: { orderPrice } };
   } catch (error: any) {

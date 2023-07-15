@@ -21,7 +21,7 @@ export const getCollectionBySlug = async (
   return collection;
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function (req: NextApiRequest, res: NextApiResponse) {
   try {
     const slug = req.query.slug as string;
     const collection = await getCollectionBySlug(slug);
@@ -30,4 +30,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     console.log(error);
     res.status(500).json({ msg: error.message });
   }
-};
+}

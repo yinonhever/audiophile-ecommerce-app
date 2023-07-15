@@ -1,8 +1,7 @@
 import styles from "./CheckoutForm.module.scss";
 import countries from "@/lib/util/countries.json";
 import type { UseFormRegister, FieldErrors } from "react-hook-form";
-import type { CheckoutData } from "@/pages/checkout";
-import type { PropsWithClassName } from "@/lib/types";
+import type { PropsWithClassName, CheckoutData } from "@/lib/types";
 import {
   cx,
   isValidEmail,

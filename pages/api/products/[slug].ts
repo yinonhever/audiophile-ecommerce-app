@@ -20,11 +20,11 @@ export const getProductBySlug = async (
   return product;
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function (req: NextApiRequest, res: NextApiResponse) {
   const slug = req.query.slug as string;
   const product = await getProductBySlug(slug);
   if (!product) {
     return res.status(404).json({ msg: "Product not found" });
   }
   res.json(product);
-};
+}

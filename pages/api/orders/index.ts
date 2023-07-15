@@ -1,16 +1,13 @@
-import Order, { OrderData } from "@/models/Order";
+import Order from "@/models/Order";
 import Product from "@/models/Product";
 import type { CartItem } from "@/lib/CartContext";
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { BillingDetails, OrderPrice, ShippingDetails } from "@/lib/types";
+import type { CheckoutData, OrderPrice } from "@/lib/types";
 import braintree from "braintree";
 import dbConnect from "@/lib/dbConnect";
 
-interface OrderRequestData {
+interface OrderRequestData extends CheckoutData {
   cartItems: CartItem[];
-  billingDetails: BillingDetails;
-  shippingDetails: ShippingDetails;
-  paymentMethod: string;
   nonce?: string;
 }
 
@@ -39,7 +36,7 @@ export const getOrderPrice = async (
   return { itemsPrice, shippingFee, vat, totalPrice };
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function (req: NextApiRequest, res: NextApiResponse) {
   try {
     if (req.method === "POST") {
       const {
@@ -98,4 +95,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     console.log(error);
     res.status(500).json({ msg: error.message });
   }
-};
+}
