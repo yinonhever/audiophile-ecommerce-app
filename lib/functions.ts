@@ -49,7 +49,11 @@ export const getConvertedItem = <T>(item: Document | DataItem<T>) => {
   ) as DataItem<T>;
   convertedItem._id = convertedItem._id.toString();
   const { createdAt, updatedAt } = convertedItem;
-  convertedItem.createdAt = new Date(createdAt).toISOString();
-  convertedItem.updatedAt = new Date(updatedAt).toISOString();
+  if (createdAt) {
+    convertedItem.createdAt = new Date(createdAt).toISOString();
+  }
+  if (updatedAt) {
+    convertedItem.updatedAt = new Date(updatedAt).toISOString();
+  }
   return convertedItem;
 };

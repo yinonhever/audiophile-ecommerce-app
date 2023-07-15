@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export const getProducts = async (): Promise<ProductData[]> => {
   await dbConnect();
-  const products = await Product.find();
+  const products = await Product.find().select("-suggestions");
   return products.map(doc => getConvertedItem(doc));
 };
 
@@ -26,6 +26,23 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       console.log(itemsToInsert);
       const result = await Product.insertMany(itemsToInsert);
       return res.status(201).json(result);
+    }
+
+    // TO DELETE BEFORE PUSING TO PRODUCTION
+    if (req.method === "PUT") {
+      await dbConnect();
+      const { data } = req.body;
+      const updatedData = [];
+      for (const item of data) {
+        const { slug } = item;
+        const product = await Product.findOne({ slug });
+        if (!product) continue;
+        product.suggestions = item.suggestions;
+        await product.save();
+        console.log(`Updated product ${slug}`);
+        updatedData.push(product);
+      }
+      return res.json(updatedData);
     }
   } catch (error: any) {
     console.log(error.message);

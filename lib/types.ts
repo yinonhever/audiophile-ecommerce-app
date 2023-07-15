@@ -6,6 +6,17 @@ export type DataItem<T = unknown> = T & {
 
 export type PropsWithClassName<T = unknown> = T & { className?: string };
 
+export interface ProductImage {
+  desktop: string;
+  tablet: string;
+  mobile: string;
+}
+
+export interface ProductInclude {
+  item: string;
+  quantity: number;
+}
+
 export interface OrderPrice {
   itemsPrice: number;
   shippingFee: number;

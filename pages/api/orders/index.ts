@@ -90,7 +90,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       await createdOrder.populate({
         path: "items.product",
         model: "Product",
-        select: "-price -qty"
+        select: "-price"
       });
       return res.status(201).json(createdOrder);
     }

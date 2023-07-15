@@ -53,7 +53,7 @@ export default function CartDrawer() {
                   <article key={item.productId} className={styles.item}>
                     <div className={styles.item__img}>
                       <img
-                        src={item.product?.image}
+                        src={item.product?.image.desktop}
                         alt={item.product?.title}
                       />
                     </div>

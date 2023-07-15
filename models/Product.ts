@@ -1,19 +1,65 @@
-import { Schema, model, models, Model } from "mongoose";
-import type { DataItem } from "@/lib/types";
+import { Schema, model, models, Model, Types } from "mongoose";
+import type { DataItem, ProductImage, ProductInclude } from "@/lib/types";
 
 interface IProduct {
+  slug: string;
   title: string;
   shortTitle: string;
   price: number;
-  image: string;
+  image: ProductImage;
+  categoryImage: ProductImage;
   isNewProduct: boolean;
   description: string;
+  features: string;
+  includedItems: ProductInclude[];
+  gallery: ProductImage[];
+  suggestions: (Types.ObjectId | Partial<ProductData>)[];
 }
 
 export type ProductData = DataItem<IProduct>;
 
+const imageSchema = new Schema<ProductImage>(
+  {
+    desktop: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    tablet: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    mobile: {
+      type: String,
+      required: true,
+      unique: true
+    }
+  },
+  { _id: false }
+);
+
+const includeSchema = new Schema<ProductInclude>(
+  {
+    item: {
+      type: String,
+      required: true
+    },
+    quantity: {
+      type: Number,
+      required: true
+    }
+  },
+  { _id: false }
+);
+
 const productSchema = new Schema<IProduct>(
   {
+    slug: {
+      type: String,
+      required: true,
+      unique: true
+    },
     title: {
       type: String,
       required: true,
@@ -29,7 +75,11 @@ const productSchema = new Schema<IProduct>(
       required: true
     },
     image: {
-      type: String,
+      type: imageSchema,
+      required: true
+    },
+    categoryImage: {
+      type: imageSchema,
       required: true
     },
     isNewProduct: {
@@ -39,7 +89,20 @@ const productSchema = new Schema<IProduct>(
     description: {
       type: String,
       required: true
-    }
+    },
+    features: {
+      type: String,
+      required: true
+    },
+    includedItems: [includeSchema],
+    gallery: [imageSchema],
+    suggestions: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+        required: true
+      }
+    ]
   },
   { timestamps: true }
 );

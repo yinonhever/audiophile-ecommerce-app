@@ -3,8 +3,9 @@ import type { ProductData } from "./Product";
 import type { DataItem } from "@/lib/types";
 
 interface ICollection {
-  title: string;
   slug: string;
+  title: string;
+  image: string;
   products: (Types.ObjectId | ProductData)[];
   showInPages: boolean;
 }
@@ -13,16 +14,20 @@ export type CollectionData = DataItem<ICollection>;
 
 const collectionSchema = new Schema<ICollection>(
   {
+    slug: {
+      type: String,
+      required: true,
+      unique: true
+    },
     title: {
       type: String,
       required: true,
       unique: true
     },
-    slug: {
+    image: {
       type: String,
       required: true,
-      unique: true,
-      immutable: true
+      unique: true
     },
     products: [
       {

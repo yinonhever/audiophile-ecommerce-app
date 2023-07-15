@@ -30,7 +30,10 @@ export default function OrderSummary({
         {displayedItems?.map(item => (
           <article key={item.productId} className={styles.item}>
             <div className={styles.item__img}>
-              <img src={item.product?.image} alt={item.product?.title} />
+              <img
+                src={item.product?.image.desktop}
+                alt={item.product?.title}
+              />
             </div>
             <div className={styles.item__content}>
               <span className={styles.item__title}>

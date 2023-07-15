@@ -8,7 +8,11 @@ export const getCollections = async (
   options: Partial<CollectionData> = {}
 ): Promise<CollectionData[]> => {
   await dbConnect();
-  const collections = await Collection.find(options).populate("products");
+  const collections = await Collection.find(options).populate({
+    path: "products",
+    model: "Product",
+    select: "slug title categoryImage description isNewProduct"
+  });
   return collections.map(doc => {
     const collection = getConvertedItem(doc);
     collection.products = collection.products.map(product =>

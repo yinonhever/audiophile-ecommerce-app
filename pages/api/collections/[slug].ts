@@ -8,7 +8,11 @@ export const getCollectionBySlug = async (
   slug: string
 ): Promise<CollectionData | null> => {
   await dbConnect();
-  const doc = await Collection.findOne({ slug }).populate("products");
+  const doc = await Collection.findOne({ slug }).populate({
+    path: "products",
+    model: "Product",
+    select: "slug title categoryImage description isNewProduct"
+  });
   if (!doc) return null;
   const collection = getConvertedItem(doc);
   collection.products = collection.products.map(product =>

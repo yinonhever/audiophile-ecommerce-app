@@ -12,7 +12,11 @@ export default function ProductMain({ product }: { product: ProductData }) {
 
   return (
     <article className={cx(styles.wrapper, "image-with-text")}>
-      <img className={styles.image} src={product.image} alt={product.title} />
+      <img
+        className={styles.image}
+        src={product.image.desktop}
+        alt={product.title}
+      />
       <div className={styles.content}>
         {product.isNewProduct && <h3 className={styles.label}>New product</h3>}
         <h2 className={styles.title}>{product.title}</h2>

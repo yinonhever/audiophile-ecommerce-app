@@ -8,6 +8,7 @@ import Page from "@/components/layout/Page";
 export default function CollectionPage({
   collection
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  console.log(collection);
   return (
     <>
       <Page>
