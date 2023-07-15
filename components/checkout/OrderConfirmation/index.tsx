@@ -1,5 +1,6 @@
 import { OrderData } from "@/models/Order";
-import styles from "./CompletionModal.module.scss";
+import styles from "./OrderConfirmation.module.scss";
+import Modal from "@/components/UI/Modal";
 
 export default function OrderConfirmation({
   orderData,
@@ -8,5 +9,5 @@ export default function OrderConfirmation({
   orderData?: OrderData;
   active: boolean;
 }) {
-  return <div></div>;
+  return <Modal active={active}></Modal>;
 }

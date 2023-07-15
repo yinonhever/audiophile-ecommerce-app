@@ -92,7 +92,7 @@ export default async function handler(
       await createdOrder.populate({
         path: "items.product",
         model: "Product",
-        select: "-price"
+        select: "slug title image"
       });
       return res.status(201).json(createdOrder.toObject());
     }

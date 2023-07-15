@@ -9,10 +9,10 @@ import Page from "@/components/layout/Page";
 import PaymentModal from "@/components/checkout/PaymentModal";
 import CheckoutForm from "@/components/checkout/CheckoutForm";
 import initialCheckoutData from "@/lib/util/initial-checkout-data.json";
-import OrderSummary from "@/components/checkout/OrderSummary";
+import CheckoutSummary from "@/components/checkout/CheckoutSummary";
 import Overlay from "@/components/UI/Overlay";
 import Spinner from "@/components/UI/Spinner";
-import CompletionModal from "@/components/checkout/CompletionModal";
+import OrderConfirmation from "@/components/checkout/OrderConfirmation";
 import GoBackButton from "@/components/UI/GoBackButton";
 import Head from "next/head";
 import styles from "@/styles/Checkout.module.scss";
@@ -78,7 +78,7 @@ export default function Checkout({
                 register={register}
                 errors={formState.errors}
               />
-              <OrderSummary
+              <CheckoutSummary
                 className={styles.section}
                 orderPrice={orderPrice}
                 onSubmit={handleSubmit(onSubmit)}
@@ -94,7 +94,7 @@ export default function Checkout({
               onPayment={submitOrder}
               error={error}
             />
-            <CompletionModal active={completed} orderData={orderData} />
+            <OrderConfirmation active={completed} orderData={orderData} />
           </>
         ) : (
           <div className={styles.empty}>Your cart is empty.</div>
