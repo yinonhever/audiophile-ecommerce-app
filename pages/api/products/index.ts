@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import { getConvertedItem } from "@/lib/functions";
+import type { ErrorResponse } from "@/lib/types";
 import Product, { ProductData } from "@/models/Product";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -9,7 +10,10 @@ export const getProducts = async (): Promise<ProductData[]> => {
   return products.map(doc => getConvertedItem(doc));
 };
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<ProductData[] | ErrorResponse>
+) {
   try {
     if (req.method === "GET") {
       const products = await getProducts();

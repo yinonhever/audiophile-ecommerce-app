@@ -1,8 +1,8 @@
-import Order from "@/models/Order";
+import Order, { OrderData } from "@/models/Order";
 import Product from "@/models/Product";
 import type { CartItem } from "@/lib/CartContext";
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { CheckoutData, OrderPrice } from "@/lib/types";
+import type { CheckoutData, ErrorResponse, OrderPrice } from "@/lib/types";
 import braintree from "braintree";
 import dbConnect from "@/lib/dbConnect";
 
@@ -36,7 +36,10 @@ export const getOrderPrice = async (
   return { itemsPrice, shippingFee, vat, totalPrice };
 };
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<OrderData | ErrorResponse>
+) {
   try {
     if (req.method === "POST") {
       const {
@@ -80,7 +83,9 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
           order.isPaid = true;
           order.paymentResult = paymentResult;
         } else {
-          throw new Error(`Payment failed – ${paymentResult.message}`);
+          return res
+            .status(420)
+            .json({ msg: `Payment failed – ${paymentResult.message}` });
         }
       }
       const createdOrder = await order.save();
@@ -89,7 +94,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
         model: "Product",
         select: "-price"
       });
-      return res.status(201).json(createdOrder);
+      return res.status(201).json(createdOrder.toObject());
     }
   } catch (error: any) {
     console.log(error);

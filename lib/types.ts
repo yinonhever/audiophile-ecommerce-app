@@ -42,3 +42,5 @@ export interface CheckoutData {
   shippingDetails: ShippingDetails;
   paymentMethod: string;
 }
+
+export type ErrorResponse<T = unknown> = T & { msg: string };

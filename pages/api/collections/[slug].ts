@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import { getConvertedItem } from "@/lib/functions";
+import type { ErrorResponse } from "@/lib/types";
 import Collection, { CollectionData } from "@/models/Collection";
 import type { ProductData } from "@/models/Product";
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -21,10 +22,16 @@ export const getCollectionBySlug = async (
   return collection;
 };
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<CollectionData | ErrorResponse>
+) {
   try {
     const slug = req.query.slug as string;
     const collection = await getCollectionBySlug(slug);
+    if (!collection) {
+      return res.status(404).json({ msg: "Collection not found" });
+    }
     res.json(collection);
   } catch (error: any) {
     console.log(error);

@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import { getConvertedItem } from "@/lib/functions";
+import type { ErrorResponse } from "@/lib/types";
 import Product, { ProductData } from "@/models/Product";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -20,7 +21,10 @@ export const getProductBySlug = async (
   return product;
 };
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<ProductData | ErrorResponse>
+) {
   const slug = req.query.slug as string;
   const product = await getProductBySlug(slug);
   if (!product) {

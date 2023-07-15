@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import { getConvertedItem } from "@/lib/functions";
+import type { ErrorResponse } from "@/lib/types";
 import Collection, { CollectionData } from "@/models/Collection";
 import type { ProductData } from "@/models/Product";
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -22,7 +23,10 @@ export const getCollections = async (
   });
 };
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<CollectionData[] | ErrorResponse>
+) {
   try {
     if (req.method === "GET") {
       const collections = await getCollections();
