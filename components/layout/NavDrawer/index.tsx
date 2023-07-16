@@ -23,7 +23,7 @@ export default function NavDrawer({ active }: { active: boolean }) {
       <div className={styles.container}>
         <div className={styles.list}>
           {collections.map(collection => (
-            <FeaturedCollection key={collection._id} collection={collection} />
+            <FeaturedCollection key={collection._id} {...collection} />
           ))}
         </div>
       </div>

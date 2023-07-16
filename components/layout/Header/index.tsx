@@ -20,18 +20,17 @@ export default function Header() {
   const { asPath } = useRouter();
 
   useEffect(() => {
-    document.body.style.overflow =
-      showMobileMenu || showCartDrawer ? "hidden" : "initial";
-    if (showCartDrawer) setShowMobileMenu(false);
-    if (showMobileMenu) toggleShowCartDrawer(false);
-  }, [showMobileMenu, showCartDrawer]);
-
-  useEffect(() => {
     setShowMobileMenu(false);
   }, [asPath]);
 
   useEffect(() => {
-    document.addEventListener("resize", () => {
+    document.documentElement.style.overflow = showMobileMenu
+      ? "hidden"
+      : "initial";
+  }, [showMobileMenu]);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
       if (window.innerWidth > 1000) {
         setShowMobileMenu(false);
       }
