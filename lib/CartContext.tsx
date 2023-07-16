@@ -34,7 +34,7 @@ export default function CartProvider({ children }: PropsWithChildren) {
   const [cartItems, setCartItems] = useSavedState<CartItem[]>("cartItems", []);
   const [showCartDrawer, setShowCartDrawer] = useState(false);
   const { data: products } = useSWR("/api/products", fecther<ProductData[]>);
-  const { pathname } = useRouter();
+  const { asPath } = useRouter();
 
   const populatedCartItems = useMemo(
     () =>
@@ -47,7 +47,7 @@ export default function CartProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     setShowCartDrawer(false);
-  }, [pathname]);
+  }, [asPath]);
 
   const addItem = (productId: string, qty: number) => {
     const clonedItems = cloneDeep(cartItems);
