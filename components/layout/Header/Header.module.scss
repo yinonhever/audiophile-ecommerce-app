@@ -59,7 +59,8 @@
   text-transform: uppercase;
   transition: color 0.4s;
 
-  &:hover {
+  &:hover,
+  &.active {
     color: variables.$color-primary;
   }
 }

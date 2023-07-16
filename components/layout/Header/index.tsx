@@ -11,11 +11,11 @@ import CartDrawer from "../CartDrawer";
 
 export default function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const { pathname } = useRouter();
+  const { asPath } = useRouter();
 
   useEffect(() => {
     setShowMobileMenu(false);
-  }, [pathname]);
+  }, [asPath]);
 
   useEffect(() => {
     document.body.style.overflow = showMobileMenu ? "hidden" : "initial";
@@ -37,7 +37,7 @@ export default function Header() {
                 href={item.path}
                 className={cx(
                   styles.navItem,
-                  pathname === item.path && styles.active
+                  asPath === item.path && item.path !== "/" && styles.active
                 )}
               >
                 {item.title}
