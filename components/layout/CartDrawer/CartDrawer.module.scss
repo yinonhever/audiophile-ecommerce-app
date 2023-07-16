@@ -2,6 +2,10 @@
 @use "styles/mixins";
 
 .wrapper {
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+  transition: all 0.4s;
   display: block;
   position: absolute;
   top: calc(100% + 32px);
@@ -15,17 +19,6 @@
   @include mixins.respond(mobile) {
     right: variables.$padding-side-mobile;
   }
-
-  .overlay {
-    z-index: 5;
-  }
-}
-
-.drawer {
-  overflow: hidden;
-  position: relative;
-  z-index: 10;
-  transition: all 0.4s;
 }
 
 .container {

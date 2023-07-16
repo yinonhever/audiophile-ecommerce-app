@@ -29,7 +29,7 @@ export default async function handler(
 ) {
   try {
     if (req.method === "GET") {
-      const collections = await getCollections();
+      const collections = await getCollections(req.query);
       return res.json(collections);
     }
   } catch (error: any) {
