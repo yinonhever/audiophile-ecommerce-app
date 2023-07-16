@@ -21,26 +21,26 @@ export const isValidInteger = (value: string) => /^\d+$/.test(value);
 export const isValidZipCode = (value: string) =>
   isValidInteger(value) && value.length >= 5;
 
-export const cx = (...classNames: (string | boolean | null | undefined)[]) =>
+export const cx = (...classNames: (string | false | null | undefined)[]) =>
   classNames.filter(className => !!className).join(" ");
 
-export const convertedNumber = (n: number | string) => {
-  if (isNaN(+n)) throw new Error("Invalid number");
-  n = n.toString();
+export const convertedNumber = (num: number) => {
+  if (isNaN(num)) throw new Error("Invalid number");
+  let numStr = num.toString();
   let isNegative = false;
-  if (n.startsWith("-")) {
+  if (numStr.startsWith("-")) {
     isNegative = true;
-    n = n.replace("-", "");
+    numStr = numStr.replace("-", "");
   }
-  const [integer, fraction] = n.split(".");
+  const [integer, fraction] = numStr.split(".");
   const integerParts = integer.split("");
   for (let i = integer.length - 3; i > 0; i -= 3) {
     integerParts.splice(i, 0, ",");
   }
-  let combinedNumber = integerParts.join("");
-  if (fraction) combinedNumber += "." + fraction;
-  if (isNegative) combinedNumber = "-" + combinedNumber;
-  return combinedNumber;
+  let combinedNum = integerParts.join("");
+  if (fraction) combinedNum += "." + fraction;
+  if (isNegative) combinedNum = "-" + combinedNum;
+  return combinedNum;
 };
 
 export const getConvertedItem = <T>(item: Document | DataItem<T>) => {

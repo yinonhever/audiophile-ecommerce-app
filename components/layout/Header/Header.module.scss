@@ -1,7 +1,79 @@
+@use "styles/variables";
+@use "styles/mixins";
+
 .header {
   position: relative;
 }
 
-// .container {
-//   z-index: 5;
-// }
+.container {
+  position: relative;
+  z-index: 10;
+  background-color: variables.$color-secondary;
+  color: #fff;
+  padding: 36px variables.$padding-side-desktop;
+  display: flex;
+  align-items: center;
+
+  & > * {
+    display: block;
+
+    &:last-child {
+      margin-left: auto;
+    }
+  }
+
+  @include mixins.respond(tablet) {
+    padding: 32px variables.$padding-side-tablet;
+  }
+
+  @include mixins.respond(mobile) {
+    padding: 32px variables.$padding-side-mobile;
+  }
+}
+
+.navigation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  @include mixins.respond(tablet) {
+    display: none;
+  }
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+
+  & > *:not(:last-child) {
+    margin-right: 34px;
+  }
+}
+
+.navItem {
+  display: block;
+  font-size: 13px;
+  line-height: 25px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: color 0.4s;
+
+  &:hover {
+    color: variables.$color-primary;
+  }
+}
+
+.logo {
+  @include mixins.respond(tablet) {
+    margin-left: 42px;
+  }
+
+  @include mixins.respond(mobile) {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

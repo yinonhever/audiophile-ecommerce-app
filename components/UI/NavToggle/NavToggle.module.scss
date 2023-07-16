@@ -1,22 +1,23 @@
 @use "styles/mixins";
+@use "styles/variables";
 
 .wrapper {
   display: none;
 
   @include mixins.respond(tablet) {
     display: block;
-    height: 20px;
-    width: 24px;
+    height: 15px;
+    width: 16px;
     position: relative;
 
     span {
       display: block;
       position: absolute;
       height: 3px;
-      width: 24px;
+      width: 16px;
       background-color: #fff;
       border-radius: 100px;
-      transition: all 0.5s;
+      transition: all 0.4s;
 
       &:nth-child(1) {
         top: 0;
@@ -40,7 +41,7 @@
       }
 
       &:nth-child(2) {
-        transform: translate(200px, -50%);
+        transform: translate(-250px, -50%);
       }
 
       &:nth-child(3) {

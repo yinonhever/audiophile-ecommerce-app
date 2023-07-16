@@ -4,24 +4,85 @@
 .footer {
   background-color: variables.$color-secondary;
   color: #fff;
-  padding: 50px variables.$padding-side-desktop; //to change
+  padding: 75px variables.$padding-side-desktop 48px;
+
+  @include mixins.respond(tablet) {
+    padding: 60px variables.$padding-side-tablet 46px;
+  }
+
+  @include mixins.respond(mobile) {
+    padding: 52px variables.$padding-side-mobile 38px;
+  }
 }
 
 .top {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 36px;
+
+  @include mixins.respond(tablet) {
+    flex-direction: column;
+    align-items: initial;
+    margin-bottom: 32px;
+  }
+
+  @include mixins.respond(mobile) {
+    align-items: center;
+    margin-bottom: 48px;
+  }
+}
+
+.logo {
+  @include mixins.respond(tablet) {
+    margin-bottom: 32px;
+  }
+
+  @include mixins.respond(mobile) {
+    margin-bottom: 48px;
+  }
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+
+  @include mixins.respond(mobile) {
+    flex-direction: column;
+  }
+
+  & > *:not(:last-child) {
+    margin-right: 34px;
+
+    @include mixins.respond(mobile) {
+      margin-right: 0;
+      margin-bottom: 16px;
+    }
+  }
+}
+
+.navItem {
+  display: block;
+  font-size: 13px;
+  line-height: 25px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: color 0.4s;
+
+  &:hover {
+    color: variables.$color-primary;
+  }
 }
 
 .bottom {
   display: grid;
   grid-template-columns: repeat(2, max-content);
   justify-content: space-between;
-  row-gap: 50px; //to change
+  row-gap: 56px;
 
   @include mixins.respond(tablet) {
     grid-template-columns: repeat(2, min-content);
-    row-gap: 60px; //to change
+    row-gap: 89px;
     align-items: center;
   }
 
@@ -29,12 +90,13 @@
     grid-template-columns: 1fr;
     text-align: center;
     align-items: initial;
-    row-gap: 40px; //to change
+    row-gap: 48px;
   }
 }
 
 .text {
-  max-width: 600px; // to change
+  max-width: 540px;
+  line-height: 25px;
 
   @include mixins.respond(tablet) {
     grid-column: 1 / -1;
@@ -57,13 +119,13 @@
     display: flex;
 
     & > *:not(:last-child) {
-      margin-right: 15px; //to change
+      margin-right: 16px;
     }
   }
 
   .icon {
-    width: 25px; //to change
-    height: 25px; //to change
+    width: 24px;
+    height: 24px;
     cursor: pointer;
 
     path {

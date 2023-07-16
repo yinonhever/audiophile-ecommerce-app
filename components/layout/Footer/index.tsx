@@ -16,7 +16,7 @@ export default function Footer() {
         <Logo className={styles.logo} />
         <div className={styles.navigation}>
           {navItems.map(item => (
-            <Link key={item.path} className={styles.link} href={item.path}>
+            <Link key={item.path} className={styles.navItem} href={item.path}>
               {item.title}
             </Link>
           ))}
@@ -24,13 +24,10 @@ export default function Footer() {
       </div>
       <div className={styles.bottom}>
         <p className={styles.text}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          Audiophile is an all in one stop to fulfill your audio needs. We're a
+          small team of music lovers and sound specialists who are devoted to
+          helping you get the most out of personal audio. Come and visit our
+          demo facility - we're open 7 days a week.
         </p>
         <div className={styles.socials}>
           <div className={styles.icons}>

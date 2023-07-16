@@ -1,10 +1,20 @@
 @use "styles/variables";
+@use "styles/mixins";
 
 .wrapper {
   display: block;
   position: absolute;
-  top: calc(100% + 20px);
+  top: calc(100% + 32px);
   right: variables.$padding-side-desktop;
+
+  @include mixins.respond(tablet) {
+    top: calc(100% + 24px);
+    right: variables.$padding-side-tablet;
+  }
+
+  @include mixins.respond(mobile) {
+    right: variables.$padding-side-mobile;
+  }
 
   .overlay {
     z-index: 5;
@@ -20,8 +30,12 @@
 
 .container {
   background-color: #fff;
-  padding: 30px;
-  border-radius: 10px;
-  width: 300px;
-  min-height: 300px;
+  padding: 32px;
+  border-radius: 8px;
+  width: 377px;
+  min-height: 200px;
+
+  @include mixins.respond(mobile) {
+    max-width: calc(100vw - (2 * variables.$padding-side-mobile));
+  }
 }

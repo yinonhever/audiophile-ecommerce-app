@@ -24,13 +24,11 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <div className={styles.logoWrapper}>
-          <NavToggle
-            onClick={() => setShowMobileMenu(!showMobileMenu)}
-            active={showMobileMenu}
-          />
-          <Logo />
-        </div>
+        <NavToggle
+          onClick={() => setShowMobileMenu(!showMobileMenu)}
+          active={showMobileMenu}
+        />
+        <Logo className={styles.logo} />
         <nav className={styles.navigation}>
           <div className={styles.navList}>
             {navItems.map(item => (

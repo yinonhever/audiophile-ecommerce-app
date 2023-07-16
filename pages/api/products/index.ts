@@ -2,12 +2,12 @@ import dbConnect from "@/lib/dbConnect";
 import { getConvertedItem } from "@/lib/functions";
 import type { ErrorResponse } from "@/lib/types";
 import Product, { ProductData } from "@/models/Product";
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 export const getProducts = async (): Promise<ProductData[]> => {
   await dbConnect();
   const products = await Product.find().select("-suggestions");
-  return products.map(doc => getConvertedItem(doc));
+  return products.map(getConvertedItem);
 };
 
 export default async function handler(

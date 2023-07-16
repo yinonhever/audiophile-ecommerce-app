@@ -6,7 +6,7 @@ import { cx } from "@/lib/functions";
 export default function Logo({ className }: PropsWithClassName) {
   return (
     <Link href="/" className={cx(styles.logo, className)}>
-      <img src="" alt="Audiophile" />
+      <img src="/assets/shared/desktop/logo.svg" alt="Audiophile" />
     </Link>
   );
 }

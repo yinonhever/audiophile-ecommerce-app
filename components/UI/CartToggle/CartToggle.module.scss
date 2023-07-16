@@ -1,0 +1,13 @@
+@use "styles/variables";
+
+.button {
+  path {
+    fill: #fff;
+    transition: fill 0.4s;
+  }
+
+  &:hover path,
+  &.active path {
+    fill: variables.$color-primary;
+  }
+}
