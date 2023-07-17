@@ -51,20 +51,18 @@ export default function Header() {
         />
         <Logo className={styles.logo} />
         <nav className={styles.navigation}>
-          <div className={styles.navList}>
-            {navItems.map(item => (
-              <Link
-                key={item.path}
-                href={item.path}
-                className={cx(
-                  styles.navItem,
-                  asPath === item.path && item.path !== "/" && styles.active
-                )}
-              >
-                {item.title}
-              </Link>
-            ))}
-          </div>
+          {navItems.map(item => (
+            <Link
+              key={item.path}
+              href={item.path}
+              className={cx(
+                styles.navItem,
+                asPath === item.path && item.path !== "/" && styles.active
+              )}
+            >
+              {item.title}
+            </Link>
+          ))}
         </nav>
         <CartToggle />
       </div>

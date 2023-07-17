@@ -1,0 +1,32 @@
+@use "styles/variables";
+@use "styles/mixins";
+
+.container {
+  padding: 80px variables.$padding-side-desktop 160px;
+
+  @include mixins.respond(tablet) {
+    padding: 33px variables.$padding-side-tablet 120px;
+  }
+
+  @include mixins.respond(mobile) {
+    padding: 16px variables.$padding-side-mobile 120px;
+  }
+
+  & > .goBack {
+    margin-bottom: 56px;
+
+    @include mixins.respond(tablet) {
+      margin-bottom: 24px;
+    }
+  }
+
+  & > section {
+    &:not(:last-child) {
+      margin-bottom: 160px;
+
+      @include mixins.respond(tablet) {
+        margin-bottom: 120px;
+      }
+    }
+  }
+}

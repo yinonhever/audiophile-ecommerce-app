@@ -6,6 +6,7 @@ import type { ProductData } from "@/models/Product";
 import type { CollectionData } from "@/models/Collection";
 import { getCollections } from "./api/collections";
 import Page from "@/components/layout/Page";
+import Link from "next/link";
 
 export default function Home({
   products,
@@ -20,7 +21,13 @@ export default function Home({
       <Page>
         <div>
           {products.map(product => (
-            <h3 key={product._id}>{product.title}</h3>
+            <Link
+              key={product._id}
+              href={`/products/${product.slug}`}
+              style={{ display: "block" }}
+            >
+              {product.title}
+            </Link>
           ))}
         </div>
       </Page>

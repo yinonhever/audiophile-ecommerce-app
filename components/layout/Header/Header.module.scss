@@ -40,15 +40,12 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
 
   @include mixins.respond(tablet) {
     display: none;
   }
-}
-
-.navList {
-  display: flex;
-  align-items: center;
 
   & > *:not(:last-child) {
     margin-right: 34px;

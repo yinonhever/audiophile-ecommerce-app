@@ -1,0 +1,11 @@
+@use "styles/mixins";
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 160px;
+
+  @include mixins.respond(tablet) {
+    gap: 120px;
+  }
+}

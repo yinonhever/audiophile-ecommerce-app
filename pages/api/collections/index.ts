@@ -6,19 +6,29 @@ import type { ProductData } from "@/models/Product";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export const getCollections = async (
-  options: Partial<CollectionData> = {}
+  options: Partial<CollectionData> = {},
+  fields = ["slug", "title", "image"]
 ): Promise<CollectionData[]> => {
   await dbConnect();
-  const collections = await Collection.find(options).populate({
-    path: "products",
-    model: "Product",
-    select: "slug title categoryImage description isNewProduct"
-  });
+  const collections = await Collection.find(options).select(fields);
+  if (fields.includes("products")) {
+    await Promise.all(
+      collections.map(doc =>
+        doc.populate({
+          path: "products",
+          model: "Product",
+          select: "slug title categoryImage description isNewProduct"
+        })
+      )
+    );
+  }
   return collections.map(doc => {
     const collection = getConvertedItem(doc);
-    collection.products = collection.products.map(product =>
-      getConvertedItem(product as ProductData)
-    );
+    if (collection.products) {
+      collection.products = collection.products.map(product =>
+        getConvertedItem(product as ProductData)
+      );
+    }
     return collection;
   });
 };
@@ -29,7 +39,8 @@ export default async function handler(
 ) {
   try {
     if (req.method === "GET") {
-      const collections = await getCollections(req.query);
+      const { fields, ...options } = req.query;
+      const collections = await getCollections(options, fields as string[]);
       return res.json(collections);
     }
   } catch (error: any) {

@@ -69,36 +69,38 @@ export default function Checkout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Page>
-        <GoBackButton />
-        {orderPrice ? (
-          <>
-            <main className={styles.container}>
-              <CheckoutForm
-                className={styles.section}
-                register={register}
-                errors={formState.errors}
+        <main className={styles.container}>
+          <GoBackButton className={styles.goBack} />
+          {orderPrice ? (
+            <>
+              <div className={styles.content}>
+                <CheckoutForm
+                  className={styles.section}
+                  register={register}
+                  errors={formState.errors}
+                />
+                <CheckoutSummary
+                  className={styles.section}
+                  orderPrice={orderPrice}
+                  onSubmit={handleSubmit(onSubmit)}
+                />
+              </div>
+              <Overlay
+                active={showPaymentModal || loading || completed}
+                onClick={() => setShowPaymentModal(false)}
               />
-              <CheckoutSummary
-                className={styles.section}
-                orderPrice={orderPrice}
-                onSubmit={handleSubmit(onSubmit)}
+              {loading && <Spinner fixed />}
+              <PaymentModal
+                active={showPaymentModal}
+                onPayment={submitOrder}
+                error={error}
               />
-            </main>
-            <Overlay
-              active={showPaymentModal || loading || completed}
-              onClick={() => setShowPaymentModal(false)}
-            />
-            {loading && <Spinner fixed />}
-            <PaymentModal
-              active={showPaymentModal}
-              onPayment={submitOrder}
-              error={error}
-            />
-            <OrderConfirmation active={completed} orderData={orderData} />
-          </>
-        ) : (
-          <div className={styles.empty}>Your cart is empty.</div>
-        )}
+              <OrderConfirmation active={completed} orderData={orderData} />
+            </>
+          ) : (
+            <div className={styles.empty}>Your cart is empty.</div>
+          )}
+        </main>
       </Page>
     </>
   );
@@ -111,8 +113,8 @@ export const getServerSideProps: GetServerSideProps<{
     const { cartItems: cartItemsCookie } = context.req.cookies;
     if (!cartItemsCookie) throw new Error("No cookie found");
     const cartItems = JSON.parse(cartItemsCookie) as CartItem[];
-    if (!Array.isArray(cartItems) || !cartItems?.length)
-      throw new Error("No cart items found");
+    // if (!Array.isArray(cartItems) || !cartItems?.length)
+    //   throw new Error("No cart items found");
     const orderPrice = await getOrderPrice(cartItems);
     return { props: { orderPrice } };
   } catch (error: any) {

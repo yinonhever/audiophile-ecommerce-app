@@ -1,21 +1,40 @@
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import type {
+  GetStaticPaths,
+  GetStaticProps,
+  InferGetStaticPropsType
+} from "next";
 import { getCollections } from "../api/collections";
 import { getCollectionBySlug } from "../api/collections/[slug]";
-import { CollectionData } from "@/models/Collection";
-import { ProductData } from "@/models/Product";
+import type { CollectionData } from "@/models/Collection";
+import type { ProductData } from "@/models/Product";
 import Page from "@/components/layout/Page";
+import Head from "next/head";
+import CollectionHeading from "@/components/collection/CollectionHeading";
+import CollectionItem from "@/components/collection/CollectionProductItem";
+import styles from "@/styles/CollectionPage.module.scss";
+import FeaturedCollections from "@/components/shared/FeaturedCollections";
+import About from "@/components/shared/About";
+import CollectionProductList from "@/components/collection/CollectionProductList";
 
 export default function CollectionPage({
-  collection
+  collection,
+  collectionList
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
+      <Head>
+        <title>{collection?.title} – Audiophile</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
       <Page>
-        <div>{collection?.title}</div>
-        {collection?.products.map(item => {
-          const product = { ...item } as ProductData;
-          return <h3 key={product._id}>{product.title}</h3>;
-        })}
+        <CollectionHeading title={collection?.title} />
+        <main className={styles.container}>
+          <CollectionProductList
+            items={collection?.products as ProductData[]}
+          />
+          <FeaturedCollections collections={collectionList} />
+          <About />
+        </main>
       </Page>
     </>
   );
@@ -36,12 +55,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<{
   collection: CollectionData;
+  collectionList: CollectionData[];
 }> = async ({ params }) => {
   try {
     const slug = params?.slug as string;
-    const collection = await getCollectionBySlug(slug);
+    const [collection, collectionList] = await Promise.all([
+      getCollectionBySlug(slug),
+      getCollections({ showInPages: true })
+    ]);
     if (!collection) return { notFound: true };
-    return { props: { collection } };
+    return { props: { collection, collectionList } };
   } catch (error: any) {
     console.log(error.message);
     return { notFound: true };

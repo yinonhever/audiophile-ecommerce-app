@@ -1,4 +1,4 @@
-import { PropsWithClassName } from "@/lib/types";
+import type { PropsWithClassName } from "@/lib/types";
 import styles from "./QtyControls.module.scss";
 import { cx } from "@/lib/functions";
 
