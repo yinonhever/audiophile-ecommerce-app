@@ -24,7 +24,8 @@ export const isValidZipCode = (value: string) =>
 export const cx = (...classNames: (string | false | null | undefined)[]) =>
   classNames.filter(className => !!className).join(" ");
 
-export const convertedNumber = (num: number) => {
+export const convertedNumber = (num?: number) => {
+  if (num === undefined) return;
   if (isNaN(num)) throw new Error("Invalid number");
   let numStr = num.toString();
   let isNegative = false;

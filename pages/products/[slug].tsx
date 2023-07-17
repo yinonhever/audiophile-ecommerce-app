@@ -26,7 +26,7 @@ export default function ProductPage({
   return (
     <>
       <Head>
-        <title>{product.title} – Audiophile</title>
+        <title>{product?.title} – Audiophile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Page>
@@ -34,8 +34,8 @@ export default function ProductPage({
           <GoBackButton className={styles.goBack} />
           <ProductDescription {...product} />
           <ProductFeatures {...product} />
-          <ProductGallery items={product.gallery} />
-          <ProductSuggestions items={product.suggestions as ProductData[]} />
+          <ProductGallery items={product?.gallery} />
+          <ProductSuggestions items={product?.suggestions as ProductData[]} />
           <FeaturedCollections collections={collections} />
           <About />
         </main>

@@ -24,10 +24,10 @@ export default function Footer() {
       </div>
       <div className={styles.bottom}>
         <p className={styles.text}>
-          Audiophile is an all in one stop to fulfill your audio needs. We're a
-          small team of music lovers and sound specialists who are devoted to
-          helping you get the most out of personal audio. Come and visit our
-          demo facility - we're open 7 days a week.
+          Audiophile is an all in one stop to fulfill your audio needs.
+          We&apos;re a small team of music lovers and sound specialists who are
+          devoted to helping you get the most out of personal audio. Come and
+          visit our demo facility - we&apos;re open 7 days a week.
         </p>
         <div className={styles.socials}>
           <div className={styles.icons}>

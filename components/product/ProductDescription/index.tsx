@@ -19,7 +19,7 @@ export default function ProductDescription({
 
   return (
     <section className={styles.wrapper}>
-      <img className={styles.image} src={image.desktop} alt={title} />
+      <img className={styles.image} src={image?.desktop} alt={title} />
       <div className={styles.content}>
         {isNewProduct && <h3 className={styles.label}>New product</h3>}
         <h2 className={styles.title}>{title}</h2>

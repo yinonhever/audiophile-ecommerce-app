@@ -4,7 +4,7 @@ import styles from "./ProductSuggestions.module.scss";
 export default function ProductSuggestions({
   items
 }: {
-  items: ProductData[];
+  items?: ProductData[];
 }) {
   return <section className={styles.wrapper}></section>;
 }
