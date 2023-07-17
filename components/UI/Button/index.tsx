@@ -17,17 +17,19 @@ export default function Button({
   outlined?: boolean;
   colored?: boolean;
 }>) {
-  const classes = [styles.button];
-  if (fullWidth) classes.push(styles.fullWidth);
-  if (outlined) classes.push(styles.outlined);
-  if (colored) classes.push(styles.colored);
+  const classes = cx(
+    styles.button,
+    fullWidth && styles.fullWidth,
+    outlined && styles.outlined,
+    colored && styles.colored
+  );
 
   return link ? (
-    <Link className={cx(...classes)} href={link}>
+    <Link className={classes} href={link}>
       {children}
     </Link>
   ) : (
-    <button className={cx(...classes)} onClick={onClick}>
+    <button className={classes} onClick={onClick}>
       {children}
     </button>
   );

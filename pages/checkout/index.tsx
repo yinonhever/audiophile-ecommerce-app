@@ -74,13 +74,8 @@ export default function Checkout({
           {orderPrice ? (
             <>
               <div className={styles.content}>
-                <CheckoutForm
-                  className={styles.section}
-                  register={register}
-                  errors={formState.errors}
-                />
+                <CheckoutForm register={register} errors={formState.errors} />
                 <CheckoutSummary
-                  className={styles.section}
                   orderPrice={orderPrice}
                   onSubmit={handleSubmit(onSubmit)}
                 />

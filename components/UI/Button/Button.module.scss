@@ -1,6 +1,31 @@
+@use "styles/variables";
+@use "styles/mixins";
+
 .button {
+  background-color: variables.$color-secondary;
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 15px 32px;
+  transition: all 0.4s;
+
+  &:hover {
+    background-color: #4c4c4c;
+  }
+
+  &.colored {
+    background-color: variables.$color-primary;
+
+    &:hover {
+      background-color: #fbaf85;
+    }
+  }
+
   &.fullWidth {
     display: block;
     width: 100%;
+    text-align: center;
   }
 }

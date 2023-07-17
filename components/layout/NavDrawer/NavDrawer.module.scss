@@ -2,25 +2,26 @@
 @use "styles/mixins";
 
 .wrapper {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  z-index: 10;
-  overflow: hidden;
-  transition: all 0.4s;
   display: none;
 
   @include mixins.respond(tablet) {
     display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 11;
+    overflow: hidden;
+    transition: all 0.4s;
   }
 }
 
 .container {
-  background-color: #fff;
-  border-radius: 0 0 8px 8px;
-  padding: 56px variables.$padding-side-tablet 67px;
-  min-height: 300px;
+  @include mixins.respond(tablet) {
+    background-color: #fff;
+    border-radius: 0 0 8px 8px;
+    padding: 56px variables.$padding-side-tablet 67px;
+  }
 
   @include mixins.respond(mobile) {
     padding: 35px variables.$padding-side-mobile;
@@ -28,9 +29,11 @@
 }
 
 .list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  @include mixins.respond(tablet) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
 
   @include mixins.respond(mobile) {
     grid-template-columns: 1fr;

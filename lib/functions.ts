@@ -60,7 +60,7 @@ export const getConvertedItem = <T>(item: Document | DataItem<T>) => {
   return convertedItem;
 };
 
-export const fixTimeoutTransition = (timeout: number): void => {
+export const fixTimeoutTransition = (timeout: number) => {
   Router.events.on("beforeHistoryChange", () => {
     // Create a clone of every <style> and <link> that currently affects the page. It doesn't matter
     // if Next.js is going to remove them or not since we are going to remove the copies ourselves

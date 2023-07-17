@@ -23,12 +23,120 @@
 
 .container {
   background-color: #fff;
-  padding: 32px;
+  padding: 31px;
   border-radius: 8px;
   width: 377px;
   min-height: 200px;
+  display: flex;
+  flex-direction: column;
 
   @include mixins.respond(mobile) {
+    padding: 31px 28px;
     max-width: calc(100vw - (2 * variables.$padding-side-mobile));
   }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+}
+
+.clear {
+  font-weight: 500;
+  text-decoration: underline;
+  line-height: 25px;
+  color: rgba(#000, 0.6);
+  transition: color 0.4s;
+
+  &:hover {
+    color: variables.$color-primary;
+  }
+}
+
+.items {
+  margin: 32px 0;
+
+  & > *:not(:last-child) {
+    margin-bottom: 24px;
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+
+  &__img {
+    display: block;
+    width: 64px;
+    margin-right: 16px;
+
+    img {
+      display: block;
+      width: 100%;
+      border-radius: 8px;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    line-height: 25px;
+    font-weight: 700;
+    margin-right: 16px;
+
+    & > * {
+      display: block;
+    }
+  }
+
+  &__title {
+    font-size: 15.5px;
+    transition: color 0.4s;
+
+    @include mixins.respond(mobile) {
+      font-size: 15px;
+    }
+  }
+
+  &__title:hover,
+  &__img:hover + &__content &__title {
+    color: variables.$color-primary;
+  }
+
+  &__price {
+    font-size: 14px;
+    color: rgba(#000, 0.6);
+  }
+}
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  &__label {
+    text-transform: uppercase;
+    line-height: 25px;
+  }
+
+  &__amount {
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+
+.empty {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@types/node": "20.3.2",
@@ -17,7 +18,6 @@
     "axios": "^1.4.0",
     "braintree": "^3.16.0",
     "braintree-web-drop-in": "^1.38.1",
-    "braintree-web-drop-in-react": "^1.2.1",
     "clone-deep": "^4.0.1",
     "cookies-next": "^2.1.2",
     "eslint": "8.43.0",
@@ -28,8 +28,8 @@
     "nextjs-progressbar": "^0.0.16",
     "nprogress": "^0.2.0",
     "react": "18.2.0",
+    "react-awesome-reveal": "^4.2.5",
     "react-dom": "18.2.0",
-    "react-dropdown-select": "^4.9.4",
     "react-hook-form": "^7.45.1",
     "swr": "^2.2.0",
     "typescript": "5.1.6"

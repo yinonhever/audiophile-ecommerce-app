@@ -1,4 +1,4 @@
-import type { OrderPrice, PropsWithClassName } from "@/lib/types";
+import type { OrderPrice } from "@/lib/types";
 import { CartContext, CartContextType } from "@/lib/CartContext";
 import { useContext, useState, useEffect, MouseEventHandler } from "react";
 import styles from "./CheckoutSummary.module.scss";
@@ -7,12 +7,11 @@ import Button from "../../UI/Button";
 
 export default function CheckoutSummary({
   orderPrice,
-  onSubmit,
-  className
-}: PropsWithClassName<{
+  onSubmit
+}: {
   orderPrice: OrderPrice;
   onSubmit: MouseEventHandler;
-}>) {
+}) {
   const { populatedCartItems } = useContext(CartContext) as CartContextType;
   const [displayedItems, setDisplayedItems] =
     useState<typeof populatedCartItems>();
@@ -24,7 +23,7 @@ export default function CheckoutSummary({
   }, [populatedCartItems]);
 
   return (
-    <div className={cx(styles.summary, className)}>
+    <div className={styles.wrapper}>
       <h3 className={styles.title}>Summary</h3>
       <div className={cx(styles.section, styles.items)}>
         {displayedItems?.map(item => (

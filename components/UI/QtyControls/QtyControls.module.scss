@@ -1,0 +1,35 @@
+@use "styles/variables";
+@use "styles/mixins";
+
+.container {
+  background-color: #f1f1f1;
+  letter-spacing: 1px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 96px;
+  height: 32px;
+
+  &.wide {
+    width: 120px;
+    height: 48px;
+  }
+}
+
+.count {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.control {
+  display: block;
+  font-size: 14px;
+  height: 100%;
+  padding: 0 12px;
+  transition: color 0.4s;
+
+  &:hover {
+    color: variables.$color-primary;
+  }
+}

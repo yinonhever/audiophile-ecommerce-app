@@ -66,7 +66,7 @@ export default function CartDrawer() {
                       {item.product?.shortTitle}
                     </Link>
                     <span className={styles.item__price}>
-                      {item.product?.price}
+                      $ {convertedNumber(item.product?.price)}
                     </span>
                   </div>
                   <QtyControls
@@ -88,7 +88,7 @@ export default function CartDrawer() {
             </Button>
           </>
         ) : (
-          <div>Your cart is empty</div>
+          <p className={styles.empty}>Your cart is empty.</p>
         )}
       </div>
     </div>
