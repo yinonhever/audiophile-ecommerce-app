@@ -22,7 +22,7 @@ export default function Checkout({
   orderPrice
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { cartItems, clearItems } = useContext(CartContext) as CartContextType;
-  const { register, control, getValues, handleSubmit, formState } =
+  const { register, control, getValues, handleSubmit, formState, watch } =
     useForm<CheckoutData>({ defaultValues: initialCheckoutData });
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -78,6 +78,7 @@ export default function Checkout({
                   register={register}
                   control={control}
                   errors={formState.errors}
+                  watch={watch}
                 />
                 <CheckoutSummary
                   orderPrice={orderPrice}

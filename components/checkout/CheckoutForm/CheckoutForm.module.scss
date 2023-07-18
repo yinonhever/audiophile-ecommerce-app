@@ -3,6 +3,14 @@
 
 .wrapper {
   padding: 54px 48px 48px;
+
+  @include mixins.respond(tablet) {
+    padding: 30px 27px;
+  }
+
+  @include mixins.respond(mobile) {
+    padding: 31px 24px;
+  }
 }
 
 .title {
@@ -12,11 +20,22 @@
   line-height: 36px;
   letter-spacing: 1.14px;
   margin-bottom: 41px;
+
+  @include mixins.respond(mobile) {
+    font-size: 28px;
+    line-height: 38px;
+    letter-spacing: 1;
+    margin-bottom: 32px;
+  }
 }
 
 .subsection {
   &:not(:last-child) {
     margin-bottom: 56px;
+
+    @include mixins.respond(mobile) {
+      margin-bottom: 32px;
+    }
   }
 }
 
@@ -34,6 +53,17 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px 16px;
+
+  @include mixins.respond(mobile) {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.subsection:last-child .subform {
+  @include mixins.respond(mobile) {
+    gap: 17px;
+  }
 }
 
 .field {
@@ -47,7 +77,10 @@
     display: block;
     font-weight: 700;
     font-size: 12px;
-    margin-bottom: 9px;
+
+    &:not(:last-child) {
+      margin-bottom: 9px;
+    }
   }
 
   .input {
@@ -149,5 +182,27 @@
         }
       }
     }
+  }
+}
+
+.note {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+
+  &__icon {
+    margin-right: 32px;
+    display: block;
+    flex-shrink: 0;
+
+    @include mixins.respond(mobile) {
+      margin-right: 24px;
+    }
+  }
+
+  &__text {
+    color: rgba(#000, 0.5);
+    line-height: 25px;
+    font-weight: 500;
   }
 }
