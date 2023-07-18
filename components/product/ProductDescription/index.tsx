@@ -7,12 +7,12 @@ import Button from "@/components/UI/Button";
 import QtyControls from "@/components/UI/QtyControls";
 
 export default function ProductDescription({
-  _id: productId,
   title,
   image,
   isNewProduct,
   price,
-  description
+  description,
+  _id: productId
 }: ProductData) {
   const { addItem } = useContext(CartContext) as CartContextType;
   const [qty, setQty] = useState(1);
@@ -26,7 +26,12 @@ export default function ProductDescription({
         <p className={styles.description}>{description}</p>
         <span className={styles.price}>$ {convertedNumber(price)}</span>
         <div className={styles.controls}>
-          <QtyControls wide className={styles.qty} value={qty} onChange={setQty} />
+          <QtyControls
+            wide
+            className={styles.qty}
+            value={qty}
+            onChange={setQty}
+          />
           <Button colored onClick={() => addItem(productId, qty)}>
             Add to cart
           </Button>

@@ -2,10 +2,12 @@
   background-color: #f4f4f4;
 }
 
-.section {
-  background-color: #fff;
-  border-radius: 8px;
-  max-width: 40%;
+.content {
+  & > section {
+    background-color: #fff;
+    border-radius: 8px;
+    max-width: 40%;
+  }
 }
 
 .empty {

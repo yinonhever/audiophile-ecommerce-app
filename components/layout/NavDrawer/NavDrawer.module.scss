@@ -20,23 +20,12 @@
   @include mixins.respond(tablet) {
     background-color: #fff;
     border-radius: 0 0 8px 8px;
-    padding: 56px variables.$padding-side-tablet 67px;
+    padding: 50px variables.$padding-side-tablet;
+    max-height: calc(100vh - 120px);
+    overflow: auto;
   }
 
   @include mixins.respond(mobile) {
     padding: 35px variables.$padding-side-mobile;
-  }
-}
-
-.list {
-  @include mixins.respond(tablet) {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-
-  @include mixins.respond(mobile) {
-    grid-template-columns: 1fr;
-    gap: 16px;
   }
 }

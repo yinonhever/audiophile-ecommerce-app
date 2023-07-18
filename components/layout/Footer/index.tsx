@@ -11,7 +11,7 @@ import {
 
 export default function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer className={styles.wrapper}>
       <div className={styles.top}>
         <Logo className={styles.logo} />
         <div className={styles.navigation}>

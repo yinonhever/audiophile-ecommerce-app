@@ -23,7 +23,7 @@ export default function CheckoutSummary({
   }, [populatedCartItems]);
 
   return (
-    <div className={styles.wrapper}>
+    <section className={styles.wrapper}>
       <h3 className={styles.title}>Summary</h3>
       <div className={cx(styles.section, styles.items)}>
         {displayedItems?.map(item => (
@@ -75,6 +75,6 @@ export default function CheckoutSummary({
       <Button fullWidth colored onClick={onSubmit}>
         Continue & pay
       </Button>
-    </div>
+    </section>
   );
 }

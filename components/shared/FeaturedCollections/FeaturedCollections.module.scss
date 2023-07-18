@@ -1,0 +1,17 @@
+@use "styles/variables";
+@use "styles/mixins";
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+
+  @include mixins.respond(tablet) {
+    gap: 10px;
+  }
+
+  @include mixins.respond(mobile) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}

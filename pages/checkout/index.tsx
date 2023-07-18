@@ -108,8 +108,8 @@ export const getServerSideProps: GetServerSideProps<{
     const { cartItems: cartItemsCookie } = context.req.cookies;
     if (!cartItemsCookie) throw new Error("No cookie found");
     const cartItems = JSON.parse(cartItemsCookie) as CartItem[];
-    // if (!Array.isArray(cartItems) || !cartItems?.length)
-    //   throw new Error("No cart items found");
+    if (!Array.isArray(cartItems) || !cartItems?.length)
+      throw new Error("No cart items found");
     const orderPrice = await getOrderPrice(cartItems);
     return { props: { orderPrice } };
   } catch (error: any) {

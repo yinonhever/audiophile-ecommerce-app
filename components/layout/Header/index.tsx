@@ -43,7 +43,7 @@ export default function Header() {
   };
 
   return (
-    <header className={styles.header}>
+    <header className={styles.wrapper}>
       <div className={styles.container}>
         <NavToggle
           onClick={() => setShowMobileMenu(!showMobileMenu)}

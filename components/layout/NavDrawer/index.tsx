@@ -3,7 +3,7 @@ import { useMemo, useRef } from "react";
 import useSWR from "swr";
 import type { CollectionData } from "@/models/Collection";
 import { fecther } from "@/lib/functions";
-import FeaturedCollection from "@/components/UI/FeaturedCollection";
+import FeaturedCollections from "@/components/shared/FeaturedCollections";
 
 export default function NavDrawer({ active }: { active: boolean }) {
   const { data: collections } = useSWR(
@@ -12,7 +12,6 @@ export default function NavDrawer({ active }: { active: boolean }) {
     { fallbackData: [] }
   );
   const element = useRef<HTMLElement>(null);
-
   const maxHeight = useMemo(
     () => (element.current && active ? `${element.current.scrollHeight}px` : 0),
     [active]
@@ -21,11 +20,7 @@ export default function NavDrawer({ active }: { active: boolean }) {
   return (
     <nav className={styles.wrapper} style={{ maxHeight }} ref={element}>
       <div className={styles.container}>
-        <div className={styles.list}>
-          {collections.map(collection => (
-            <FeaturedCollection key={collection._id} {...collection} />
-          ))}
-        </div>
+        <FeaturedCollections collections={collections} />
       </div>
     </nav>
   );

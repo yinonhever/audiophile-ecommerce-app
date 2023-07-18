@@ -1,7 +1,7 @@
 @use "styles/variables";
 @use "styles/mixins";
 
-.footer {
+.wrapper {
   background-color: variables.$color-secondary;
   color: #fff;
   padding: 75px variables.$padding-side-desktop 48px;

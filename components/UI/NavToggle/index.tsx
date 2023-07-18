@@ -1,6 +1,6 @@
 import { cx } from "@/lib/functions";
 import styles from "./NavToggle.module.scss";
-import { MouseEventHandler } from "react";
+import type { MouseEventHandler } from "react";
 
 export default function NavToggle({
   onClick,
