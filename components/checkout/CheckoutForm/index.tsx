@@ -1,6 +1,11 @@
 import styles from "./CheckoutForm.module.scss";
 import countries from "@/lib/util/countries.json";
-import type { UseFormRegister, FieldErrors } from "react-hook-form";
+import {
+  Controller,
+  UseFormRegister,
+  Control,
+  FieldErrors
+} from "react-hook-form";
 import type { CheckoutData } from "@/lib/types";
 import {
   cx,
@@ -8,12 +13,15 @@ import {
   isValidZipCode,
   isValidPhone
 } from "@/lib/functions";
+import Select from "react-dropdown-select";
 
 export default function CheckoutForm({
   register,
+  control,
   errors
 }: {
   register: UseFormRegister<CheckoutData>;
+  control: Control<CheckoutData>;
   errors: FieldErrors<CheckoutData>;
 }) {
   return (
@@ -51,6 +59,7 @@ export default function CheckoutForm({
                 styles.input,
                 errors.billingDetails?.email && styles.errored
               )}
+              placeholder="alexei@mail.com"
             />
             {errors.billingDetails?.email && (
               <small>{errors.billingDetails.email.message}</small>
@@ -68,6 +77,7 @@ export default function CheckoutForm({
                 styles.input,
                 errors.billingDetails?.phone && styles.errored
               )}
+              placeholder="+1 202-555-0136"
             />
             {errors.billingDetails?.phone && (
               <small>{errors.billingDetails.phone.message}</small>
@@ -78,7 +88,7 @@ export default function CheckoutForm({
       <div className={styles.subsection}>
         <h3 className={styles.subtitle}>Shipping info</h3>
         <div className={styles.subform}>
-          <div className={`${styles.field} ${styles["field--expanded"]}`}>
+          <div className={cx(styles.field, styles.expanded)}>
             <label className={styles.label}>Address</label>
             <input
               {...register("shippingDetails.address", {
@@ -89,6 +99,7 @@ export default function CheckoutForm({
                 styles.input,
                 errors.shippingDetails?.address && styles.errored
               )}
+              placeholder="1137 Williams Avenue"
             />
             {errors.shippingDetails?.address && (
               <small>{errors.shippingDetails.address.message}</small>
@@ -106,6 +117,7 @@ export default function CheckoutForm({
                 styles.input,
                 errors.shippingDetails?.zipCode && styles.errored
               )}
+              placeholder="10001"
             />
             {errors.shippingDetails?.zipCode && (
               <small>{errors.shippingDetails.zipCode.message}</small>
@@ -122,6 +134,7 @@ export default function CheckoutForm({
                 styles.input,
                 errors.shippingDetails?.city && styles.errored
               )}
+              placeholder="New York"
             />
             {errors.shippingDetails?.city && (
               <small>{errors.shippingDetails.city.message}</small>
@@ -129,21 +142,27 @@ export default function CheckoutForm({
           </div>
           <div className={styles.field}>
             <label className={styles.label}>Country</label>
-            <select
-              {...register("shippingDetails.country", {
-                required: "Required field"
-              })}
-              className={cx(
-                styles.input,
-                errors.shippingDetails?.country && styles.errored
+            <Controller
+              control={control}
+              name="shippingDetails.country"
+              rules={{ required: "Required field" }}
+              render={({ field: { value, onChange } }) => (
+                <Select
+                  options={countries}
+                  labelField="name"
+                  valueField="name"
+                  values={countries.filter(country => country.code === value)}
+                  onChange={values => onChange(values[0]?.code || "")}
+                  color="#d87d4a"
+                  noDataLabel="No matching countries"
+                  className={cx(
+                    styles.input,
+                    errors.shippingDetails?.country && styles.errored
+                  )}
+                  placeholder="United States"
+                />
               )}
-            >
-              {countries.map(country => (
-                <option key={country.code} value={country.code}>
-                  {country.name}
-                </option>
-              ))}
-            </select>
+            />
             {errors.shippingDetails?.country && (
               <small>{errors.shippingDetails.country.message}</small>
             )}
@@ -165,7 +184,13 @@ export default function CheckoutForm({
                   value="credit-card"
                   id="field-credit-card"
                 />
-                <label htmlFor="field-credit-card">Credit Card</label>
+                <label
+                  htmlFor="field-credit-card"
+                  className={styles.radioLabel}
+                >
+                  <span className={styles.radioIcon} />
+                  <span>Credit Card</span>
+                </label>
               </div>{" "}
               <div className={styles.radioOption}>
                 <input
@@ -174,7 +199,10 @@ export default function CheckoutForm({
                   value="cash"
                   id="field-cash"
                 />
-                <label htmlFor="field-cash">Cash</label>
+                <label htmlFor="field-cash" className={styles.radioLabel}>
+                  <span className={styles.radioIcon} />
+                  <span>Cash on Delivery</span>
+                </label>
               </div>
             </div>
           </div>

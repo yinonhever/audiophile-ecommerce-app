@@ -1,17 +1,153 @@
 @use "styles/variables";
+@use "styles/mixins";
 
-.form {
-  display: block;
+.wrapper {
+  padding: 54px 48px 48px;
 }
 
-.input {
-  outline: none;
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 36px;
+  letter-spacing: 1.14px;
+  margin-bottom: 41px;
+}
 
-  &:focus {
-    border-color: variables.$color-primary;
+.subsection {
+  &:not(:last-child) {
+    margin-bottom: 56px;
+  }
+}
+
+.subtitle {
+  font-size: 14px;
+  font-weight: 800;
+  color: variables.$color-primary;
+  text-transform: uppercase;
+  line-height: 25px;
+  letter-spacing: 0.95px;
+  margin-bottom: 16px;
+}
+
+.subform {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px 16px;
+}
+
+.field {
+  position: relative;
+
+  &.expanded {
+    grid-column: 1 / -1;
   }
 
-  &.errored {
-    border-color: variables.$color-error;
+  .label {
+    display: block;
+    font-weight: 700;
+    font-size: 12px;
+    margin-bottom: 9px;
+  }
+
+  .input {
+    outline: none;
+    width: 100%;
+    border: 2px solid #cfcfcf;
+    border-radius: 8px;
+    padding: 17px 24px;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.25px;
+    transition: border-color 0.4s;
+
+    &:focus {
+      border-color: variables.$color-primary;
+    }
+
+    &.errored {
+      border-color: variables.$color-error;
+    }
+
+    &::placeholder {
+      color: rgba(#000, 0.4);
+    }
+  }
+
+  small {
+    position: absolute;
+    top: 1px;
+    right: 3px;
+    color: variables.$color-error;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: -0.21px;
+  }
+
+  .radioGroup {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .radioOption {
+    input {
+      display: none;
+    }
+
+    .radioLabel {
+      width: 100%;
+      border: 2px solid #cfcfcf;
+      border-radius: 8px;
+      padding: 18px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.25px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.4s;
+
+      &:hover {
+        border-color: variables.$color-primary;
+      }
+    }
+
+    .radioIcon {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #cfcfcf;
+      border-radius: 50%;
+      margin-right: 16px;
+      display: block;
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: variables.$color-primary;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s;
+      }
+    }
+
+    input:checked + .radioLabel {
+      border-color: variables.$color-primary;
+
+      .radioIcon {
+        &::after {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+    }
   }
 }

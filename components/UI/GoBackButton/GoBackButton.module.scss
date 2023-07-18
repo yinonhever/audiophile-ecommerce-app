@@ -1,0 +1,14 @@
+@use "styles/variables";
+@use "styles/mixins";
+
+.button {
+  line-height: 25px;
+  font-size: 15px;
+  color: rgba(#000, 0.6);
+  font-weight: 500;
+  transition: color 0.4s;
+
+  &:hover {
+    color: variables.$color-primary;
+  }
+}

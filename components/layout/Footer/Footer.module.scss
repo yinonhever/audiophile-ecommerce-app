@@ -5,6 +5,7 @@
   background-color: variables.$color-secondary;
   color: #fff;
   padding: 75px variables.$padding-side-desktop 48px;
+  position: relative;
 
   @include mixins.respond(tablet) {
     padding: 60px variables.$padding-side-tablet 46px;
@@ -12,6 +13,25 @@
 
   @include mixins.respond(mobile) {
     padding: 52px variables.$padding-side-mobile 38px;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: variables.$padding-side-desktop;
+    height: 4px;
+    width: 100px;
+    background-color: variables.$color-primary;
+
+    @include mixins.respond(tablet) {
+      left: variables.$padding-side-tablet;
+    }
+
+    @include mixins.respond(mobile) {
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
 }
 

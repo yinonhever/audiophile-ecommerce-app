@@ -2,7 +2,7 @@ import dbConnect from "@/lib/dbConnect";
 import { getConvertedItem } from "@/lib/functions";
 import type { ErrorResponse } from "@/lib/types";
 import Collection, { CollectionData } from "@/models/Collection";
-import type { ProductData } from "@/models/Product";
+import Product, { ProductData } from "@/models/Product";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export const getCollections = async (

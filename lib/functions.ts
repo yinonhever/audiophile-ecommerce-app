@@ -2,6 +2,7 @@ import axios from "axios";
 import { Document } from "mongoose";
 import type { DataItem } from "./types";
 import Router from "next/router";
+import parsePhoneNumber from "libphonenumber-js";
 
 export const fecther = async <T>(url: string) => {
   const { data } = await axios.get<T>(url);
@@ -10,12 +11,8 @@ export const fecther = async <T>(url: string) => {
 
 export const isValidEmail = (value: string) => /\S+@\S+\.\S+/.test(value);
 
-export const isValidPhone = (value: string) => {
-  if (value.startsWith("+")) {
-    value = value.replace("+", "");
-  }
-  return isValidInteger(value) && value.length >= 6;
-};
+export const isValidPhone = (value: string) =>
+  parsePhoneNumber(value)?.isValid();
 
 export const isValidInteger = (value: string) => /^\d+$/.test(value);
 

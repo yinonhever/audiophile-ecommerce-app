@@ -4,9 +4,14 @@
 .wrapper {
   padding-top: 80px;
   position: relative;
+  transition: transform 0.4s;
 
   @include mixins.respond(tablet) {
     padding-top: 52px;
+  }
+
+  &:hover {
+    transform: translateY(-10%);
   }
 
   .img {

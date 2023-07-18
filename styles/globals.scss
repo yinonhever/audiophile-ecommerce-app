@@ -30,3 +30,15 @@ button {
   display: flex;
   flex-direction: column;
 }
+
+// LIBRARY CSS OVERRIDES
+.react-dropdown-select-input {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  margin-left: 0 !important;
+  font-family: inherit !important;
+
+  &::placeholder {
+    color: rgba(#000, 0.4) !important;
+  }
+}

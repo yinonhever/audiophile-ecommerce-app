@@ -13,7 +13,7 @@ export default function FeaturedCollections({
   const TagName = tag || "section";
   const items = navItems
     .map(item =>
-      collections.find(
+      collections?.find(
         collection => item.path === `/collections/${collection.slug}`
       )
     )

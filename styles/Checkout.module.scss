@@ -1,12 +1,28 @@
+@use "styles/variables";
+@use "styles/mixins";
+
 .container {
   background-color: #f4f4f4;
+  padding: 80px variables.$padding-side-desktop 140px;
+}
+
+.goBack {
+  margin-bottom: 38px;
 }
 
 .content {
+  display: grid;
+  grid-template-columns: 51vw 1fr;
+  gap: 2.1vw;
+  align-items: start;
+
   & > section {
     background-color: #fff;
     border-radius: 8px;
-    max-width: 40%;
+
+    img {
+      display: none;
+    }
   }
 }
 
