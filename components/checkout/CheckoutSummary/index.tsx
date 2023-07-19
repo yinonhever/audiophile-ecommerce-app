@@ -21,7 +21,7 @@ export default function CheckoutSummary({
   const [displayedItems, setDisplayedItems] = useState([...populatedCartItems]);
   const orderPrice = useMemo(
     () => calculateOrderPrice(displayedItems),
-    displayedItems
+    [displayedItems]
   );
   const hasProductData = useMemo(
     () => displayedItems.filter(item => item.product).length > 0,

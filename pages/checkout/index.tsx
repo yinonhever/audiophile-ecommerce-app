@@ -28,10 +28,8 @@ export default function Checkout({
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>();
-  const [completed, setCompleted] = useState(true);
-  const [orderData, setOrderData] = useState<OrderData>(
-    require("@/temp34.json")
-  );
+  const [completed, setCompleted] = useState(false);
+  const [orderData, setOrderData] = useState<OrderData>();
 
   const onSubmit: SubmitHandler<CheckoutData> = ({ paymentMethod }) => {
     if (paymentMethod === PAYMENT_METHODS.CREDIT_CARD) {
