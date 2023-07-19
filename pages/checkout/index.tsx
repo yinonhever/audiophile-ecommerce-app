@@ -109,9 +109,9 @@ export default function Checkout({
 
 export const getServerSideProps: GetServerSideProps<{
   hasCartItems: boolean;
-}> = async context => {
+}> = async ({ req }) => {
   try {
-    const { cartItems: cartItemsCookie } = context.req.cookies;
+    const { cartItems: cartItemsCookie } = req.cookies;
     if (!cartItemsCookie) return { props: { hasCartItems: false } };
     const cartItems = JSON.parse(cartItemsCookie) as CartItem[];
     if (!Array.isArray(cartItems) || !cartItems?.length)

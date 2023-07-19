@@ -23,7 +23,7 @@ export default function CollectionPage({
   return (
     <>
       <Head>
-        <title>{collection?.title} – Audiophile</title>
+        <title>{`${collection?.title} – Audiophile`}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Page>

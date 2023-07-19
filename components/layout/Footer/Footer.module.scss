@@ -138,8 +138,12 @@
   .icons {
     display: flex;
 
-    & > *:not(:last-child) {
-      margin-right: 16px;
+    & > * {
+      display: block;
+
+      &:not(:last-child) {
+        margin-right: 16px;
+      }
     }
   }
 

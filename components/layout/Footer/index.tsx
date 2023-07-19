@@ -31,9 +31,18 @@ export default function Footer() {
         </p>
         <div className={styles.socials}>
           <div className={styles.icons}>
-            <FontAwesomeIcon icon={faFacebookSquare} className={styles.icon} />
-            <FontAwesomeIcon icon={faTwitter} className={styles.icon} />
-            <FontAwesomeIcon icon={faInstagram} className={styles.icon} />
+            <Link href="https://facebook.com" target="_blank">
+              <FontAwesomeIcon
+                icon={faFacebookSquare}
+                className={styles.icon}
+              />
+            </Link>
+            <Link href="https://twitter.com" target="_blank">
+              <FontAwesomeIcon icon={faTwitter} className={styles.icon} />
+            </Link>
+            <Link href="https://instagram.com" target="_blank">
+              <FontAwesomeIcon icon={faInstagram} className={styles.icon} />
+            </Link>
           </div>
         </div>
         <p className={styles.copyright}>

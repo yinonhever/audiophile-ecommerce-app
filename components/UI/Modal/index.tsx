@@ -19,7 +19,7 @@ export default function Modal({
     if (!fixedHeight && adjustHeight !== false) {
       setHeight(
         active && element.current
-          ? `${element.current.scrollHeight}px`
+          ? `${element.current.offsetHeight + 1}px`
           : undefined
       );
     }

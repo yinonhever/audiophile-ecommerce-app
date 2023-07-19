@@ -26,7 +26,7 @@ export default function ProductPage({
   return (
     <>
       <Head>
-        <title>{product?.title} – Audiophile</title>
+        <title>{`${product?.title} – Audiophile`}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Page>
