@@ -3,7 +3,8 @@ import { CartContext, CartContextType } from "@/lib/CartContext";
 import { useContext, useState, useEffect, MouseEventHandler } from "react";
 import styles from "./CheckoutSummary.module.scss";
 import { convertedNumber, cx } from "@/lib/functions";
-import Button from "../../UI/Button";
+import Button from "@/components/UI/Button";
+import Link from "next/link";
 
 export default function CheckoutSummary({
   orderPrice,
@@ -28,18 +29,31 @@ export default function CheckoutSummary({
       <div className={cx(styles.section, styles.items)}>
         {displayedItems?.map(item => (
           <article key={item.productId} className={styles.item}>
-            <div className={styles.item__img}>
+            <Link
+              className={styles.item__img}
+              href={`/products/${item.product?.slug}`}
+            >
               <img
                 src={item.product?.image.desktop}
                 alt={item.product?.title}
               />
-            </div>
+            </Link>
             <div className={styles.item__content}>
-              <span className={styles.item__title}>
-                {item.product?.shortTitle}
+              <div className={styles.item__main}>
+                <Link
+                  className={styles.item__title}
+                  href={`/products/${item.product?.slug}`}
+                >
+                  {item.product?.shortTitle}
+                </Link>
+                <span className={styles.item__price}>
+                  $ {convertedNumber(item.product?.price)}
+                </span>
+              </div>
+              <span className={styles.item__count}>
+                <span className={styles.x}>x</span>
+                {item.qty}
               </span>
-              <span className={styles.item__price}>{item.product?.price}</span>
-              <span className={styles.item__count}>X{item.qty}</span>
             </div>
           </article>
         ))}
@@ -50,7 +64,7 @@ export default function CheckoutSummary({
           <span className={styles.priceRow__amount}>
             $ {convertedNumber(orderPrice.itemsPrice)}
           </span>
-        </div>{" "}
+        </div>
         <div className={styles.priceRow}>
           <span className={styles.priceRow__label}>Shipping</span>
           <span className={styles.priceRow__amount}>
@@ -63,8 +77,6 @@ export default function CheckoutSummary({
             $ {convertedNumber(orderPrice.vat)}
           </span>
         </div>
-      </div>
-      <div className={cx(styles.section, styles.pricing)}>
         <div className={cx(styles.priceRow, styles.totalRow)}>
           <span className={styles.priceRow__label}>Grand total</span>
           <span className={styles.priceRow__amount}>
