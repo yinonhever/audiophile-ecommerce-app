@@ -1,8 +1,9 @@
 import axios from "axios";
 import { Document } from "mongoose";
-import type { DataItem } from "./types";
+import type { DataItem, OrderPrice } from "./types";
 import Router from "next/router";
 import parsePhoneNumber from "libphonenumber-js";
+import type { PopulatedCartItem } from "./CartContext";
 
 export const fecther = async <T>(url: string) => {
   const { data } = await axios.get<T>(url);
@@ -55,6 +56,16 @@ export const getConvertedItem = <T>(item: Document | DataItem<T>) => {
     convertedItem.updatedAt = new Date(updatedAt).toISOString();
   }
   return convertedItem;
+};
+
+export const calculateOrderPrice = (items: PopulatedCartItem[]): OrderPrice => {
+  const itemsPrice = +items
+    .reduce((sum, item) => sum + (item.product?.price ?? 0) * item.qty, 0)
+    .toFixed(2);
+  const shippingFee = 50;
+  const vat = +((itemsPrice * 20) / 100).toFixed(2);
+  const totalPrice = +(itemsPrice + shippingFee + vat).toFixed(2);
+  return { itemsPrice, shippingFee, vat, totalPrice };
 };
 
 export const fixTimeoutTransition = (timeout: number) => {

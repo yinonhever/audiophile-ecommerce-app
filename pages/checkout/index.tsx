@@ -1,14 +1,13 @@
 import { CartContext, CartContextType, CartItem } from "@/lib/CartContext";
-import { getOrderPrice } from "../api/orders";
 import { useContext, useState } from "react";
-import type { OrderPrice, CheckoutData } from "@/lib/types";
+import type { CheckoutData } from "@/lib/types";
 import { SubmitHandler, useForm } from "react-hook-form";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import type { OrderData } from "@/models/Order";
 import Page from "@/components/layout/Page";
 import PaymentModal from "@/components/checkout/PaymentModal";
 import CheckoutForm from "@/components/checkout/CheckoutForm";
-import initialCheckoutData from "@/lib/util/initial-checkout-data.json";
+import initialCheckoutData from "@/lib/assets/initial-checkout-data.json";
 import CheckoutSummary from "@/components/checkout/CheckoutSummary";
 import Overlay from "@/components/UI/Overlay";
 import Spinner from "@/components/UI/Spinner";
@@ -19,7 +18,7 @@ import styles from "@/styles/Checkout.module.scss";
 import axios from "axios";
 
 export default function Checkout({
-  orderPrice
+  hasCartItems
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { cartItems, clearItems } = useContext(CartContext) as CartContextType;
   const { register, control, getValues, handleSubmit, formState, watch } =
@@ -71,7 +70,7 @@ export default function Checkout({
       <Page>
         <main className={styles.container}>
           <GoBackButton className={styles.goBack} />
-          {orderPrice ? (
+          {hasCartItems ? (
             <>
               <div className={styles.content}>
                 <CheckoutForm
@@ -80,10 +79,7 @@ export default function Checkout({
                   errors={formState.errors}
                   watch={watch}
                 />
-                <CheckoutSummary
-                  orderPrice={orderPrice}
-                  onSubmit={handleSubmit(onSubmit)}
-                />
+                <CheckoutSummary onSubmit={handleSubmit(onSubmit)} />
               </div>
               <Overlay
                 active={showPaymentModal || loading || completed}
@@ -107,18 +103,17 @@ export default function Checkout({
 }
 
 export const getServerSideProps: GetServerSideProps<{
-  orderPrice: OrderPrice | null;
+  hasCartItems: boolean;
 }> = async context => {
   try {
     const { cartItems: cartItemsCookie } = context.req.cookies;
-    if (!cartItemsCookie) throw new Error("No cookie found");
+    if (!cartItemsCookie) return { props: { hasCartItems: false } };
     const cartItems = JSON.parse(cartItemsCookie) as CartItem[];
     if (!Array.isArray(cartItems) || !cartItems?.length)
-      throw new Error("No cart items found");
-    const orderPrice = await getOrderPrice(cartItems);
-    return { props: { orderPrice } };
+      return { props: { hasCartItems: false } };
+    return { props: { hasCartItems: true } };
   } catch (error: any) {
     console.log(error.message);
-    return { props: { orderPrice: null } };
+    return { props: { hasCartItems: false } };
   }
 };

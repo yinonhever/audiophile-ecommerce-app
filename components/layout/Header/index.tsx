@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import styles from "./Header.module.scss";
-import navItems from "@/lib/util/nav-items.json";
+import navItems from "@/lib/assets/nav-items.json";
 import Logo from "@/components/UI/Logo";
 import Link from "next/link";
 import { cx } from "@/lib/functions";

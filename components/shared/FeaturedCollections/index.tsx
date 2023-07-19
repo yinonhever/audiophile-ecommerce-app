@@ -1,7 +1,7 @@
 import type { CollectionData } from "@/models/Collection";
 import styles from "./FeaturedCollections.module.scss";
 import FeaturedCollection from "@/components/UI/FeaturedCollection";
-import navItems from "@/lib/util/nav-items.json";
+import navItems from "@/lib/assets/nav-items.json";
 
 export default function FeaturedCollections({
   collections,

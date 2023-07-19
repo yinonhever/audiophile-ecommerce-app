@@ -1,5 +1,5 @@
 import styles from "./CheckoutForm.module.scss";
-import countries from "@/lib/util/countries.json";
+import countries from "@/lib/assets/countries.json";
 import {
   Controller,
   UseFormRegister,

@@ -17,9 +17,13 @@ export interface CartItem {
   qty: number;
 }
 
+export interface PopulatedCartItem extends CartItem {
+  product?: ProductData;
+}
+
 export interface CartContextType {
   cartItems: CartItem[];
-  populatedCartItems: (CartItem & { product?: ProductData })[];
+  populatedCartItems: PopulatedCartItem[];
   addItem: (productId: string, qty: number) => void;
   removeItem: (productId: string) => void;
   updateItemQty: (productId: string, qty: number) => void;

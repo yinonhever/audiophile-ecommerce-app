@@ -1,7 +1,7 @@
 import Logo from "@/components/UI/Logo";
 import styles from "./Footer.module.scss";
-import navItems from "@/lib/util/nav-items.json";
 import Link from "next/link";
+import navItems from "@/lib/assets/nav-items.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebookSquare,

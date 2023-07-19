@@ -1,9 +1,10 @@
 import Order, { OrderData } from "@/models/Order";
 import Product from "@/models/Product";
-import type { CartItem } from "@/lib/CartContext";
+import type { CartItem, PopulatedCartItem } from "@/lib/CartContext";
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { CheckoutData, ErrorResponse, OrderPrice } from "@/lib/types";
+import type { CheckoutData, ErrorResponse } from "@/lib/types";
 import braintree from "braintree";
+import { calculateOrderPrice } from "@/lib/functions";
 import dbConnect from "@/lib/dbConnect";
 
 interface OrderRequestData extends CheckoutData {
@@ -11,37 +12,13 @@ interface OrderRequestData extends CheckoutData {
   nonce?: string;
 }
 
-export const getOrderPrice = async (
-  cartItems: CartItem[]
-): Promise<OrderPrice> => {
-  await dbConnect();
-  const products = await Product.find({
-    _id: { $in: cartItems.map(item => item.productId) }
-  });
-  if (products.length !== cartItems.length) {
-    throw new Error("One or more cart items have an invalid product ID");
-  }
-  const populatedItems = cartItems.map(item => ({
-    ...item,
-    product: products
-      .find(product => product._id.toString() === item.productId)
-      ?.toObject()
-  }));
-  const itemsPrice = +populatedItems
-    .reduce((sum, item) => sum + (item.product?.price ?? 0) * item.qty, 0)
-    .toFixed(2);
-  const shippingFee = 50;
-  const vat = +((itemsPrice * 20) / 100).toFixed(2);
-  const totalPrice = +(itemsPrice + shippingFee + vat).toFixed(2);
-  return { itemsPrice, shippingFee, vat, totalPrice };
-};
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<OrderData | ErrorResponse>
 ) {
   try {
     if (req.method === "POST") {
+      await dbConnect();
       const {
         cartItems,
         billingDetails,
@@ -49,17 +26,21 @@ export default async function handler(
         paymentMethod,
         nonce
       }: OrderRequestData = req.body;
-      const price = await getOrderPrice(cartItems);
       const products = await Product.find({
         _id: { $in: cartItems.map(item => item.productId) }
       }).select("price");
-      const orderItems = cartItems.map(item => ({
+      const populatedItems: PopulatedCartItem[] = cartItems.map(item => ({
+        ...item,
+        product: products
+          .find(product => product._id.toString() === item.productId)
+          ?.toObject()
+      }));
+      const orderItems = populatedItems.map(item => ({
         product: item.productId,
-        price: products.find(
-          product => product._id.toString() === item.productId
-        )?.price,
+        price: item.product?.price,
         qty: item.qty
       }));
+      const price = calculateOrderPrice(populatedItems);
       const order = new Order({
         items: orderItems,
         price,
