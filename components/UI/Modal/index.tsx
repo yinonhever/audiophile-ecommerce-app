@@ -7,6 +7,6 @@ export default function Modal({
   children
 }: PropsWithChildren<{ active: boolean }>) {
   return (
-    <div className={cx(styles.modal, active && styles.active)}>{children}</div>
+    <div className={cx(styles.container, active && styles.active)}>{children}</div>
   );
 }
