@@ -28,7 +28,7 @@
   gap: 2.1vw;
   align-items: start;
 
-  @include mixins.respond(tablet) {
+  @include mixins.respond(tablet-land) {
     grid-template-columns: 1fr;
     gap: 32px;
   }

@@ -1,8 +1,16 @@
+@use "styles/variables";
+@use "styles/mixins";
+
 .wrapper {
   min-height: 200px;
   position: relative;
+  padding: 32px;
+
+  @include mixins.respond(mobile) {
+    padding: 24px;
+  }
 }
 
-.dropin {
-  margin-bottom: 30px;
+.button {
+  margin-top: 30px;
 }

@@ -9,21 +9,23 @@ export default function Button({
   link,
   fullWidth,
   outlined,
-  colored
+  colored,
+  className
 }: PropsWithChildren<{
   onClick?: MouseEventHandler;
   link?: string;
   fullWidth?: boolean;
   outlined?: boolean;
   colored?: boolean;
+  className?: string;
 }>) {
   const classes = cx(
     styles.button,
     fullWidth && styles.fullWidth,
     outlined && styles.outlined,
-    colored && styles.colored
+    colored && styles.colored,
+    className
   );
-
   return link ? (
     <Link className={classes} href={link}>
       {children}

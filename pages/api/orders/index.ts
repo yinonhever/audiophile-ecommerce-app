@@ -6,6 +6,7 @@ import type { CheckoutData, ErrorResponse } from "@/lib/types";
 import braintree from "braintree";
 import { calculateOrderPrice } from "@/lib/functions";
 import dbConnect from "@/lib/dbConnect";
+import { PAYMENT_METHODS } from "@/lib/constants";
 
 interface OrderRequestData extends CheckoutData {
   cartItems: CartItem[];
@@ -48,7 +49,7 @@ export default async function handler(
         shippingDetails,
         paymentMethod
       });
-      if (paymentMethod === "credit-card") {
+      if (paymentMethod === PAYMENT_METHODS.CREDIT_CARD) {
         const gateway = new braintree.BraintreeGateway({
           environment: braintree.Environment.Sandbox,
           merchantId: process.env.BRAINTREE_MERCHANT_ID as string,

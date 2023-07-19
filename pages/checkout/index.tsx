@@ -15,6 +15,7 @@ import OrderConfirmation from "@/components/checkout/OrderConfirmation";
 import GoBackButton from "@/components/UI/GoBackButton";
 import Head from "next/head";
 import styles from "@/styles/Checkout.module.scss";
+import { PAYMENT_METHODS } from "@/lib/constants";
 import axios from "axios";
 
 export default function Checkout({
@@ -23,16 +24,16 @@ export default function Checkout({
   const { cartItems, clearItems } = useContext(CartContext) as CartContextType;
   const { register, control, getValues, handleSubmit, formState, watch } =
     useForm<CheckoutData>({ defaultValues: initialCheckoutData });
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>();
   const [completed, setCompleted] = useState(false);
   const [orderData, setOrderData] = useState<OrderData>();
 
   const onSubmit: SubmitHandler<CheckoutData> = ({ paymentMethod }) => {
-    if (paymentMethod === "credit-card") {
+    if (paymentMethod === PAYMENT_METHODS.CREDIT_CARD) {
       setShowPaymentModal(true);
-    } else if (paymentMethod === "cash") {
+    } else if (paymentMethod === PAYMENT_METHODS.CASH) {
       submitOrder();
     }
   };

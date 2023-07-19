@@ -6,6 +6,7 @@ import type {
   OrderPrice
 } from "@/lib/types";
 import type { ProductData } from "./Product";
+import { PAYMENT_METHODS } from "@/lib/constants";
 
 interface IOrder {
   items: {
@@ -98,7 +99,7 @@ const orderSchema = new Schema<IOrder>(
     paymentMethod: {
       type: String,
       required: true,
-      enum: ["credit-card", "cash"]
+      enum: [PAYMENT_METHODS.CREDIT_CARD, PAYMENT_METHODS.CASH]
     },
     isPaid: {
       type: Boolean,

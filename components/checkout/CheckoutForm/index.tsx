@@ -15,6 +15,7 @@ import {
   isValidPhone
 } from "@/lib/functions";
 import Select from "react-dropdown-select";
+import { PAYMENT_METHODS } from "@/lib/constants";
 
 export default function CheckoutForm({
   register,
@@ -186,7 +187,7 @@ export default function CheckoutForm({
                 <input
                   {...register("paymentMethod")}
                   type="radio"
-                  value="credit-card"
+                  value={PAYMENT_METHODS.CREDIT_CARD}
                   id="field-credit-card"
                 />
                 <label
@@ -201,7 +202,7 @@ export default function CheckoutForm({
                 <input
                   {...register("paymentMethod")}
                   type="radio"
-                  value="cash"
+                  value={PAYMENT_METHODS.CASH}
                   id="field-cash"
                 />
                 <label htmlFor="field-cash" className={styles.radioLabel}>
@@ -225,7 +226,7 @@ export default function CheckoutForm({
             />
           </svg>
           <p className={styles.note__text}>
-            {paymentMethod === "cash" ? (
+            {paymentMethod === PAYMENT_METHODS.CASH ? (
               <>
                 The ‘Cash on Delivery’ option enables you to pay in cash when
                 our delivery courier arrives at your residence. Just make sure
@@ -233,7 +234,7 @@ export default function CheckoutForm({
                 cancelled.
               </>
             ) : (
-              paymentMethod === "credit-card" && (
+              paymentMethod === PAYMENT_METHODS.CREDIT_CARD && (
                 <>
                   Upon clicking ‘Continue & Pay’, you'll be prompted to enter
                   your credit card details to complete the order. Your payment

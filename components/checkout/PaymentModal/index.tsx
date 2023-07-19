@@ -39,11 +39,16 @@ export default function PaymentModal({
   return (
     <Modal active={active}>
       <div className={styles.wrapper}>
-        <div id="dropin-container" className={styles.dropin} />
+        <div id="dropin-container" />
         {!braintreeInstance ? (
           <Spinner colored />
         ) : (
-          <Button fullWidth colored onClick={paymentHandler}>
+          <Button
+            className={styles.button}
+            fullWidth
+            colored
+            onClick={paymentHandler}
+          >
             Pay & complete order
           </Button>
         )}

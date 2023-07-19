@@ -1,6 +1,37 @@
+@use "styles/mixins";
+@use "styles/variables";
+
 .container {
-  position: absolute;
-  z-index: 60;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: calc(100% - 2 * variables.$padding-side-desktop);
+  max-width: 540px;
   background-color: #fff;
-  display: none;
+  border-radius: 8px;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 60;
+  transition: all 0.4s;
+  overflow: hidden;
+
+  @include mixins.respond(tablet) {
+    width: calc(100% - 2 * variables.$padding-side-tablet);
+  }
+
+  @include mixins.respond(mobile) {
+    width: calc(100% - 2 * variables.$padding-side-mobile);
+  }
+
+  &.active {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.content {
+  height: 100%;
+  overflow: auto;
 }

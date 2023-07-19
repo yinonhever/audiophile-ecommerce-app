@@ -1,8 +1,4 @@
-import {
-  CartContext,
-  CartContextType,
-  PopulatedCartItem
-} from "@/lib/CartContext";
+import { CartContext, CartContextType } from "@/lib/CartContext";
 import {
   useContext,
   useState,
@@ -23,12 +19,10 @@ export default function CheckoutSummary({
 }) {
   const { populatedCartItems } = useContext(CartContext) as CartContextType;
   const [displayedItems, setDisplayedItems] = useState([...populatedCartItems]);
-
   const orderPrice = useMemo(
     () => calculateOrderPrice(displayedItems),
     displayedItems
   );
-
   const hasProductData = useMemo(
     () => displayedItems.filter(item => item.product).length > 0,
     [displayedItems]
