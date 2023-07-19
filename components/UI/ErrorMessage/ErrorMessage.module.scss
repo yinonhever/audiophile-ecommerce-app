@@ -1,0 +1,10 @@
+@use "styles/variables";
+@use "styles/mixins";
+
+.message {
+  margin-top: 24px;
+  color: variables.$color-error;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.3;
+}
