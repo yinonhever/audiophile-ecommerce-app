@@ -17,6 +17,7 @@ import Head from "next/head";
 import styles from "@/styles/Checkout.module.scss";
 import { PAYMENT_METHODS } from "@/lib/constants";
 import axios from "axios";
+import ErrorMessage from "@/components/UI/ErrorMessage";
 
 export default function Checkout({
   hasCartItems
@@ -27,8 +28,10 @@ export default function Checkout({
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>();
-  const [completed, setCompleted] = useState(false);
-  const [orderData, setOrderData] = useState<OrderData>();
+  const [completed, setCompleted] = useState(true);
+  const [orderData, setOrderData] = useState<OrderData>(
+    require("@/temp34.json")
+  );
 
   const onSubmit: SubmitHandler<CheckoutData> = ({ paymentMethod }) => {
     if (paymentMethod === PAYMENT_METHODS.CREDIT_CARD) {
@@ -56,7 +59,9 @@ export default function Checkout({
       clearItems();
     } catch (error: any) {
       setError(error);
-      setShowPaymentModal(true);
+      if (paymentMethod === PAYMENT_METHODS.CREDIT_CARD) {
+        setShowPaymentModal(true);
+      }
     } finally {
       setLoading(false);
     }
@@ -82,6 +87,7 @@ export default function Checkout({
                 />
                 <CheckoutSummary onSubmit={handleSubmit(onSubmit)} />
               </div>
+              {error && !showPaymentModal && <ErrorMessage error={error} />}
               <Overlay
                 active={showPaymentModal || loading || completed}
                 onClick={() => setShowPaymentModal(false)}

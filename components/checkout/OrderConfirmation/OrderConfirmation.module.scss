@@ -2,7 +2,11 @@
 @use "styles/mixins";
 
 .wrapper {
-  padding: 48px;
+  padding: 40px;
+
+  @include mixins.respond(mobile) {
+    padding: 32px;
+  }
 }
 
 .icon {
@@ -17,13 +21,24 @@
   letter-spacing: 1.14px;
   text-transform: uppercase;
   margin-bottom: 24px;
+
+  @include mixins.respond(mobile) {
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: 0.86px;
+    margin-bottom: 16px;
+  }
 }
 
 .text {
   line-height: 25px;
   color: rgba(#000, 0.5);
   font-weight: 500;
-  margin-bottom: 33px;
+  margin-bottom: 32px;
+
+  @include mixins.respond(mobile) {
+    margin-bottom: 24px;
+  }
 }
 
 .summary {
@@ -31,12 +46,17 @@
   grid-template-columns: 55.4% 1fr;
   border-radius: 8px;
   overflow: hidden;
-  margin-bottom: 48px;
+  margin-bottom: 40px;
+
+  @include mixins.respond(mobile) {
+    grid-template-columns: 1fr;
+    margin-bottom: 24px;
+  }
 }
 
 .items {
   background-color: #f1f1f1;
-  padding: 24px 24px 19px;
+  padding: 20px 24px;
 }
 
 .list {
@@ -108,6 +128,11 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+
+  @include mixins.respond(mobile) {
+    padding: 15px 24px 19px;
+    justify-content: initial;
+  }
 
   &__container {
     display: flex;
