@@ -8,6 +8,7 @@
   transform: translate(-50%, -50%) scale(0);
   width: calc(100% - 2 * variables.$padding-side-desktop);
   max-width: 540px;
+  max-height: 95%;
   background-color: #fff;
   border-radius: 8px;
   visibility: hidden;
@@ -33,5 +34,6 @@
 
 .content {
   height: 100%;
+  position: relative;
   overflow: auto;
 }

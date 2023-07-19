@@ -12,7 +12,7 @@ export default function PaymentModal({
   error
 }: {
   active: boolean;
-  onPayment: (arg: string) => void;
+  onPayment: (nonce: string) => void;
   error?: Error | null;
 }) {
   const [braintreeInstance, setBraintreeInstance] = useState<Dropin>();
@@ -37,17 +37,17 @@ export default function PaymentModal({
   };
 
   return (
-    <Modal active={active}>
+    <Modal active={active} adjustHeight={false}>
       <div className={styles.wrapper}>
         <div id="dropin-container" />
         {!braintreeInstance ? (
           <Spinner colored />
         ) : (
           <Button
-            className={styles.button}
             fullWidth
             colored
             onClick={paymentHandler}
+            className={styles.button}
           >
             Pay & complete order
           </Button>

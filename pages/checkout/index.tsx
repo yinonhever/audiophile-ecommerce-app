@@ -24,7 +24,7 @@ export default function Checkout({
   const { cartItems, clearItems } = useContext(CartContext) as CartContextType;
   const { register, control, getValues, handleSubmit, formState, watch } =
     useForm<CheckoutData>({ defaultValues: initialCheckoutData });
-  const [showPaymentModal, setShowPaymentModal] = useState(true);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>();
   const [completed, setCompleted] = useState(false);

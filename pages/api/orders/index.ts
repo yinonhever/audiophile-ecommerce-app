@@ -74,7 +74,7 @@ export default async function handler(
       await createdOrder.populate({
         path: "items.product",
         model: "Product",
-        select: "slug title image"
+        select: "slug title shortTitle image"
       });
       return res.status(201).json(createdOrder.toObject());
     }

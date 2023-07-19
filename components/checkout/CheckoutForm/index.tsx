@@ -239,7 +239,7 @@ export default function CheckoutForm({
                   Upon clicking ‘Continue & Pay’, you'll be prompted to enter
                   your credit card details to complete the order. Your payment
                   details are fully encrypted and protected using the most
-                  secure TLS protocol.
+                  advanced TLS protocol.
                 </>
               )
             )}
