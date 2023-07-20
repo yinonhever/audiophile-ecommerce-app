@@ -9,8 +9,12 @@ export default function CollectionProductList({
 }) {
   return (
     <section className={styles.wrapper}>
-      {items?.map(product => (
-        <CollectionProductItem key={product._id} {...product} />
+      {items?.map((product, index) => (
+        <CollectionProductItem
+          key={product._id}
+          {...product}
+          reverse={index % 2 !== 0}
+        />
       ))}
     </section>
   );

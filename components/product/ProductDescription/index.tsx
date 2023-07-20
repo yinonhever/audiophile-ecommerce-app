@@ -5,6 +5,7 @@ import { CartContext, CartContextType } from "@/lib/CartContext";
 import { convertedNumber } from "@/lib/functions";
 import Button from "@/components/UI/Button";
 import QtyControls from "@/components/UI/QtyControls";
+import ImageWithContent from "@/components/UI/ImageWithContent";
 
 export default function ProductDescription({
   title,
@@ -18,25 +19,30 @@ export default function ProductDescription({
   const [qty, setQty] = useState(1);
 
   return (
-    <section className={styles.wrapper}>
-      <img className={styles.image} src={image?.desktop} alt={title} />
-      <div className={styles.content}>
-        {isNewProduct && <h3 className={styles.label}>New product</h3>}
-        <h2 className={styles.title}>{title}</h2>
-        <p className={styles.description}>{description}</p>
-        <span className={styles.price}>$ {convertedNumber(price)}</span>
-        <div className={styles.controls}>
-          <QtyControls
-            wide
-            className={styles.qty}
-            value={qty}
-            onChange={setQty}
-          />
-          <Button colored onClick={() => addItem(productId, qty)}>
-            Add to cart
-          </Button>
-        </div>
+    <ImageWithContent
+      desktopImg={image.desktop}
+      tabletImg={image.tablet}
+      mobileImg={image.mobile}
+      alt={title}
+      twoColumnsTablet
+      extraSpaced
+      className={styles.wrapper}
+    >
+      {isNewProduct && <h3 className={styles.label}>New product</h3>}
+      <h2 className={styles.title}>{title}</h2>
+      <p className={styles.description}>{description}</p>
+      <span className={styles.price}>$ {convertedNumber(price)}</span>
+      <div className={styles.controls}>
+        <QtyControls
+          wide
+          className={styles.qty}
+          value={qty}
+          onChange={setQty}
+        />
+        <Button colored onClick={() => addItem(productId, qty)}>
+          Add to cart
+        </Button>
       </div>
-    </section>
+    </ImageWithContent>
   );
 }

@@ -1,14 +1,17 @@
 import { cx } from "@/lib/functions";
 import styles from "./ImageWithContent.module.scss";
 import { PropsWithChildren } from "react";
+import Link from "next/link";
 
 export default function ImageWithContent({
   desktopImg,
   tabletImg,
   mobileImg,
   alt,
+  link,
   reverse,
   twoColumnsTablet,
+  extraSpaced,
   tag,
   className,
   children
@@ -17,25 +20,32 @@ export default function ImageWithContent({
   tabletImg?: string;
   mobileImg?: string;
   alt: string;
+  link?: string;
   reverse?: boolean;
   twoColumnsTablet?: boolean;
-  tag?: "section" | "div";
+  extraSpaced?: boolean;
+  tag?: "section" | "div" | "article";
   className?: string;
 }>) {
   const Tag = tag || "section";
+  const ImageContainerTag = link ? Link : "div";
   return (
-    <Tag className={cx(styles.container, reverse && styles.reverse, className)}>
-      <div className={styles.img}>
+    <Tag
+      className={cx(
+        styles.container,
+        reverse && styles.reverse,
+        twoColumnsTablet && styles.twoColumnsTablet,
+        extraSpaced && styles.extraSpaced,
+        className
+      )}
+    >
+      <ImageContainerTag className={styles.img} href={link || ""}>
         <picture>
-          {tabletImg && (
-            <source media="(max-width: 1000px)" srcSet={tabletImg} />
-          )}
-          {mobileImg && (
-            <source media="(max-width: 600px)" srcSet={mobileImg} />
-          )}
+          <source media="(max-width: 600px)" srcSet={mobileImg} />
+          <source media="(max-width: 1000px)" srcSet={tabletImg} />
           <img src={desktopImg} alt={alt} />
         </picture>
-      </div>
+      </ImageContainerTag>
       <div className={styles.content}>{children}</div>
     </Tag>
   );

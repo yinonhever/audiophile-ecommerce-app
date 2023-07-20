@@ -13,13 +13,23 @@
   @include mixins.respond(tablet) {
     &:not(.twoColumnsTablet) {
       flex-direction: column;
+      text-align: center;
+
+      .img {
+        margin-bottom: 52px;
+      }
+
+      &.extraSpaced .img {
+        margin-bottom: 63px;
+      }
     }
   }
 
   .img {
+    display: block;
     width: 37.5vw;
 
-    @include respond(tablet) {
+    @include mixins.respond(tablet) {
       width: 100%;
     }
 
@@ -30,28 +40,42 @@
     }
   }
 
-  .content {
-    width: 30.1vw;
+  @include mixins.respond(mobile) {
+    .img {
+      margin-bottom: 32px !important;
+    }
 
-    @include respond(tablet) {
+    &.extraSpaced .img {
+      margin-bottom: 40px !important;
+    }
+  }
+
+  .content {
+    width: 31vw;
+
+    @include mixins.respond(tablet) {
       width: 100%;
     }
   }
 
   &.twoColumnsTablet {
-    .img {
-      width: 36.6vw;
+    @include mixins.respond(tablet) {
+      .img {
+        width: 36.6vw;
+      }
+
+      .content {
+        width: 44.2vw;
+      }
     }
 
-    .content {
-      width: 44.2vw;
-    }
-
-    @include respond(mobile) {
+    @include mixins.respond(mobile) {
       flex-direction: column;
+      text-align: center;
 
       .img,
       .content {
+        display: block;
         width: 100%;
       }
     }
