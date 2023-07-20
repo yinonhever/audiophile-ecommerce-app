@@ -10,7 +10,7 @@ export default function FeaturedCollections({
   collections: CollectionData[];
   tag?: "div" | "section";
 }) {
-  const TagName = tag || "section";
+  const Tag = tag || "section";
   const items = navItems
     .map(item =>
       collections?.find(
@@ -20,10 +20,10 @@ export default function FeaturedCollections({
     .filter(item => item);
 
   return (
-    <TagName className={styles.wrapper}>
+    <Tag className={styles.wrapper}>
       {(items as CollectionData[]).map(collection => (
         <FeaturedCollection key={collection._id} {...collection} />
       ))}
-    </TagName>
+    </Tag>
   );
 }

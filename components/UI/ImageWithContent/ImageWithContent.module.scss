@@ -1,0 +1,59 @@
+@use "styles/variables";
+@use "styles/mixins";
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &.reverse {
+    flex-direction: row-reverse;
+  }
+
+  @include mixins.respond(tablet) {
+    &:not(.twoColumnsTablet) {
+      flex-direction: column;
+    }
+  }
+
+  .img {
+    width: 37.5vw;
+
+    @include respond(tablet) {
+      width: 100%;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      border-radius: 8px;
+    }
+  }
+
+  .content {
+    width: 30.1vw;
+
+    @include respond(tablet) {
+      width: 100%;
+    }
+  }
+
+  &.twoColumnsTablet {
+    .img {
+      width: 36.6vw;
+    }
+
+    .content {
+      width: 44.2vw;
+    }
+
+    @include respond(mobile) {
+      flex-direction: column;
+
+      .img,
+      .content {
+        width: 100%;
+      }
+    }
+  }
+}
