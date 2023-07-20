@@ -28,7 +28,7 @@ export default function ProductDescription({
       extraSpaced
       className={styles.wrapper}
     >
-      {isNewProduct && <h3 className={styles.label}>New product</h3>}
+      {isNewProduct && <h4 className={styles.label}>New product</h4>}
       <h2 className={styles.title}>{title}</h2>
       <p className={styles.description}>{description}</p>
       <span className={styles.price}>$ {convertedNumber(price)}</span>
@@ -37,6 +37,7 @@ export default function ProductDescription({
           wide
           className={styles.qty}
           value={qty}
+          minValue={1}
           onChange={setQty}
         />
         <Button colored onClick={() => addItem(productId, qty)}>

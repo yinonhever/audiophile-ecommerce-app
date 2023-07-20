@@ -16,9 +16,9 @@ export const getCollectionBySlug = async (
   });
   if (!doc) return null;
   const collection = getConvertedItem(doc);
-  collection.products = collection.products.map(product =>
-    getConvertedItem(product as ProductData)
-  );
+  collection.products = collection.products
+    .map(product => getConvertedItem(product as ProductData))
+    .sort((a, b) => +b.isNewProduct - +a.isNewProduct);
   return collection;
 };
 

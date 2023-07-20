@@ -29,7 +29,15 @@
   padding: 0 12px;
   transition: color 0.4s;
 
-  &:hover {
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
     color: variables.$color-primary;
   }
+}
+
+.wide .control {
+  padding: 0 16px;
 }

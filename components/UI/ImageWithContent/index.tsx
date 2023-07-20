@@ -2,6 +2,7 @@ import { cx } from "@/lib/functions";
 import styles from "./ImageWithContent.module.scss";
 import { PropsWithChildren } from "react";
 import Link from "next/link";
+import { Fade } from "react-awesome-reveal";
 
 export default function ImageWithContent({
   desktopImg,
@@ -39,14 +40,25 @@ export default function ImageWithContent({
         className
       )}
     >
-      <ImageContainerTag className={styles.img} href={link || ""}>
-        <picture>
-          <source media="(max-width: 600px)" srcSet={mobileImg} />
-          <source media="(max-width: 1000px)" srcSet={tabletImg} />
-          <img src={desktopImg} alt={alt} />
-        </picture>
-      </ImageContainerTag>
-      <div className={styles.content}>{children}</div>
+      <Fade duration={600} direction={reverse ? "right" : "left"} triggerOnce>
+        <ImageContainerTag className={styles.img} href={link || ""}>
+          <picture>
+            <source media="(max-width: 600px)" srcSet={mobileImg} />
+            <source media="(max-width: 1000px)" srcSet={tabletImg} />
+            <img src={desktopImg} alt={alt} />
+          </picture>
+        </ImageContainerTag>
+      </Fade>
+      <div className={styles.content}>
+        <Fade
+          duration={350}
+          direction={reverse ? "left" : "right"}
+          cascade
+          triggerOnce
+        >
+          {children}
+        </Fade>
+      </div>
     </Tag>
   );
 }

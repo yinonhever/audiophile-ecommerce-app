@@ -2,6 +2,8 @@
 @use "styles/mixins";
 
 .wrapper {
+  background-color: #fff;
+  border-radius: 8px;
   padding: 32px;
 
   @include mixins.respond(mobile) {

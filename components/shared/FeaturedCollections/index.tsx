@@ -2,6 +2,7 @@ import type { CollectionData } from "@/models/Collection";
 import styles from "./FeaturedCollections.module.scss";
 import FeaturedCollection from "@/components/UI/FeaturedCollection";
 import navItems from "@/lib/assets/nav-items.json";
+import { Slide } from "react-awesome-reveal";
 
 export default function FeaturedCollections({
   collections,
@@ -20,10 +21,12 @@ export default function FeaturedCollections({
     .filter(item => item);
 
   return (
-    <Tag className={styles.wrapper}>
-      {(items as CollectionData[]).map(collection => (
-        <FeaturedCollection key={collection._id} {...collection} />
-      ))}
-    </Tag>
+    <Slide direction="left" duration={600} triggerOnce>
+      <Tag className={styles.wrapper}>
+        {(items as CollectionData[]).map(collection => (
+          <FeaturedCollection key={collection._id} {...collection} />
+        ))}
+      </Tag>
+    </Slide>
   );
 }

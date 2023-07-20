@@ -11,6 +11,7 @@ import { calculateOrderPrice, convertedNumber, cx } from "@/lib/functions";
 import Button from "@/components/UI/Button";
 import Link from "next/link";
 import Spinner from "@/components/UI/Spinner";
+import { Fade } from "react-awesome-reveal";
 
 export default function CheckoutSummary({
   onSubmit
@@ -35,6 +36,7 @@ export default function CheckoutSummary({
   }, [populatedCartItems]);
 
   return (
+    //  duration={600} direction="right" triggerOnce>
     <section className={styles.wrapper}>
       <h3 className={styles.title}>Summary</h3>
       <div className={styles.content}>
@@ -107,5 +109,6 @@ export default function CheckoutSummary({
         )}
       </div>
     </section>
+    // </Fade>
   );
 }
