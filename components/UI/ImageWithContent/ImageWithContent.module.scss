@@ -17,6 +17,8 @@
 
       .img {
         margin-bottom: 52px;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
       }
 
       &.extraSpaced .img {
@@ -34,9 +36,11 @@
   .img {
     display: block;
     width: 37.5vw;
+    max-width: 540px;
 
     @include mixins.respond(tablet) {
       width: 100%;
+      max-width: 750px;
     }
 
     img {
@@ -46,9 +50,19 @@
     }
   }
 
+  &:not(.reverse) .img {
+    margin-right: 8.65vw;
+  }
+
+  &.reverse .img {
+    margin-left: 8.65vw;
+  }
+
   @include mixins.respond(mobile) {
     .img {
       margin-bottom: 32px !important;
+      margin-right: 0 !important;
+      margin-left: 0 !important;
     }
 
     &.extraSpaced .img {
@@ -57,7 +71,7 @@
   }
 
   .content {
-    width: 31vw;
+    flex: 1;
 
     @include mixins.respond(tablet) {
       width: 100%;
@@ -70,8 +84,12 @@
         width: 36.6vw;
       }
 
-      .content {
-        width: 44.2vw;
+      &:not(.reverse) .img {
+        margin-right: 8.98vw;
+      }
+
+      &.reverse .img {
+        margin-left: 8.98vw;
       }
     }
 

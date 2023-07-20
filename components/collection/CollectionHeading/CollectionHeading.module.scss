@@ -1,0 +1,32 @@
+@use "styles/variables";
+@use "styles/mixins";
+
+.wrapper {
+  position: relative;
+  background-color: variables.$color-secondary;
+  color: #fff;
+  padding: 98px variables.$padding-side-desktop;
+
+  @include mixins.respond(tablet) {
+    padding: 105px variables.$padding-side-tablet 97px;
+  }
+
+  @include mixins.respond(mobile) {
+    padding: 32px variables.$padding-side-mobile;
+  }
+}
+
+.heading {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 44px;
+  letter-spacing: 1.43px;
+  text-transform: uppercase;
+  text-align: center;
+
+  @include mixins.respond(mobile) {
+    font-size: 28px;
+    line-height: auto;
+    letter-spacing: 2px;
+  }
+}
