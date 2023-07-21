@@ -6,5 +6,5 @@ export default function ProductSuggestions({
 }: {
   items?: ProductData[];
 }) {
-  return <section className={styles.wrapper}></section>;
+  return <section className={styles.wrapper}>Suggestions</section>;
 }

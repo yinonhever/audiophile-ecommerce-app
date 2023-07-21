@@ -15,6 +15,10 @@
     width: 120px;
     height: 48px;
   }
+
+  &.tile {
+    border-radius: 0;
+  }
 }
 
 .count {

@@ -33,13 +33,7 @@ export default function ProductDescription({
       <p className={styles.description}>{description}</p>
       <span className={styles.price}>$ {convertedNumber(price)}</span>
       <div className={styles.controls}>
-        <QtyControls
-          wide
-          className={styles.qty}
-          value={qty}
-          minValue={1}
-          onChange={setQty}
-        />
+        <QtyControls value={qty} onChange={setQty} minValue={1} wide tile />
         <Button colored onClick={() => addItem(productId, qty)}>
           Add to cart
         </Button>

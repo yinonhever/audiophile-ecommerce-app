@@ -95,7 +95,6 @@
 
     @include mixins.respond(mobile) {
       flex-direction: column;
-      text-align: center;
 
       .img,
       .content {

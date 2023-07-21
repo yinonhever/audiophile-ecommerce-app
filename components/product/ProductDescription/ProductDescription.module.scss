@@ -1,0 +1,79 @@
+@use "styles/variables";
+@use "styles/mixins";
+
+.wrapper {
+  @include mixins.respond(mobile) {
+    margin-bottom: 88px !important;
+  }
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 400;
+  color: variables.$color-primary;
+  text-transform: uppercase;
+  letter-spacing: 10px;
+  margin-bottom: 16px;
+
+  @include mixins.respond(tablet) {
+    font-size: 12px;
+    letter-spacing: 8.5px;
+    margin-bottom: 17px;
+  }
+
+  @include mixins.respond(mobile) {
+    font-size: 14px;
+    letter-spacing: 10px;
+    margin-bottom: 24px;
+  }
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 44px;
+  letter-spacing: 1.43px;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+
+  @include mixins.respond(tablet) {
+    font-size: 28px;
+    line-height: 1.2;
+    letter-spacing: 1px;
+  }
+
+  @include mixins.respond(mobile) {
+    margin-bottom: 24px;
+  }
+}
+
+.description {
+  color: rgba(#000, 0.5);
+  font-weight: 500;
+  line-height: 25px;
+  margin-bottom: 32px;
+
+  @include mixins.respond(mobile) {
+    margin-bottom: 24px;
+  }
+}
+
+.price {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  margin-bottom: 47px;
+
+  @include mixins.respond(tablet) {
+    margin-bottom: 32px;
+  }
+}
+
+.controls {
+  display: flex;
+
+  & > *:not(:last-child) {
+    margin-right: 16px;
+  }
+}
