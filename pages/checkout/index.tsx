@@ -1,5 +1,5 @@
 import { CartContext, CartContextType, CartItem } from "@/lib/CartContext";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import type { CheckoutData } from "@/lib/types";
 import { SubmitHandler, useForm } from "react-hook-form";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
@@ -20,7 +20,7 @@ import axios from "axios";
 import ErrorMessage from "@/components/UI/ErrorMessage";
 
 export default function Checkout({
-  hasCartItems
+  initialItems
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { cartItems, clearItems } = useContext(CartContext) as CartContextType;
   const { register, control, getValues, handleSubmit, formState, watch } =
@@ -30,6 +30,11 @@ export default function Checkout({
   const [error, setError] = useState<Error | null>();
   const [completed, setCompleted] = useState(false);
   const [orderData, setOrderData] = useState<OrderData>();
+  const [hasItems, setHasItems] = useState(initialItems.length > 0);
+
+  useEffect(() => {
+    setHasItems(cartItems.length > 0);
+  }, [cartItems]);
 
   const onSubmit: SubmitHandler<CheckoutData> = ({ paymentMethod }) => {
     if (paymentMethod === PAYMENT_METHODS.CREDIT_CARD) {
@@ -74,7 +79,7 @@ export default function Checkout({
       <Page>
         <main className={styles.container}>
           <GoBackButton className={styles.goBack} />
-          {hasCartItems ? (
+          {hasItems || completed ? (
             <>
               <div className={styles.content}>
                 <CheckoutForm
@@ -108,17 +113,17 @@ export default function Checkout({
 }
 
 export const getServerSideProps: GetServerSideProps<{
-  hasCartItems: boolean;
+  initialItems: CartItem[];
 }> = async ({ req }) => {
   try {
     const { cartItems: cartItemsCookie } = req.cookies;
-    if (!cartItemsCookie) return { props: { hasCartItems: false } };
+    if (!cartItemsCookie) return { props: { initialItems: [] } };
     const cartItems = JSON.parse(cartItemsCookie) as CartItem[];
     if (!Array.isArray(cartItems) || !cartItems?.length)
-      return { props: { hasCartItems: false } };
-    return { props: { hasCartItems: true } };
+      return { props: { initialItems: [] } };
+    return { props: { initialItems: cartItems } };
   } catch (error: any) {
     console.log(error.message);
-    return { props: { hasCartItems: false } };
+    return { props: { initialItems: [] } };
   }
 };

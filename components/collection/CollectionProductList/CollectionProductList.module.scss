@@ -3,7 +3,7 @@
 .wrapper {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 160px;
+  gap: 120px;
 
   @include mixins.respond(tablet) {
     gap: 120px;

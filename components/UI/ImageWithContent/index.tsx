@@ -40,15 +40,15 @@ export default function ImageWithContent({
         className
       )}
     >
-      <Fade duration={600} direction={reverse ? "right" : "left"} triggerOnce>
-        <ImageContainerTag className={styles.img} href={link || ""}>
+      <ImageContainerTag className={styles.img} href={link || ""}>
+        <Fade duration={600} direction={reverse ? "right" : "left"} triggerOnce>
           <picture>
             <source media="(max-width: 600px)" srcSet={mobileImg} />
             <source media="(max-width: 1000px)" srcSet={tabletImg} />
             <img src={desktopImg} alt={alt} />
           </picture>
-        </ImageContainerTag>
-      </Fade>
+        </Fade>
+      </ImageContainerTag>
       <div className={styles.content}>
         <Fade
           duration={350}

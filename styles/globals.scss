@@ -1,3 +1,5 @@
+@use "styles/variables";
+
 *,
 *::before,
 *::after {
@@ -29,6 +31,11 @@ button {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+::selection {
+  background-color: variables.$color-primary;
+  color: #fff;
 }
 
 // LIBRARY CSS OVERRIDES

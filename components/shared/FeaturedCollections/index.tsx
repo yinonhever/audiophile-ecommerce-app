@@ -21,12 +21,14 @@ export default function FeaturedCollections({
     .filter(item => item);
 
   return (
-    <Slide direction="left" duration={600} triggerOnce>
-      <Tag className={styles.wrapper}>
-        {(items as CollectionData[]).map(collection => (
-          <FeaturedCollection key={collection._id} {...collection} />
-        ))}
-      </Tag>
-    </Slide>
+    <Tag>
+      <Slide direction="left" duration={600} triggerOnce>
+        <div className={styles.wrapper}>
+          {(items as CollectionData[]).map(collection => (
+            <FeaturedCollection key={collection._id} {...collection} />
+          ))}
+        </div>
+      </Slide>{" "}
+    </Tag>
   );
 }

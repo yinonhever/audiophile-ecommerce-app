@@ -36,79 +36,79 @@ export default function CheckoutSummary({
   }, [populatedCartItems]);
 
   return (
-    //  duration={600} direction="right" triggerOnce>
-    <section className={styles.wrapper}>
-      <h3 className={styles.title}>Summary</h3>
-      <div className={styles.content}>
-        {hasProductData ? (
-          <>
-            <div className={cx(styles.section, styles.items)}>
-              {displayedItems?.map(item => (
-                <article key={item.productId} className={styles.item}>
-                  <Link
-                    className={styles.item__img}
-                    href={`/products/${item.product?.slug}`}
-                  >
-                    <img
-                      src={item.product?.image.desktop}
-                      alt={item.product?.title}
-                    />
-                  </Link>
-                  <div className={styles.item__content}>
-                    <div className={styles.item__main}>
-                      <Link
-                        className={styles.item__title}
-                        href={`/products/${item.product?.slug}`}
-                      >
-                        {item.product?.shortTitle}
-                      </Link>
-                      <span className={styles.item__price}>
-                        $ {convertedNumber(item.product?.price)}
+    <Fade duration={600} direction="right" triggerOnce>
+      <section className={styles.wrapper}>
+        <h3 className={styles.title}>Summary</h3>
+        <div className={styles.content}>
+          {hasProductData ? (
+            <>
+              <div className={cx(styles.section, styles.items)}>
+                {displayedItems?.map(item => (
+                  <article key={item.productId} className={styles.item}>
+                    <Link
+                      className={styles.item__img}
+                      href={`/products/${item.product?.slug}`}
+                    >
+                      <img
+                        src={item.product?.image.desktop}
+                        alt={item.product?.title}
+                      />
+                    </Link>
+                    <div className={styles.item__content}>
+                      <div className={styles.item__main}>
+                        <Link
+                          className={styles.item__title}
+                          href={`/products/${item.product?.slug}`}
+                        >
+                          {item.product?.shortTitle}
+                        </Link>
+                        <span className={styles.item__price}>
+                          $ {convertedNumber(item.product?.price)}
+                        </span>
+                      </div>
+                      <span className={styles.item__count}>
+                        <span className={styles.x}>x</span>
+                        {item.qty}
                       </span>
                     </div>
-                    <span className={styles.item__count}>
-                      <span className={styles.x}>x</span>
-                      {item.qty}
-                    </span>
-                  </div>
-                </article>
-              ))}
-            </div>
-            <div className={cx(styles.section, styles.pricing)}>
-              <div className={styles.priceRow}>
-                <span className={styles.priceRow__label}>Total</span>
-                <span className={styles.priceRow__amount}>
-                  $ {convertedNumber(orderPrice.itemsPrice)}
-                </span>
+                  </article>
+                ))}
               </div>
-              <div className={styles.priceRow}>
-                <span className={styles.priceRow__label}>Shipping</span>
-                <span className={styles.priceRow__amount}>
-                  $ {convertedNumber(orderPrice.shippingFee)}
-                </span>
+              <div className={cx(styles.section, styles.pricing)}>
+                <div className={styles.priceRow}>
+                  <span className={styles.priceRow__label}>Total</span>
+                  <span className={styles.priceRow__amount}>
+                    $ {convertedNumber(orderPrice.itemsPrice)}
+                  </span>
+                </div>
+                <div className={styles.priceRow}>
+                  <span className={styles.priceRow__label}>Shipping</span>
+                  <span className={styles.priceRow__amount}>
+                    $ {convertedNumber(orderPrice.shippingFee)}
+                  </span>
+                </div>
+                <div className={styles.priceRow}>
+                  <span className={styles.priceRow__label}>VAT (included)</span>
+                  <span className={styles.priceRow__amount}>
+                    $ {convertedNumber(orderPrice.vat)}
+                  </span>
+                </div>
+                <div className={cx(styles.priceRow, styles.totalRow)}>
+                  <span className={styles.priceRow__label}>Grand total</span>
+                  <span className={styles.priceRow__amount}>
+                    $ {convertedNumber(orderPrice.totalPrice)}
+                  </span>
+                </div>
               </div>
-              <div className={styles.priceRow}>
-                <span className={styles.priceRow__label}>VAT (included)</span>
-                <span className={styles.priceRow__amount}>
-                  $ {convertedNumber(orderPrice.vat)}
-                </span>
-              </div>
-              <div className={cx(styles.priceRow, styles.totalRow)}>
-                <span className={styles.priceRow__label}>Grand total</span>
-                <span className={styles.priceRow__amount}>
-                  $ {convertedNumber(orderPrice.totalPrice)}
-                </span>
-              </div>
-            </div>
-            <Button fullWidth colored onClick={onSubmit}>
-              Continue & pay
-            </Button>
-          </>
-        ) : (
-          <Spinner colored />
-        )}
-      </div>
-    </section>
-    // </Fade>
+              <Button fullWidth colored onClick={onSubmit}>
+                Continue & pay
+              </Button>
+            </>
+          ) : (
+            <Spinner colored />
+          )}
+        </div>
+      </section>
+    </Fade>
   );
 }
