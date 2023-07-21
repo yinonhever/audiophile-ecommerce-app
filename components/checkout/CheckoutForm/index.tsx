@@ -238,10 +238,10 @@ export default function CheckoutForm({
               ) : (
                 paymentMethod === PAYMENT_METHODS.CREDIT_CARD && (
                   <>
-                    Upon clicking ‘Continue & Pay’, you'll be prompted to enter
-                    your credit card details to complete the order. Your payment
-                    details are fully encrypted and protected using the most
-                    advanced TLS protocol.
+                    Upon clicking ‘Continue & Pay’, you&apos;ll be prompted to
+                    enter your credit card details to complete the order. Your
+                    payment details are fully encrypted and protected using the
+                    most advanced TLS protocol.
                   </>
                 )
               )}

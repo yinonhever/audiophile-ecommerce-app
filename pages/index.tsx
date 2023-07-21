@@ -6,12 +6,23 @@ import type { ProductData } from "@/models/Product";
 import type { CollectionData } from "@/models/Collection";
 import { getCollections } from "./api/collections";
 import Page from "@/components/layout/Page";
-import Link from "next/link";
+import Hero from "@/components/home/Hero";
+import FeaturedCollections from "@/components/shared/FeaturedCollections";
+import FeaturedProducts from "@/components/home/FeaturedProducts";
+import About from "@/components/shared/About";
+import homepageProducts from "@/lib/assets/homepage-products.json";
 
 export default function Home({
   products,
   collections
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const heroProduct = products.find(
+    product => product.slug === homepageProducts.hero
+  ) as ProductData;
+  const featuredProducts = homepageProducts.featured.map(slug =>
+    products.find(product => product.slug === slug)
+  ) as ProductData[];
+
   return (
     <>
       <Head>
@@ -19,17 +30,12 @@ export default function Home({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Page>
-        <div>
-          {products.map(product => (
-            <Link
-              key={product._id}
-              href={`/products/${product.slug}`}
-              style={{ display: "block" }}
-            >
-              {product.title}
-            </Link>
-          ))}
-        </div>
+        <Hero product={heroProduct} />
+        <main className={styles.container}>
+          <FeaturedCollections collections={collections} />
+          <FeaturedProducts products={featuredProducts} />
+          <About />
+        </main>
       </Page>
     </>
   );

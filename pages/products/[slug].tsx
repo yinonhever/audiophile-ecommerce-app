@@ -1,11 +1,7 @@
-import type {
-  GetStaticPaths,
-  GetStaticProps,
-  InferGetStaticPropsType
-} from "next";
-import { getProducts } from "../api/products";
-import { getProductBySlug } from "../api/products/[slug]";
-import { getCollections } from "../api/collections";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import { getProducts } from "@/pages/api/products";
+import { getProductBySlug } from "@/pages/api/products/[slug]";
+import { getCollections } from "@/pages/api/collections";
 import type { ProductData } from "@/models/Product";
 import type { CollectionData } from "@/models/Collection";
 import Page from "@/components/layout/Page";

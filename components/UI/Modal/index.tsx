@@ -23,7 +23,7 @@ export default function Modal({
           : undefined
       );
     }
-  }, [active]);
+  }, [active, fixedHeight, adjustHeight]);
 
   return (
     <div

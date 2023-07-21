@@ -10,7 +10,7 @@ export default function FeaturedCollection({
 }: CollectionData) {
   return (
     <Link className={cx(styles.wrapper)} href={`/collections/${slug}`}>
-      <img className={styles.img} src={image} />
+      <img className={styles.img} src={image} alt={title} />
       <div className={styles.card}>
         <span className={styles.title}>{title}</span>
         <span className={styles.cta}>

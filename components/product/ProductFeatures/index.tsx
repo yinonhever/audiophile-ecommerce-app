@@ -20,7 +20,7 @@ export default function ProductFeatures({
               className={styles.text}
             >
               {features
-                .split("\n")
+                ?.split("\n")
                 .filter(x => x.trim())
                 .map(paragraph => (
                   <p key={paragraph}>{paragraph}</p>
@@ -41,7 +41,7 @@ export default function ProductFeatures({
                 triggerOnce
                 className={styles.list}
               >
-                {includedItems.map(include => (
+                {includedItems?.map(include => (
                   <div key={include.item} className={styles.item}>
                     <span className={styles.item__count}>
                       {include.quantity}x

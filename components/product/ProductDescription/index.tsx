@@ -20,9 +20,9 @@ export default function ProductDescription({
 
   return (
     <ImageWithContent
-      desktopImg={image.desktop}
-      tabletImg={image.tablet}
-      mobileImg={image.mobile}
+      desktopImg={image?.desktop}
+      tabletImg={image?.tablet}
+      mobileImg={image?.mobile}
       alt={title}
       twoColumnsTablet
       extraSpaced
