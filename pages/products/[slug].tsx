@@ -34,7 +34,7 @@ export default function ProductPage({
           <GoBackButton className={styles.goBack} />
           <ProductDescription {...product} />
           <ProductFeatures {...product} />
-          <ProductGallery items={product?.gallery} />
+          <ProductGallery {...product} />
           <ProductSuggestions items={product?.suggestions as ProductData[]} />
           <FeaturedCollections collections={collections} />
           <About />
