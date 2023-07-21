@@ -1,0 +1,40 @@
+@use "styles/variables";
+@use "styles/mixins";
+
+.wrapper {
+  text-align: center;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 36px;
+  letter-spacing: 1.14px;
+  margin-bottom: 64px;
+
+  @include mixins.respond(tablet) {
+    margin-bottom: 56px;
+  }
+
+  @include mixins.respond(mobile) {
+    font-size: 24px;
+    letter-spacing: 0.86px;
+    margin-bottom: 40px;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+
+  @include mixins.respond(tablet) {
+    gap: 11px;
+  }
+
+  @include mixins.respond(mobile) {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+}

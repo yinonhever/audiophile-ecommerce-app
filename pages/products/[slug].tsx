@@ -35,7 +35,7 @@ export default function ProductPage({
           <ProductDescription {...product} />
           <ProductFeatures {...product} />
           <ProductGallery {...product} />
-          <ProductSuggestions items={product?.suggestions as ProductData[]} />
+          <ProductSuggestions {...product} />
           <FeaturedCollections collections={collections} />
           <About />
         </main>

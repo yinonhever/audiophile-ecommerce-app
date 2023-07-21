@@ -28,7 +28,7 @@ export default function FeaturedCollections({
             <FeaturedCollection key={collection._id} {...collection} />
           ))}
         </div>
-      </Slide>{" "}
+      </Slide>
     </Tag>
   );
 }

@@ -11,7 +11,7 @@ export const getProductBySlug = async (
   const doc = await Product.findOne({ slug }).populate({
     path: "suggestions",
     model: "Product",
-    select: "slug title image"
+    select: "slug title image categoryImage"
   });
   if (!doc) return null;
   const product = getConvertedItem(doc);

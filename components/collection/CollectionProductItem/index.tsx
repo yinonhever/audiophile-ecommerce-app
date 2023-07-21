@@ -12,6 +12,7 @@ export default function CollectionProductItem({
   description,
   reverse
 }: ProductData & { reverse?: boolean }) {
+  const link = `/products/${slug}`;
   return (
     <ImageWithContent
       tag="article"
@@ -20,14 +21,14 @@ export default function CollectionProductItem({
       tabletImg={categoryImage.tablet}
       mobileImg={categoryImage.mobile}
       alt={title}
-      link={`/products/${slug}`}
+      link={link}
     >
       {isNewProduct && <h4 className={styles.label}>New product</h4>}
-      <Link href={`/products/${slug}`}>
+      <Link href={link}>
         <h2 className={styles.title}>{title}</h2>
       </Link>
       <p className={styles.description}>{description}</p>
-      <Button colored link={`/products/${slug}`}>
+      <Button colored link={link}>
         See product
       </Button>
     </ImageWithContent>
