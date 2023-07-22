@@ -8,10 +8,11 @@ interface IProduct {
   price: number;
   image: ProductImage;
   categoryImage: ProductImage;
+  homepageImage?: ProductImage | null;
   isNewProduct: boolean;
   description: string;
   features: string;
-  heroText: string | null;
+  heroText?: string | null;
   includedItems: ProductInclude[];
   gallery: ProductImage[];
   suggestions: (Types.ObjectId | ProductData)[];
@@ -82,6 +83,10 @@ const productSchema = new Schema<IProduct>(
     categoryImage: {
       type: imageSchema,
       required: true
+    },
+    homepageImage: {
+      type: imageSchema,
+      default: null
     },
     isNewProduct: {
       type: Boolean,

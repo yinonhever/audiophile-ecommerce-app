@@ -68,6 +68,16 @@ export const calculateOrderPrice = (items: PopulatedCartItem[]): OrderPrice => {
   return { itemsPrice, shippingFee, vat, totalPrice };
 };
 
+export const shortenedProductTitle = (title?: string) => {
+  if (!title) return;
+  const productTypes = ["Headphones", "Earphones", "Speaker"];
+  const [modelName] = title.split(" ");
+  return title
+    .split(" ")
+    .filter(x => x === modelName || productTypes.includes(x))
+    .join(" ");
+};
+
 export const fixTimeoutTransition = (timeout: number) => {
   Router.events.on("beforeHistoryChange", () => {
     // Create a clone of every <style> and <link> that currently affects the page. It doesn't matter
