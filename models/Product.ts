@@ -11,6 +11,7 @@ interface IProduct {
   isNewProduct: boolean;
   description: string;
   features: string;
+  heroText: string | null;
   includedItems: ProductInclude[];
   gallery: ProductImage[];
   suggestions: (Types.ObjectId | ProductData)[];
@@ -93,6 +94,10 @@ const productSchema = new Schema<IProduct>(
     features: {
       type: String,
       required: true
+    },
+    heroText: {
+      type: String,
+      default: null
     },
     includedItems: [includeSchema],
     gallery: [imageSchema],

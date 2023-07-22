@@ -4,7 +4,7 @@ import Divider from "@/components/UI/Divider";
 export default function CollectionHeading({ title }: { title: string }) {
   return (
     <section className={styles.wrapper}>
-      <Divider />
+      <Divider className={styles.divider} />
       <h1 className={styles.heading}>{title}</h1>
     </section>
   );

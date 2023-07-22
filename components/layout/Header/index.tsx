@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useMemo } from "react";
 import { useRouter } from "next/router";
 import styles from "./Header.module.scss";
 import navItems from "@/lib/assets/nav-items.json";
@@ -11,13 +11,18 @@ import CartDrawer from "../CartDrawer";
 import { CartContext, CartContextType } from "@/lib/CartContext";
 import Overlay from "@/components/UI/Overlay";
 import NavDrawer from "../NavDrawer";
+import { TRANSPARENT_HEADER_ROUTES } from "@/lib/constants";
 
 export default function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const { showCartDrawer, toggleShowCartDrawer } = useContext(
     CartContext
   ) as CartContextType;
-  const { asPath } = useRouter();
+  const { pathname, asPath } = useRouter();
+  const transparent = useMemo(
+    () => TRANSPARENT_HEADER_ROUTES.includes(pathname),
+    [pathname]
+  );
 
   useEffect(() => {
     setShowMobileMenu(false);
@@ -43,7 +48,7 @@ export default function Header() {
   };
 
   return (
-    <header className={styles.wrapper}>
+    <header className={cx(styles.wrapper, transparent && styles.transparent)}>
       <div className={styles.container}>
         <NavToggle
           onClick={() => setShowMobileMenu(!showMobileMenu)}

@@ -5,14 +5,27 @@
   position: relative;
   background-color: variables.$color-secondary;
   color: #fff;
-  padding: 98px variables.$padding-side-desktop;
+  padding: 195px variables.$padding-side-desktop 98px;
 
   @include mixins.respond(tablet) {
-    padding: 105px variables.$padding-side-tablet 97px;
+    padding: 195px variables.$padding-side-tablet 97px;
   }
 
   @include mixins.respond(mobile) {
-    padding: 32px variables.$padding-side-mobile;
+    padding: 122px variables.$padding-side-mobile 32px;
+  }
+
+  .divider {
+    top: 97px;
+    z-index: 56;
+
+    @include mixins.respond(tablet) {
+      top: 89px;
+    }
+
+    @include mixins.respond(mobile) {
+      top: 88px;
+    }
   }
 }
 

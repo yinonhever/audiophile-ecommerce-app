@@ -1,3 +1,109 @@
+@use "styles/variables";
+@use "styles/mixins";
+
+@keyframes animateBackground {
+  0% {
+    background-size: 150%;
+  }
+
+  100% {
+    background-size: 100%;
+  }
+}
+
 .wrapper {
   position: relative;
+  background-color: #0e0e0e;
+  background-image: url("../../../public/assets/home/desktop/image-hero.jpg");
+  background-size: 100%;
+  background-position: center;
+  color: #fff;
+  padding: 225px variables.$padding-side-desktop 158px;
+  animation: animateBackground 1s;
+
+  @include mixins.respond(tablet) {
+    background-image: url("../../../public/assets/home/tablet/image-header.jpg");
+    padding: 216px variables.$padding-side-tablet 167px;
+  }
+
+  @include mixins.respond(mobile) {
+    background-image: url("../../../public/assets/home/mobile/image-header.jpg");
+    padding: 198px variables.$padding-side-tablet 112px;
+  }
+
+  .divider {
+    top: 96px;
+
+    @include mixins.respond(tablet) {
+      top: 89px;
+    }
+
+    @include mixins.respond(mobile) {
+      top: 88px;
+    }
+  }
+}
+
+.content {
+  width: 26.32vw;
+  min-width: 380px;
+  display: flex;
+  flex-direction: column;
+
+  @include mixins.respond(tablet) {
+    width: 100%;
+    min-width: initial;
+    max-width: 400px;
+    margin: auto;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(#fff, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 10px;
+  margin-bottom: 24px;
+
+  @include mixins.respond(mobile) {
+    margin-bottom: 16px;
+  }
+}
+
+.title {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 58px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+
+  @include mixins.respond(mobile) {
+    font-size: 36px;
+    line-height: 40px;
+    letter-spacing: 1.3px;
+  }
+}
+
+.text {
+  width: 24.3vw;
+  min-width: 350px;
+  color: rgba(#fff, 0.75);
+  line-height: 25px;
+  margin-bottom: 40px;
+
+  @include mixins.respond(tablet) {
+    width: 100%;
+    min-width: initial;
+    max-width: 350px;
+    margin: 0 auto 40px;
+  }
+
+  @include mixins.respond(mobile) {
+    width: 95%;
+    margin: 0 auto 28px;
+  }
 }

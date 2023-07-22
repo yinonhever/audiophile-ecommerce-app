@@ -2,7 +2,16 @@
 @use "styles/mixins";
 
 .wrapper {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  &.transparent {
+    .container {
+      background-color: transparent;
+    }
+  }
 
   .overlay {
     z-index: 5;
@@ -17,14 +26,7 @@
   padding: 36px variables.$padding-side-desktop;
   display: flex;
   align-items: center;
-
-  & > * {
-    display: block;
-
-    &:last-child {
-      margin-left: auto;
-    }
-  }
+  transition: background-color 1s;
 
   @include mixins.respond(tablet) {
     padding: 32px variables.$padding-side-tablet;
@@ -32,6 +34,14 @@
 
   @include mixins.respond(mobile) {
     padding: 32px variables.$padding-side-mobile;
+  }
+
+  & > * {
+    display: block;
+
+    &:last-child {
+      margin-left: auto;
+    }
   }
 }
 

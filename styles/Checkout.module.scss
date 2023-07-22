@@ -3,14 +3,14 @@
 
 .container {
   background-color: #f4f4f4;
-  padding: 80px variables.$padding-side-desktop 140px;
+  padding: 176px variables.$padding-side-desktop 140px;
 
   @include mixins.respond(tablet) {
-    padding: 48px variables.$padding-side-tablet 116px;
+    padding: 137px variables.$padding-side-tablet 116px;
   }
 
   @include mixins.respond(mobile) {
-    padding: 16px variables.$padding-side-mobile 97px;
+    padding: 106px variables.$padding-side-mobile 97px;
   }
 }
 
