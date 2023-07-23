@@ -1,4 +1,8 @@
-import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import type {
+  GetStaticPaths,
+  GetStaticProps,
+  InferGetStaticPropsType
+} from "next";
 import { getCollections } from "@/pages/api/collections";
 import { getCollectionBySlug } from "@/pages/api/collections/[slug]";
 import type { CollectionData } from "@/models/Collection";
@@ -14,7 +18,7 @@ import styles from "@/styles/CollectionPage.module.scss";
 export default function CollectionPage({
   collection,
   collectionList
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <Head>
@@ -35,7 +39,20 @@ export default function CollectionPage({
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{
+export const getStaticPaths: GetStaticPaths = async () => {
+  try {
+    const collections = await getCollections({}, ["slug"]);
+    const paths = collections.map(collection => ({
+      params: { slug: collection.slug }
+    }));
+    return { paths, fallback: "blocking" };
+  } catch (error: any) {
+    console.log(error.message);
+    return { paths: [], fallback: "blocking" };
+  }
+};
+
+export const getStaticProps: GetStaticProps<{
   collection: CollectionData;
   collectionList: CollectionData[];
 }> = async ({ params }) => {

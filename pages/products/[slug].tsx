@@ -44,10 +44,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
   try {
     const products = await getProducts();
     const paths = products.map(product => ({ params: { slug: product.slug } }));
-    return { paths, fallback: true };
+    return { paths, fallback: "blocking" };
   } catch (error: any) {
     console.log(error.message);
-    return { paths: [], fallback: true };
+    return { paths: [], fallback: "blocking" };
   }
 };
 
