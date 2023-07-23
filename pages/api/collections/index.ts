@@ -7,7 +7,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 export const getCollections = async (
   options: Partial<CollectionData> = {},
-  fields = ["slug", "title", "image"]
+  fields: (keyof CollectionData)[] = ["slug", "title", "image"]
 ): Promise<CollectionData[]> => {
   await dbConnect();
   const collections = await Collection.find(options).select(fields);
@@ -41,7 +41,10 @@ export default async function handler(
   try {
     if (req.method === "GET") {
       const { fields, ...options } = req.query;
-      const collections = await getCollections(options, fields as string[]);
+      const collections = await getCollections(
+        options,
+        fields as (keyof CollectionData)[]
+      );
       return res.json(collections);
     }
   } catch (error: any) {
