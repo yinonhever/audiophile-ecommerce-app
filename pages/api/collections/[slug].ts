@@ -9,6 +9,7 @@ export const getCollectionBySlug = async (
   slug: string
 ): Promise<CollectionData | null> => {
   await dbConnect();
+  new Product();
   const doc = await Collection.findOne({ slug }).populate({
     path: "products",
     model: "Product",

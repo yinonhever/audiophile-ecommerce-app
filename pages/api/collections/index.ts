@@ -12,6 +12,7 @@ export const getCollections = async (
   await dbConnect();
   const collections = await Collection.find(options).select(fields);
   if (fields.includes("products")) {
+    new Product();
     await Promise.all(
       collections.map(doc =>
         doc.populate({
