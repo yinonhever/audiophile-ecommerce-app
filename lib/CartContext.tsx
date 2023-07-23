@@ -58,11 +58,10 @@ export default function CartProvider({ children }: PropsWithChildren) {
     const existingItem = clonedItems.find(item => item.productId === productId);
     if (existingItem) {
       existingItem.qty += qty;
-      setCartItems(clonedItems);
     } else {
-      const newItem = { productId, qty };
-      setCartItems([...clonedItems, newItem]);
+      clonedItems.push({ productId, qty });
     }
+    setCartItems(clonedItems);
     setTimeout(() => setShowCartDrawer(true), 50);
   };
 

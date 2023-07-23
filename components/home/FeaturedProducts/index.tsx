@@ -15,26 +15,28 @@ export default function FeaturedProducts({
       <Fade duration={600} direction="right" triggerOnce>
         <article className={styles.item}>
           <div className={cx(styles.box, styles.heroBox)}>
-            <img
-              className={styles.heroBox__pattern}
-              src="/assets/home/desktop/pattern-circles.svg"
-              alt="Background pattern"
-            />
-            <picture>
-              <source
-                media="(max-width: 600px)"
-                srcSet={firstProduct?.homepageImage?.mobile}
-              />
-              <source
-                media="(max-width: 100px)"
-                srcSet={firstProduct?.homepageImage?.tablet}
-              />
+            <div className={styles.heroBox__bg}>
               <img
-                src={firstProduct?.homepageImage?.desktop}
-                alt={firstProduct?.title}
-                className={styles.heroBox__img}
+                className={styles.heroBox__pattern}
+                src="/assets/home/desktop/pattern-circles.svg"
+                alt="Background pattern"
               />
-            </picture>
+              <picture>
+                <source
+                  media="(max-width: 600px)"
+                  srcSet={firstProduct?.homepageImage?.mobile}
+                />
+                <source
+                  media="(max-width: 1000px)"
+                  srcSet={firstProduct?.homepageImage?.tablet}
+                />
+                <img
+                  src={firstProduct?.homepageImage?.desktop}
+                  alt={firstProduct?.title}
+                  className={styles.heroBox__img}
+                />
+              </picture>
+            </div>
             <div className={styles.heroBox__content}>
               <h2 className={styles.heroBox__title}>
                 {shortenedProductTitle(firstProduct?.title)}
@@ -56,7 +58,7 @@ export default function FeaturedProducts({
                 srcSet={secondProduct?.homepageImage?.mobile}
               />
               <source
-                media="(max-width: 100px)"
+                media="(max-width: 1000px)"
                 srcSet={secondProduct?.homepageImage?.tablet}
               />
               <img
@@ -85,7 +87,7 @@ export default function FeaturedProducts({
                 srcSet={thirdProduct?.homepageImage?.mobile}
               />
               <source
-                media="(max-width: 100px)"
+                media="(max-width: 1000px)"
                 srcSet={thirdProduct?.homepageImage?.tablet}
               />
               <img
