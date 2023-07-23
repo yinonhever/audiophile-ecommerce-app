@@ -1,25 +1,20 @@
-import type {
-  GetStaticPaths,
-  GetStaticProps,
-  InferGetStaticPropsType
-} from "next";
-import { getCollections } from "../api/collections";
-import { getCollectionBySlug } from "../api/collections/[slug]";
+import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { getCollections } from "@/pages/api/collections";
+import { getCollectionBySlug } from "@/pages/api/collections/[slug]";
 import type { CollectionData } from "@/models/Collection";
 import type { ProductData } from "@/models/Product";
-import Page from "@/components/layout/Page";
 import Head from "next/head";
+import Page from "@/components/layout/Page";
 import CollectionHeading from "@/components/collection/CollectionHeading";
-import CollectionItem from "@/components/collection/CollectionProductItem";
-import styles from "@/styles/CollectionPage.module.scss";
+import CollectionProductList from "@/components/collection/CollectionProductList";
 import FeaturedCollections from "@/components/shared/FeaturedCollections";
 import About from "@/components/shared/About";
-import CollectionProductList from "@/components/collection/CollectionProductList";
+import styles from "@/styles/CollectionPage.module.scss";
 
 export default function CollectionPage({
   collection,
   collectionList
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Head>
@@ -40,20 +35,7 @@ export default function CollectionPage({
   );
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  try {
-    const collections = await getCollections();
-    const paths = collections.map(collection => ({
-      params: { slug: collection.slug }
-    }));
-    return { paths, fallback: true };
-  } catch (error: any) {
-    console.log(error.message);
-    return { paths: [], fallback: true };
-  }
-};
-
-export const getStaticProps: GetStaticProps<{
+export const getServerSideProps: GetServerSideProps<{
   collection: CollectionData;
   collectionList: CollectionData[];
 }> = async ({ params }) => {
