@@ -3,17 +3,25 @@
 
 .wrapper {
   overflow: hidden;
-  position: relative;
   z-index: 10;
-  transition: all 0.4s;
+  transition: max-height 0.4s;
   display: block;
   position: absolute;
   top: calc(100% + 32px);
   right: variables.$padding-side-desktop;
 
+  &.fixed {
+    position: fixed;
+    top: 32px;
+  }
+
   @include mixins.respond(tablet) {
     top: calc(100% + 24px);
     right: variables.$padding-side-tablet;
+
+    &.fixed {
+      top: 24px;
+    }
   }
 
   @include mixins.respond(mobile) {

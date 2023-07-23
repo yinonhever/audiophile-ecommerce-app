@@ -1,13 +1,13 @@
 import { useContext, useRef, useMemo } from "react";
 import { CartContextType, CartContext } from "@/lib/CartContext";
 import styles from "./CartDrawer.module.scss";
-import { convertedNumber } from "@/lib/functions";
+import { convertedNumber, cx } from "@/lib/functions";
 import QtyControls from "@/components/UI/QtyControls";
 import Button from "@/components/UI/Button";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function CartDrawer() {
+export default function CartDrawer({ fixed }: { fixed: boolean }) {
   const {
     showCartDrawer: active,
     populatedCartItems,
@@ -35,7 +35,11 @@ export default function CartDrawer() {
   );
 
   return (
-    <div className={styles.wrapper} style={{ maxHeight }} ref={element}>
+    <div
+      className={cx(styles.wrapper, fixed && styles.fixed)}
+      style={{ maxHeight }}
+      ref={element}
+    >
       <div className={styles.container}>
         {hasProductData ? (
           <>
