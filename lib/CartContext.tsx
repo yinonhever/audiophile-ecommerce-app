@@ -62,7 +62,7 @@ export default function CartProvider({ children }: PropsWithChildren) {
       clonedItems.push({ productId, qty });
     }
     setCartItems(clonedItems);
-    setTimeout(() => setShowCartDrawer(true), 50);
+    setTimeout(() => setShowCartDrawer(true), 100);
   };
 
   const removeItem = (productId: string) =>
