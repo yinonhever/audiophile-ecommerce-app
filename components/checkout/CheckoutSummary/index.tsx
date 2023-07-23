@@ -12,6 +12,7 @@ import Button from "@/components/UI/Button";
 import Link from "next/link";
 import Spinner from "@/components/UI/Spinner";
 import { Fade } from "react-awesome-reveal";
+import Image from "next/image";
 
 export default function CheckoutSummary({
   onSubmit
@@ -49,9 +50,10 @@ export default function CheckoutSummary({
                       className={styles.item__img}
                       href={`/products/${item.product?.slug}`}
                     >
-                      <img
-                        src={item.product?.image.desktop}
-                        alt={item.product?.title}
+                      <Image
+                        src={item.product?.image.desktop as string}
+                        alt={item.product?.title as string}
+                        fill
                       />
                     </Link>
                     <div className={styles.item__content}>

@@ -3,6 +3,7 @@ import styles from "./FeaturedProducts.module.scss";
 import { Fade } from "react-awesome-reveal";
 import { cx, shortenedProductTitle } from "@/lib/functions";
 import Button from "@/components/UI/Button";
+import Image from "next/image";
 
 export default function FeaturedProducts({
   products
@@ -16,10 +17,11 @@ export default function FeaturedProducts({
         <article className={styles.item}>
           <div className={cx(styles.box, styles.heroBox)}>
             <div className={styles.heroBox__bg}>
-              <img
+              <Image
                 className={styles.heroBox__pattern}
                 src="/assets/home/desktop/pattern-circles.svg"
                 alt="Background pattern"
+                fill
               />
               <picture>
                 <source

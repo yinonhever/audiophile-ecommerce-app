@@ -5,6 +5,7 @@ import { convertedNumber } from "@/lib/functions";
 import { ProductData } from "@/models/Product";
 import Link from "next/link";
 import Button from "@/components/UI/Button";
+import Image from "next/image";
 
 interface OrderItem {
   product: ProductData;
@@ -55,7 +56,11 @@ export default function OrderConfirmation({
                       className={styles.item__img}
                       href={`/products/${product.slug}`}
                     >
-                      <img src={product.image.desktop} alt={product.title} />
+                      <Image
+                        src={product.image.desktop}
+                        alt={product.title}
+                        fill
+                      />
                     </Link>
                     <div className={styles.item__content}>
                       <div className={styles.item__main}>

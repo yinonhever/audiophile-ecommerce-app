@@ -28,7 +28,7 @@
   }
 
   &:last-child {
-    img {
+    .img {
       width: 240px;
 
       @include mixins.respond(tablet) {
