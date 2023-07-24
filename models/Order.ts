@@ -1,12 +1,12 @@
 import { Schema, model, models, Model, Types } from "mongoose";
-import type {
+import {
   BillingDetails,
   ShippingDetails,
   DataItem,
-  OrderPrice
+  OrderPrice,
+  PaymentMethod
 } from "@/lib/types";
 import type { ProductData } from "./Product";
-import { PAYMENT_METHODS } from "@/lib/constants";
 
 interface IOrder {
   items: {
@@ -17,7 +17,7 @@ interface IOrder {
   price: OrderPrice;
   billingDetails: BillingDetails;
   shippingDetails: ShippingDetails;
-  paymentMethod: string;
+  paymentMethod: PaymentMethod;
   isPaid: boolean;
   paymentResult: object | null;
 }
@@ -99,7 +99,7 @@ const orderSchema = new Schema<IOrder>(
     paymentMethod: {
       type: String,
       required: true,
-      enum: [PAYMENT_METHODS.CREDIT_CARD, PAYMENT_METHODS.CASH]
+      enum: PaymentMethod
     },
     isPaid: {
       type: Boolean,

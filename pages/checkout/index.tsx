@@ -1,13 +1,13 @@
 import { CartContext, CartContextType } from "@/lib/CartContext";
 import { useContext, useState, useEffect } from "react";
-import type { CheckoutData } from "@/lib/types";
+import { CheckoutData, PaymentMethod } from "@/lib/types";
 import { SubmitHandler, useForm } from "react-hook-form";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import type { OrderData } from "@/models/Order";
 import Page from "@/components/layout/Page";
 import PaymentModal from "@/components/checkout/PaymentModal";
 import CheckoutForm from "@/components/checkout/CheckoutForm";
-import initialCheckoutData from "@/lib/assets/initial-checkout-data.json";
+import initialCheckoutData from "@/lib/assets/initial-checkout-data";
 import CheckoutSummary from "@/components/checkout/CheckoutSummary";
 import Overlay from "@/components/UI/Overlay";
 import Spinner from "@/components/UI/Spinner";
@@ -16,7 +16,6 @@ import GoBackButton from "@/components/UI/GoBackButton";
 import ErrorMessage from "@/components/UI/ErrorMessage";
 import Head from "next/head";
 import styles from "@/styles/Checkout.module.scss";
-import { PAYMENT_METHODS } from "@/lib/constants";
 import axios from "axios";
 
 export default function Checkout({
@@ -37,9 +36,9 @@ export default function Checkout({
   }, [cartItems]);
 
   const onSubmit: SubmitHandler<CheckoutData> = ({ paymentMethod }) => {
-    if (paymentMethod === PAYMENT_METHODS.CREDIT_CARD) {
+    if (paymentMethod === PaymentMethod.CreditCard) {
       setShowPaymentModal(true);
-    } else if (paymentMethod === PAYMENT_METHODS.CASH) {
+    } else if (paymentMethod === PaymentMethod.Cash) {
       submitOrder();
     }
   };
@@ -62,7 +61,7 @@ export default function Checkout({
       clearItems();
     } catch (error: any) {
       setError(error);
-      if (paymentMethod === PAYMENT_METHODS.CREDIT_CARD) {
+      if (paymentMethod === PaymentMethod.CreditCard) {
         setShowPaymentModal(true);
       }
     } finally {

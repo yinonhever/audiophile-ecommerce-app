@@ -7,7 +7,7 @@ import {
   FieldErrors,
   UseFormWatch
 } from "react-hook-form";
-import type { CheckoutData } from "@/lib/types";
+import { CheckoutData, PaymentMethod } from "@/lib/types";
 import {
   cx,
   isValidEmail,
@@ -15,7 +15,6 @@ import {
   isValidPhone
 } from "@/lib/functions";
 import Select from "react-dropdown-select";
-import { PAYMENT_METHODS } from "@/lib/constants";
 import { Fade } from "react-awesome-reveal";
 
 export default function CheckoutForm({
@@ -189,7 +188,7 @@ export default function CheckoutForm({
                   <input
                     {...register("paymentMethod")}
                     type="radio"
-                    value={PAYMENT_METHODS.CREDIT_CARD}
+                    value={PaymentMethod.CreditCard}
                     id="field-credit-card"
                   />
                   <label
@@ -204,7 +203,7 @@ export default function CheckoutForm({
                   <input
                     {...register("paymentMethod")}
                     type="radio"
-                    value={PAYMENT_METHODS.CASH}
+                    value={PaymentMethod.Cash}
                     id="field-cash"
                   />
                   <label htmlFor="field-cash" className={styles.radioLabel}>
@@ -228,7 +227,7 @@ export default function CheckoutForm({
               />
             </svg>
             <p className={styles.note__text}>
-              {paymentMethod === PAYMENT_METHODS.CASH ? (
+              {paymentMethod === PaymentMethod.Cash ? (
                 <>
                   The ‘Cash on Delivery’ option enables you to pay in cash when
                   our delivery courier arrives at your residence. Just make sure
@@ -236,7 +235,7 @@ export default function CheckoutForm({
                   cancelled.
                 </>
               ) : (
-                paymentMethod === PAYMENT_METHODS.CREDIT_CARD && (
+                paymentMethod === PaymentMethod.CreditCard && (
                   <>
                     Upon clicking ‘Continue & Pay’, you&apos;ll be prompted to
                     enter your credit card details to complete the order. Your

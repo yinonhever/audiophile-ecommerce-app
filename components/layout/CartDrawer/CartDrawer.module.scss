@@ -2,13 +2,12 @@
 @use "styles/mixins";
 
 .wrapper {
-  overflow: hidden;
-  z-index: 10;
-  transition: max-height 0.4s;
-  display: block;
   position: absolute;
   top: calc(100% + 32px);
   right: variables.$padding-side-desktop;
+  overflow: hidden;
+  z-index: 10;
+  transition: max-height 0.4s;
 
   &.fixed {
     position: fixed;

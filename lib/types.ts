@@ -37,10 +37,15 @@ export interface ShippingDetails {
   country: string;
 }
 
+export enum PaymentMethod {
+  CreditCard = "credit-card",
+  Cash = "cash"
+}
+
 export interface CheckoutData {
   billingDetails: BillingDetails;
   shippingDetails: ShippingDetails;
-  paymentMethod: string;
+  paymentMethod: PaymentMethod;
 }
 
 export type ErrorResponse<T = unknown> = T & { msg: string };
