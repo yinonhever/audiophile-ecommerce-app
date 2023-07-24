@@ -198,7 +198,7 @@ export default function CheckoutForm({
                     <span className={styles.radioIcon} />
                     <span>Credit Card</span>
                   </label>
-                </div>{" "}
+                </div>
                 <div className={styles.radioOption}>
                   <input
                     {...register("paymentMethod")}
